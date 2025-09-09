@@ -1,0 +1,90 @@
+# General
+error:
+  players_only: "&c¡Este comando solo está disponible para jugadores!"
+  unknown_command: "&cComando desconocido."
+  player_not_found: "&cJugador no encontrado o desconectado."
+
+# Plugin
+plugin:
+  enabled: "¡NomadHorses se ha habilitado correctamente!"
+  disabled: "¡NomadHorses deshabilitado!"
+  autosave: "¡Guardado automático completado!"
+
+# Horse
+horse:
+  hidden: "&aTu caballo está oculto."
+  following: "&aEl caballo ahora te seguirá."
+  staying: "&aEl caballo se quedará en su lugar."
+  death_cooldown: "&c¡Tu caballo ha muerto! Podrás invocarlo de nuevo en {minutes} minutos."
+  not_yours: "&c¡Este no es tu caballo!"
+  already_has_passenger: "&c¡Alguien ya está montando este caballo!"
+  passenger_mounted: "&aHas montado el caballo."
+  passenger_informed_owner: "&a{passenger} ha montado tu caballo."
+  cooldown_active: "&c¡Tu caballo aún se está recuperando! Tiempo restante: {time}"
+  level_up: "&a¡Tu caballo ha alcanzado el nivel {level}!"
+
+# Passenger System
+passenger:
+  usage_allow: "&cUso: /horse allowpassenger <nombre_jugador>"
+  usage_remove: "&cUso: /horse removepassenger <nombre_jugador>"
+  allowed: "&aHas permitido que {player} monte tu caballo."
+  informed_allowed: "&a{owner} te ha permitido montar su caballo."
+  removed: "&cHas revocado el permiso de {player} para montar tu caballo."
+  informed_removed: "&c{owner} ha revocado tu permiso para montar su caballo."
+  no_permission: "&cEl dueño del caballo no te ha dado permiso para montar."
+  list_empty: "&eNo tienes pasajeros autorizados."
+  list_header: "&6Pasajeros autorizados:"
+  list_item: "&7- {player}"
+
+# Help
+help:
+  title: "&6----- Comandos del Caballo &e/horse &6-----"
+  stats: "&e/horse &7- Mostrar estadísticas del caballo"
+  summon: "&e/horse summon &7- Invocar tu caballo"
+  hide: "&e/horse hide &7- Ocultar tu caballo"
+  follow: "&e/horse follow &7- El caballo te sigue"
+  stay: "&e/horse stay &7- El caballo se queda en su lugar"
+  customize: "&e/horse customize &7- Personalizar apariencia del caballo"
+  allowpassenger: "&e/horse allowpassenger <nombre> &7- Permitir montar"
+  removepassenger: "&e/horse removepassenger <nombre> &7- Revocar permiso de montar"
+  passengers: "&e/horse passengers &7- Lista de pasajeros autorizados"
+  help: "&e/horse help &7- Mostrar esta ayuda"
+
+# Input System
+input:
+  prompt: "&eEscribe un valor en el chat o 'cancelar' para cancelar"
+  cancel_keyword: "cancelar"
+  cancelled: "&cAcción cancelada"
+
+# Menus
+menu:
+  stats:
+    title: "Estadísticas del Caballo"
+    level: "Nivel: &e{level}"
+    experience: "Experiencia: &f{current}&7/&f{required}"
+    xp_to_next: "XP para el siguiente nivel: &f{remaining}"
+    speed: "Velocidad: &e{value}%"
+    health: "Salud: &e{value} ❤"
+    jump_strength: "Fuerza de salto: &e{value}%"
+    status_cooldown: "&cEl caballo se está recuperando"
+    status_ready: "&aEl caballo está listo"
+    cooldown_remaining: "Tiempo restante: &f{time}"
+  customize:
+    title: "Personalización del Caballo"
+    name_item: "&6Cambiar nombre"
+    current_name: "Nombre actual: &f{name}"
+    no_name: "Ninguno"
+    name_prompt_1: "&eHaz clic, luego escribe"
+    name_prompt_2: "&eun nuevo nombre en el chat"
+    enter_name_prompt: "&eEscribe un nuevo nombre para tu caballo en el chat:"
+    name_changed: "&aEl nombre del caballo ha cambiado a: &f{name}"
+    color_changed: "&a¡El color del caballo ha cambiado!"
+    save_item: "&aGuardar cambios"
+    saved: "&a¡Cambios guardados!"
+    color_white: "Blanco"
+    color_creamy: "Cremoso"
+    color_chestnut: "Alazán"
+    color_brown: "Marrón"
+    color_black: "Negro"
+    color_gray: "Gris"
+    color_dark_brown: "Marrón oscuro"

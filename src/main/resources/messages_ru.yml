@@ -1,0 +1,90 @@
+# General
+error:
+  players_only: "&cЭта команда доступна только игрокам!"
+  unknown_command: "&cНеизвестная команда."
+  player_not_found: "&cИгрок не найден или не в сети."
+
+# Plugin
+plugin:
+  enabled: "NomadHorses успешно запущен!"
+  disabled: "NomadHorses отключен!"
+  autosave: "Автосохранение завершено!"
+
+# Horse
+horse:
+  hidden: "&aВаша лошадь спрятана."
+  following: "&aЛошадь теперь следует за вами."
+  staying: "&aЛошадь останется на месте."
+  death_cooldown: "&cВаша лошадь погибла! Вы сможете вызвать ее снова через {minutes} минут."
+  not_yours: "&cЭто не ваша лошадь!"
+  already_has_passenger: "&cНа лошади уже кто-то сидит!"
+  passenger_mounted: "&aВы сели на лошадь."
+  passenger_informed_owner: "&a{passenger} сел на вашу лошадь."
+  cooldown_active: "&cВаша лошадь еще не восстановилась! Осталось: {time}"
+  level_up: "&aВаша лошадь достигла {level} уровня!"
+
+# Passenger System
+passenger:
+  usage_allow: "&cИспользование: /horse allowpassenger <ник>"
+  usage_remove: "&cИспользование: /horse removepassenger <ник>"
+  allowed: "&aВы разрешили {player} садиться на вашу лошадь."
+  informed_allowed: "&a{owner} разрешил вам садиться на свою лошадь."
+  removed: "&cВы запретили {player} садиться на вашу лошадь."
+  informed_removed: "&c{owner} запретил вам садиться на свою лошадь."
+  no_permission: "&cВладелец лошади не дал вам разрешения садиться."
+  list_empty: "&eУ вас нет разрешенных пассажиров."
+  list_header: "&6Разрешенные пассажиры:"
+  list_item: "&7- {player}"
+
+# Help
+help:
+  title: "&6----- Команды лошади &e/horse &6-----"
+  stats: "&e/horse &7- Показать характеристики лошади"
+  summon: "&e/horse summon &7- Призвать вашу лошадь"
+  hide: "&e/horse hide &7- Спрятать вашу лошадь"
+  follow: "&e/horse follow &7- Лошадь будет следовать за вами"
+  stay: "&e/horse stay &7- Лошадь останется на месте"
+  customize: "&e/horse customize &7- Настроить внешний вид лошади"
+  allowpassenger: "&e/horse allowpassenger <ник> &7- Разрешить игроку садиться"
+  removepassenger: "&e/horse removepassenger <ник> &7- Запретить садиться"
+  passengers: "&e/horse passengers &7- Список разрешенных пассажиров"
+  help: "&e/horse help &7- Показать эту справку"
+
+# Input System
+input:
+  prompt: "&eВведите значение в чат или 'отмена' для отмены"
+  cancel_keyword: "отмена"
+  cancelled: "&cДействие отменено"
+
+# Menus
+menu:
+  stats:
+    title: "Статистика лошади"
+    level: "Уровень: &e{level}"
+    experience: "Опыт: &f{current}&7/&f{required}"
+    xp_to_next: "До следующего уровня: &f{remaining}"
+    speed: "Скорость: &e{value}%"
+    health: "Здоровье: &e{value} ❤"
+    jump_strength: "Сила прыжка: &e{value}%"
+    status_cooldown: "&cЛошадь восстанавливается"
+    status_ready: "&aЛошадь готова"
+    cooldown_remaining: "Осталось: &f{time}"
+  customize:
+    title: "Кастомизация лошади"
+    name_item: "&6Изменить имя"
+    current_name: "Текущее имя: &f{name}"
+    no_name: "Нет"
+    name_prompt_1: "&eНажмите, затем введите"
+    name_prompt_2: "&eновое имя в чат"
+    enter_name_prompt: "&eВведите новое имя для лошади в чат:"
+    name_changed: "&aИмя лошади изменено на: &f{name}"
+    color_changed: "&aЦвет лошади изменен!"
+    save_item: "&aСохранить изменения"
+    saved: "&aИзменения сохранены!"
+    color_white: "Белый"
+    color_creamy: "Кремовый"
+    color_chestnut: "Каштановый"
+    color_brown: "Коричневый"
+    color_black: "Черный"
+    color_gray: "Серый"
+    color_dark_brown: "Темно-коричневый"

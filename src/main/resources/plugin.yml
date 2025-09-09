@@ -1,0 +1,13 @@
+name: NomadHorses
+version: 2.0
+main: nomadhorses.NomadHorses
+api-version: 1.20.6
+authors: [IB]
+commands:
+  horse:
+    description: Manage your personal horse
+    usage: /horse [summon|hide|follow|stay|stats|customize|allowpassenger|removepassenger|passengers|help]
+permissions:
+  nomadhorses.passenger:
+    description: Allows riding other horses with permission
+    default: true

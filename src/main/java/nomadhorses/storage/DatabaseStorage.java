@@ -1,0 +1,280 @@
+package nomadhorses.storage;
+
+import nomadhorses.NomadHorses;
+import nomadhorses.config.ConfigManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Horse;
+
+import java.sql.*;
+import java.util.*;
+import java.util.logging.Logger;
+
+public class DatabaseStorage implements StorageStrategy {
+    private final NomadHorses plugin;
+    private final Logger logger;
+    private Connection connection;
+    private final String dbHost;
+    private final int dbPort;
+    private final String dbName;
+    private final String dbUser;
+    private final String dbPassword;
+
+    private final Map<UUID, HorseData> horsesData = new HashMap<>();
+    private final Map<UUID, Set<UUID>> passengerPermissions = new HashMap<>();
+
+    public DatabaseStorage(NomadHorses plugin, ConfigManager configManager) {
+        this.plugin = plugin;
+        this.logger = plugin.getLogger();
+        this.dbHost = configManager.getDatabaseHost();
+        this.dbPort = configManager.getDatabasePort();
+        this.dbName = configManager.getDatabaseName();
+        this.dbUser = configManager.getDatabaseUser();
+        this.dbPassword = configManager.getDatabasePassword();
+        initializeDatabase();
+    }
+
+    private void initializeDatabase() {
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            String url = "jdbc:mariadb://" + dbHost + ":" + dbPort + "/" + dbName;
+            this.connection = DriverManager.getConnection(url, dbUser, dbPassword);
+            try (Statement stmt = connection.createStatement()) {
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS nomad_horses (" +
+                        "player_uuid VARCHAR(36) PRIMARY KEY," +
+                        "level INT NOT NULL DEFAULT 1," +
+                        "experience INT NOT NULL DEFAULT 0," +
+                        "color VARCHAR(20) NOT NULL DEFAULT 'BROWN'," +
+                        "style VARCHAR(20) NOT NULL DEFAULT 'NONE'," +
+                        "horse_name VARCHAR(32)," +
+                        "death_time BIGINT NOT NULL DEFAULT 0," +
+                        "jumps INT NOT NULL DEFAULT 0," +
+                        "blocks_traveled DOUBLE NOT NULL DEFAULT 0.0," +
+                        "total_jumps INT NOT NULL DEFAULT 0," +
+                        "total_blocks_traveled DOUBLE NOT NULL DEFAULT 0.0" +
+                        ")");
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS nomad_horse_passengers (" +
+                        "owner_uuid VARCHAR(36)," +
+                        "passenger_uuid VARCHAR(36)," +
+                        "PRIMARY KEY (owner_uuid, passenger_uuid))");
+            }
+        } catch (Exception e) {
+            logger.severe("Database initialization error: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void loadData() {
+        loadHorsesFromDatabase();
+        loadPassengersFromDatabase();
+    }
+
+    private void loadHorsesFromDatabase() {
+        if (connection == null) return;
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM nomad_horses")) {
+            while (rs.next()) {
+                UUID playerId = UUID.fromString(rs.getString("player_uuid"));
+                HorseData data = new HorseData();
+                data.setOwnerId(playerId);
+                data.setLevel(rs.getInt("level"));
+                data.setExperience(rs.getInt("experience"));
+                data.setColor(parseColor(rs.getString("color")));
+                data.setStyle(parseStyle(rs.getString("style")));
+                data.setHorseName(rs.getString("horse_name"));
+                data.setDeathTime(rs.getLong("death_time"));
+                data.setJumps(rs.getInt("jumps"));
+                data.setBlocksTraveled(rs.getDouble("blocks_traveled"));
+                data.setTotalJumps(rs.getInt("total_jumps"));
+                data.setTotalBlocksTraveled(rs.getDouble("total_blocks_traveled"));
+                horsesData.put(playerId, data);
+            }
+        } catch (SQLException e) {
+            logger.severe("Error loading horse data from DB: " + e.getMessage());
+        }
+    }
+
+    private void loadPassengersFromDatabase() {
+        if (connection == null) return;
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM nomad_horse_passengers")) {
+            while (rs.next()) {
+                UUID ownerId = UUID.fromString(rs.getString("owner_uuid"));
+                UUID passengerId = UUID.fromString(rs.getString("passenger_uuid"));
+                passengerPermissions.computeIfAbsent(ownerId, k -> new HashSet<>()).add(passengerId);
+            }
+        } catch (SQLException e) {
+            logger.severe("Error loading passenger data from DB: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public HorseData getHorseData(UUID playerId) {
+        return horsesData.computeIfAbsent(playerId, k -> new HorseData());
+    }
+
+    @Override
+    public void saveHorseData(HorseData data) {
+        if (connection == null || data.getOwnerId() == null) return;
+        try (PreparedStatement stmt = connection.prepareStatement(
+                "INSERT INTO nomad_horses (player_uuid, level, experience, color, style, horse_name, " +
+                        "death_time, jumps, blocks_traveled, total_jumps, total_blocks_traveled) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+                        "ON DUPLICATE KEY UPDATE " +
+                        "level = VALUES(level), experience = VALUES(experience), color = VALUES(color), " +
+                        "style = VALUES(style), horse_name = VALUES(horse_name), death_time = VALUES(death_time), " +
+                        "jumps = VALUES(jumps), blocks_traveled = VALUES(blocks_traveled), " +
+                        "total_jumps = VALUES(total_jumps), total_blocks_traveled = VALUES(total_blocks_traveled)")) {
+            stmt.setString(1, data.getOwnerId().toString());
+            stmt.setInt(2, data.getLevel());
+            stmt.setInt(3, data.getExperience());
+            stmt.setString(4, data.getColor().name());
+            stmt.setString(5, data.getStyle().name());
+            stmt.setString(6, data.getHorseName());
+            stmt.setLong(7, data.getDeathTime());
+            stmt.setInt(8, data.getJumps());
+            stmt.setDouble(9, data.getBlocksTraveled());
+            stmt.setInt(10, data.getTotalJumps());
+            stmt.setDouble(11, data.getTotalBlocksTraveled());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            logger.warning("Error saving player data to DB: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void saveAllData() {
+        if (connection == null) return;
+        try {
+            connection.setAutoCommit(false);
+            saveAllHorses();
+            saveAllPassengers();
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                logger.severe("Transaction rollback error: " + ex.getMessage());
+            }
+            logger.severe("Error saving all data to DB: " + e.getMessage());
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                logger.warning("Error restoring autoCommit: " + e.getMessage());
+            }
+        }
+    }
+
+    private void saveAllHorses() throws SQLException {
+        try (PreparedStatement stmt = connection.prepareStatement(
+                "INSERT INTO nomad_horses (player_uuid, level, experience, color, style, horse_name, " +
+                        "death_time, jumps, blocks_traveled, total_jumps, total_blocks_traveled) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+                        "ON DUPLICATE KEY UPDATE " +
+                        "level = VALUES(level), experience = VALUES(experience), color = VALUES(color), " +
+                        "style = VALUES(style), horse_name = VALUES(horse_name), death_time = VALUES(death_time), " +
+                        "jumps = VALUES(jumps), blocks_traveled = VALUES(blocks_traveled), " +
+                        "total_jumps = VALUES(total_jumps), total_blocks_traveled = VALUES(total_blocks_traveled)")) {
+            for (HorseData data : horsesData.values()) {
+                stmt.setString(1, data.getOwnerId().toString());
+                stmt.setInt(2, data.getLevel());
+                stmt.setInt(3, data.getExperience());
+                stmt.setString(4, data.getColor().name());
+                stmt.setString(5, data.getStyle().name());
+                stmt.setString(6, data.getHorseName());
+                stmt.setLong(7, data.getDeathTime());
+                stmt.setInt(8, data.getJumps());
+                stmt.setDouble(9, data.getBlocksTraveled());
+                stmt.setInt(10, data.getTotalJumps());
+                stmt.setDouble(11, data.getTotalBlocksTraveled());
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
+        }
+    }
+
+    private void saveAllPassengers() throws SQLException {
+        try (PreparedStatement clearStmt = connection.prepareStatement(
+                "DELETE FROM nomad_horse_passengers WHERE owner_uuid = ?")) {
+            for (UUID ownerId : passengerPermissions.keySet()) {
+                clearStmt.setString(1, ownerId.toString());
+                clearStmt.addBatch();
+            }
+            clearStmt.executeBatch();
+        }
+
+        try (PreparedStatement insertStmt = connection.prepareStatement(
+                "INSERT INTO nomad_horse_passengers (owner_uuid, passenger_uuid) VALUES (?, ?)")) {
+            for (Map.Entry<UUID, Set<UUID>> entry : passengerPermissions.entrySet()) {
+                UUID ownerId = entry.getKey();
+                for (UUID passengerId : entry.getValue()) {
+                    insertStmt.setString(1, ownerId.toString());
+                    insertStmt.setString(2, passengerId.toString());
+                    insertStmt.addBatch();
+                }
+            }
+            insertStmt.executeBatch();
+        }
+    }
+
+    @Override
+    public Set<UUID> getPassengers(UUID ownerUUID) {
+        return passengerPermissions.getOrDefault(ownerUUID, Collections.emptySet());
+    }
+
+    @Override
+    public void addPassenger(UUID ownerUUID, UUID passengerUUID) {
+        passengerPermissions.computeIfAbsent(ownerUUID, k -> new HashSet<>()).add(passengerUUID);
+        if (connection != null) {
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    "INSERT INTO nomad_horse_passengers (owner_uuid, passenger_uuid) VALUES (?, ?)")) {
+                stmt.setString(1, ownerUUID.toString());
+                stmt.setString(2, passengerUUID.toString());
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                logger.warning("Error adding passenger permission to DB: " + e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void removePassenger(UUID ownerUUID, UUID passengerUUID) {
+        passengerPermissions.getOrDefault(ownerUUID, Collections.emptySet()).remove(passengerUUID);
+        if (connection != null) {
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    "DELETE FROM nomad_horse_passengers WHERE owner_uuid = ? AND passenger_uuid = ?")) {
+                stmt.setString(1, ownerUUID.toString());
+                stmt.setString(2, passengerUUID.toString());
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                logger.warning("Error removing passenger permission from DB: " + e.getMessage());
+            }
+        }
+    }
+
+    public void close() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                logger.warning("Error closing DB connection: " + e.getMessage());
+            }
+        }
+    }
+
+    private Horse.Color parseColor(String colorStr) {
+        try {
+            return Horse.Color.valueOf(colorStr);
+        } catch (IllegalArgumentException e) {
+            return Horse.Color.BROWN;
+        }
+    }
+
+    private Horse.Style parseStyle(String styleStr) {
+        try {
+            return Horse.Style.valueOf(styleStr);
+        } catch (IllegalArgumentException e) {
+            return Horse.Style.NONE;
+        }
+    }
+}

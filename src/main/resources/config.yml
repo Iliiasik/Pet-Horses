@@ -1,0 +1,28 @@
+# Language for the plugin. Available: 'en', 'ru', 'es'
+language: 'en'
+
+# Database configuration (MariaDB only)
+database:
+  enabled: false
+  host: "localhost"
+  port: 3306
+  name: "minecraft"
+  user: "root"
+  password: ""
+
+# Leveling system configuration
+leveling:
+  base_xp: 100
+  xp_increment: 50
+
+# Horse stats configuration
+stats:
+  speed_base: 0.18
+  speed_max_bonus: 0.225
+  health_base: 15.0
+  health_max_bonus: 15.0
+  jump_base: 0.6
+  jump_max_bonus: 0.6
+
+# Cooldown in minutes before a dead horse can be respawned
+respawn_cooldown_minutes: 15

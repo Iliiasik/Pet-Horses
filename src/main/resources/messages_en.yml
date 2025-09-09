@@ -1,0 +1,90 @@
+# General
+error:
+  players_only: "&cThis command is only available to players!"
+  unknown_command: "&cUnknown command."
+  player_not_found: "&cPlayer not found or offline."
+
+# Plugin
+plugin:
+  enabled: "NomadHorses successfully enabled!"
+  disabled: "NomadHorses disabled!"
+  autosave: "Autosave completed!"
+
+# Horse
+horse:
+  hidden: "&aYour horse is hidden."
+  following: "&aThe horse will now follow you."
+  staying: "&aThe horse will stay in place."
+  death_cooldown: "&cYour horse has died! You can summon it again in {minutes} minutes."
+  not_yours: "&cThis is not your horse!"
+  already_has_passenger: "&cSomeone is already riding this horse!"
+  passenger_mounted: "&aYou have mounted the horse."
+  passenger_informed_owner: "&a{passenger} has mounted your horse."
+  cooldown_active: "&cYour horse is still recovering! Time left: {time}"
+  level_up: "&aYour horse has reached level {level}!"
+
+# Passenger System
+passenger:
+  usage_allow: "&cUsage: /horse allowpassenger <player_name>"
+  usage_remove: "&cUsage: /horse removepassenger <player_name>"
+  allowed: "&aYou have allowed {player} to ride your horse."
+  informed_allowed: "&a{owner} has allowed you to ride their horse."
+  removed: "&cYou have revoked {player}'s permission to ride your horse."
+  informed_removed: "&c{owner} has revoked your permission to ride their horse."
+  no_permission: "&cThe horse's owner has not given you permission to ride."
+  list_empty: "&eYou have no authorized passengers."
+  list_header: "&6Authorized Passengers:"
+  list_item: "&7- {player}"
+
+# Help
+help:
+  title: "&6----- Horse Commands &e/horse &6-----"
+  stats: "&e/horse &7- Show horse stats"
+  summon: "&e/horse summon &7- Summon your horse"
+  hide: "&e/horse hide &7- Hide your horse"
+  follow: "&e/horse follow &7- Horse follows you"
+  stay: "&e/horse stay &7- Horse stays in place"
+  customize: "&e/horse customize &7- Customize horse appearance"
+  allowpassenger: "&e/horse allowpassenger <name> &7- Allow player to ride"
+  removepassenger: "&e/horse removepassenger <name> &7- Revoke riding permission"
+  passengers: "&e/horse passengers &7- List authorized passengers"
+  help: "&e/horse help &7- Show this help"
+
+# Input System
+input:
+  prompt: "&eEnter a value in chat or 'cancel' to cancel"
+  cancel_keyword: "cancel"
+  cancelled: "&cAction cancelled"
+
+# Menus
+menu:
+  stats:
+    title: "Horse Stats"
+    level: "Level: &e{level}"
+    experience: "Experience: &f{current}&7/&f{required}"
+    xp_to_next: "XP to next level: &f{remaining}"
+    speed: "Speed: &e{value}%"
+    health: "Health: &e{value} ❤"
+    jump_strength: "Jump Strength: &e{value}%"
+    status_cooldown: "&cHorse is recovering"
+    status_ready: "&aHorse is ready"
+    cooldown_remaining: "Time left: &f{time}"
+  customize:
+    title: "Horse Customization"
+    name_item: "&6Change Name"
+    current_name: "Current name: &f{name}"
+    no_name: "None"
+    name_prompt_1: "&eClick, then enter"
+    name_prompt_2: "&ea new name in chat"
+    enter_name_prompt: "&eEnter a new name for your horse in chat:"
+    name_changed: "&aHorse name changed to: &f{name}"
+    color_changed: "&aHorse color changed!"
+    save_item: "&aSave Changes"
+    saved: "&aChanges saved!"
+    color_white: "White"
+    color_creamy: "Creamy"
+    color_chestnut: "Chestnut"
+    color_brown: "Brown"
+    color_black: "Black"
+    color_gray: "Gray"
+    color_dark_brown: "Dark Brown"
