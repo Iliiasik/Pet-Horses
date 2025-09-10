@@ -3,8 +3,6 @@
   <span>NOMAD HORSES</span>
 </div>
 
-
-
 [![GitHub Downloads][github-downloads-shield]][github-downloads-url]
 [![SpigotMC Downloads][spigot-downloads-shield]][spigot-downloads-url]
 [![Modrinth Downloads][modrinth-downloads-shield]][modrinth-downloads-url]
@@ -18,7 +16,16 @@
 [modrinth-downloads-shield]: https://img.shields.io/badge/Modrinth-Downloads-green?style=for-the-badge&logo=modrinth
 [modrinth-downloads-url]: https://modrinth.com/plugin/nomad-horses
 
-
+<div style="display: flex; justify-content: center; gap: 8px; margin-top: 6px; font-size: 1.2em;">
+  <code>1.20</code>
+  <code>1.20.1</code>
+  <code>1.20.2</code>
+  <code>1.20.3</code>
+  <code>1.20.4</code>
+  <code>1.20.5</code>
+  <code>1.20.6</code>
+  <code>1.21</code>
+</div>
 
 ## Description
 
