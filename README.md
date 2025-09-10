@@ -5,10 +5,6 @@
 
 
 <p align="center">
-  <a href="https://github.com/Iliiasik/Nomad-Horses/stargazers">
-    <img src="https://img.shields.io/github/stars/Iliiasik/Nomad-Horses.svg?style=flat&logo=github" alt="GitHub stars">
-  </a>
-  <br>
   <a href="https://github.com/Iliiasik/Nomad-Horses/releases">
     <img src="https://img.shields.io/github/downloads/Iliiasik/Nomad-Horses/total.svg?style=flat&logo=github" alt="Downloads">
   </a>
