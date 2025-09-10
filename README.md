@@ -1,7 +1,9 @@
-<div>
-  <img width="14" height="14" alt="HORSE" src="https://github.com/user-attachments/assets/b505c936-97ca-459b-b605-0b8fc1a792ee"/>
-  <span>NOMAD HORSES</span>
-</div>
+<h1>
+  NOMAD HORSES
+  <img width="27" height="27" alt="HORSE" src="https://github.com/user-attachments/assets/b505c936-97ca-459b-b605-0b8fc1a792ee"/>
+</h1>
+
+
 
 [![GitHub Downloads][github-downloads-shield]][github-downloads-url]
 [![SpigotMC Downloads][spigot-downloads-shield]][spigot-downloads-url]
