@@ -6,7 +6,13 @@
 
 <p align="center">
   <a href="https://github.com/Iliiasik/Nomad-Horses/releases">
-    <img src="https://img.shields.io/github/downloads/Iliiasik/Nomad-Horses/total.svg?style=flat&logo=github" alt="Downloads">
+    <img src="https://img.shields.io/github/downloads/Iliiasik/Nomad-Horses/total.svg?style=flat&logo=github" alt="GitHub Downloads">
+  </a>
+  <a href="https://www.spigotmc.org/resources/nomad-horses.128733/">
+    <img src="https://img.shields.io/badge/SpigotMC-Downloads-blue?style=flat&logo=spigot" alt="SpigotMC Downloads">
+  </a>
+  <a href="https://modrinth.com/plugin/nomad-horses">
+    <img src="https://img.shields.io/badge/Modrinth-Downloads-green?style=flat&logo=modrinth" alt="Modrinth Downloads">
   </a>
 </p>
 
