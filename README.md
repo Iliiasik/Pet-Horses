@@ -89,12 +89,6 @@ This plugin was developed for nomadic-style servers focused on constant movement
 - Easy to add new languages by translating localization files
 
 <p align="center">
-  <a href="https://github.com/Iliiasik/Nomad-Horses" target="_blank">
-    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="80" height="80" alt="GitHub">
-  </a>
-</p>
-
-<p align="center">
 <img width="300" height="200" alt="Screenshot 4" src="https://github.com/user-attachments/assets/7e57fccb-b185-4d3b-802d-ad1cc030bea3" />
 </p>
 
