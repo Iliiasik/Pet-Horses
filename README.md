@@ -5,7 +5,6 @@
 
 
 
-[![GitHub Downloads][github-downloads-shield]][github-downloads-url]
 [![SpigotMC Downloads][spigot-downloads-shield]][spigot-downloads-url]
 [![Modrinth Downloads][modrinth-downloads-shield]][modrinth-downloads-url]
 
