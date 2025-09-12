@@ -30,17 +30,18 @@
 
 ## Description
 
-### Nomad Horses is a simple Minecraft plugin that enhances horse gameplay and adds a small passive leveling system.  
-### Over time, your horse will become faster, jump higher, and gain more health.  
+Nomad Horses enhances horse gameplay by adding **passive leveling**, **summon/hide functionality**, **customization via GUI**, and **passenger permissions**. Over time, your horse becomes faster, jumps higher, and gains more health.
+
+---
 
 <p align="center">
-  <img width="506" height="273" alt="Screenshot 1" src="https://github.com/user-attachments/assets/3b0104be-6d4d-4662-99e6-d74c9bc09344" />
+  <img src="https://github.com/user-attachments/assets/3b0104be-6d4d-4662-99e6-d74c9bc09344" width="400" height="200" alt="Horse Level">
 </p>
 
-### When a horse dies, it can be respawned after a configurable cooldown. All settings can be adjusted in the plugin's config:
+Horses that die can be **respawned** after a configurable cooldown. All settings can be adjusted in the plugin's configuration:
 
-```bash
-# Language for the plugin. Available: 'en', 'ru', 'es'
+```yaml
+# Language for the plugin: 'en', 'ru', 'es'
 language: 'en'
 
 # Database configuration (MariaDB only)
@@ -52,12 +53,12 @@ database:
   user: "root"
   password: ""
 
-# Leveling system configuration
+# Leveling system
 leveling:
   base_xp: 100
   xp_increment: 50
 
-# Horse stats configuration
+# Horse stats
 stats:
   speed_base: 0.18
   speed_max_bonus: 0.225
@@ -66,39 +67,32 @@ stats:
   jump_base: 0.6
   jump_max_bonus: 0.6
 
-# Cooldown in minutes before a dead horse can be respawned
+# Cooldown (minutes) before a dead horse can respawn
 respawn_cooldown_minutes: 15
 ```
 
-### Horses can be fully customized with colors and names.
 <p align="center">
-<img width="645" height="320" alt="Screenshot 1" src="https://github.com/user-attachments/assets/6209fd9c-4c8c-4054-81bd-13d4089fc516" />
-</p>
-<p align="center">
-<img width="645" height="320" alt="Screenshot 2" src="https://github.com/user-attachments/assets/e78bb678-6543-4ff5-8a22-25d8eef61dd3" />
+  <img src="https://github.com/user-attachments/assets/6209fd9c-4c8c-4054-81bd-13d4089fc516" width="400" height="200" alt="Customize Horse">
+  <img src="https://github.com/user-attachments/assets/e78bb678-6543-4ff5-8a22-25d8eef61dd3" width="417" height="217" alt="Horse GUI">
 </p>
 
-### You can hide or summon your horse at any time, make it follow you, or stay in place.
-### Other players cannot ride someone else's horse without the owner's permission.
+Horses can be customized in appearance through a GUI. You can summon or hide your horse at any time, make it follow you, or leave it standing in place. Other players cannot ride your horse without your permission.
 
 <p align="center">
-<img width="645" height="320" alt="Screenshot 3" src="https://github.com/user-attachments/assets/f8a24ea0-2c50-4bf1-9609-c7d2bb6c91f3" />
+  <img src="https://github.com/user-attachments/assets/f8a24ea0-2c50-4bf1-9609-c7d2bb6c91f3" width="400" height="200" alt="Commands">
 </p>
 
-### This plugin was developed for a nomadic-style server focused on constant movement without elytra.
+This plugin was developed for nomadic-style servers focused on constant movement without elytra.
 
-### The plugin supports 3 languages – 
-`English`, `Spanish`, `Russian`.
+- Supports English, Spanish, and Russian
+- Storage options: YAML (small servers) or MariaDB (large servers)
+- Easy to add new languages by translating localization files
 
-### Adding a new language is simple: translate one of the localization files and include it in the project.
-
-### The plugin can use either 
-`YAML` as storage (suitable for small servers) or a full 
-`MariaDB` database (better for large servers).
-
-### I decided to share this plugin hoping it will be useful for someone
-
-
+<p align="center">
+  <a href="https://github.com/Iliiasik/Nomad-Horses" target="_blank">
+    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="80" height="80" alt="GitHub">
+  </a>
+</p>
 
 <p align="center">
 <img width="300" height="200" alt="Screenshot 4" src="https://github.com/user-attachments/assets/7e57fccb-b185-4d3b-802d-ad1cc030bea3" />
