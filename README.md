@@ -4,8 +4,6 @@
 </h1>
 
 
-
-[![SpigotMC Downloads][spigot-downloads-shield]][spigot-downloads-url]
 [![Modrinth Downloads][modrinth-downloads-shield]][modrinth-downloads-url]
 
 [github-downloads-shield]: https://img.shields.io/github/downloads/Iliiasik/Nomad-Horses/total.svg?style=for-the-badge&logo=github
