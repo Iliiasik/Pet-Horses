@@ -1,7 +1,6 @@
 package nomadhorses.listeners;
 
 import nomadhorses.NomadHorses;
-import nomadhorses.config.LocalizationManager;
 import nomadhorses.services.HorseService;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
@@ -11,14 +10,10 @@ import org.bukkit.event.entity.HorseJumpEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class HorseMovementListener implements Listener {
-    private final NomadHorses plugin;
     private final HorseService horseService;
-    private final LocalizationManager localizationManager;
 
     public HorseMovementListener(NomadHorses plugin) {
-        this.plugin = plugin;
         this.horseService = plugin.getHorseService();
-        this.localizationManager = plugin.getLocalizationManager();
     }
 
     @EventHandler

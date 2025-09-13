@@ -1,7 +1,7 @@
-# Language for the plugin. Available: 'en', 'ru', 'es'
+# Language for the plugin. Available: 'en', 'ru', 'es', 'fr', 'zh', 'pt'
 language: 'en'
 
-# Database configuration (MariaDB only)
+# Database configuration (MariaDB only) false - yaml storage
 database:
   enabled: false
   host: "localhost"
