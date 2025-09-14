@@ -28,7 +28,10 @@
 
 ## Description
 
-Nomad Horses enhances horse gameplay by adding **passive leveling**, **summon/hide functionality**, **customization via GUI**, and **passenger permissions**. Over time, your horse becomes faster, jumps higher, and gains more health.
+Nomad Horses enhances horse gameplay by giving **each player their own personal horse pet**.  
+It adds **passive leveling**, **summon/hide functionality**, **customization via GUI**, **passenger permissions**, and a **personal inventory to carry items**.  
+Over time, your horse becomes faster, jumps higher, and gains more health.
+
 
 ---
 
@@ -39,10 +42,10 @@ Nomad Horses enhances horse gameplay by adding **passive leveling**, **summon/hi
 Horses that die can be **respawned** after a configurable cooldown. All settings can be adjusted in the plugin's configuration:
 
 ```yaml
-# Language for the plugin: 'en', 'ru', 'es'
+# Language for the plugin. Available: 'en', 'ru', 'es', 'fr', 'zh', 'pt', 'de', 'ja', 'ko', 'it'
 language: 'en'
 
-# Database configuration (MariaDB only)
+# Database configuration (MariaDB only) false - yaml storage
 database:
   enabled: false
   host: "localhost"
@@ -51,12 +54,12 @@ database:
   user: "root"
   password: ""
 
-# Leveling system
+# Leveling system configuration
 leveling:
   base_xp: 100
   xp_increment: 50
 
-# Horse stats
+# Horse stats configuration
 stats:
   speed_base: 0.18
   speed_max_bonus: 0.225
@@ -65,7 +68,15 @@ stats:
   jump_base: 0.6
   jump_max_bonus: 0.6
 
-# Cooldown (minutes) before a dead horse can respawn
+# Horse backpack configuration
+# IMPORTANT. Size must be between 9 and 54, and must be a multiple of 9
+backpack:
+  base_size: 9
+  size_per_level: 9
+  max_size: 54
+  armor_slot_enabled: true
+
+# Cooldown in minutes before a dead horse can be respawned
 respawn_cooldown_minutes: 15
 ```
 
@@ -80,10 +91,23 @@ Horses can be customized in appearance through a GUI. You can summon or hide you
   <img src="https://github.com/user-attachments/assets/f8a24ea0-2c50-4bf1-9609-c7d2bb6c91f3" width="400" height="200" alt="Commands">
 </p>
 
+---
+
+<p align="center">
+<img width="600" alt="Inventory" src="https://github.com/user-attachments/assets/7c5255c6-ad0d-4b35-9ad8-5632ddffdbe0" />
+</p>
+
+
+Each horse has its own **personal inventory**, which can be opened by pressing <kbd>SHIFT</kbd> + <kbd>Right Click</kbd>.  
+The inventory **expands as the horse levels up**.  
+All settings can be **customized in the configuration file**, including the option to **enable or disable horse armor saving**.
+
+---
+
 This plugin was developed for nomadic-style servers focused on constant movement without elytra.
 
-- Supports English, Spanish, and Russian
-- Storage options: YAML (small servers) or MariaDB (large servers)
+- Supports multiple languages: English (en), Russian (ru), Spanish (es), French (fr), Chinese (zh), Portuguese (pt), German (de), Japanese (ja), Korean (ko), Italian (it)
+- Storage options: YAML (small servers 0-70 players) or MariaDB (large servers 100+ players)
 - Easy to add new languages by translating localization files
 
 <p align="center">
