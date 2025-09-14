@@ -19,11 +19,13 @@ public class HorseService {
     private final NomadHorses plugin;
     private final HorseDataManager dataManager;
     private final ConfigManager configManager;
+    private final HorseBackpackService backpackService;
 
     public HorseService(NomadHorses plugin) {
         this.plugin = plugin;
         this.dataManager = plugin.getHorseDataManager();
         this.configManager = plugin.getConfigManager();
+        this.backpackService = new HorseBackpackService(plugin);
     }
 
     public void summonHorse(Player player) {
@@ -44,7 +46,9 @@ public class HorseService {
         horse.setAdult();
         horse.setCanPickupItems(false);
         horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
-        horse.getInventory().setArmor(null);
+
+        backpackService.handleArmorForHorse(horse, data);
+
         horse.setColor(data.getColor());
         horse.setStyle(data.getStyle());
 
@@ -107,6 +111,10 @@ public class HorseService {
         if (data == null || data.getHorseId() == null) return;
 
         Entity entity = Bukkit.getEntity(data.getHorseId());
+        if (entity instanceof Horse horse) {
+            backpackService.saveHorseArmorFromEntity(playerId, horse);
+        }
+
         if (entity != null) entity.remove();
         data.setHorseId(null);
     }
@@ -114,6 +122,11 @@ public class HorseService {
     public void onHorseDeath(UUID playerId) {
         HorseData data = dataManager.getHorseData(playerId);
         if (data == null) return;
+
+        Entity entity = Bukkit.getEntity(data.getHorseId());
+        if (entity instanceof Horse horse) {
+            backpackService.saveHorseArmorFromEntity(playerId, horse);
+        }
 
         data.setDeathTime(System.currentTimeMillis());
         data.setHorseId(null);
@@ -204,5 +217,9 @@ public class HorseService {
         if (data != null) {
             data.setFollowing(following);
         }
+    }
+
+    public void saveHorseArmor(UUID playerId, ItemStack armor) {
+        backpackService.saveHorseArmor(playerId, armor);
     }
 }

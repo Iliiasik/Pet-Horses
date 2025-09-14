@@ -77,4 +77,20 @@ public class ConfigManager {
     public long getRespawnCooldownMinutes() {
         return config.getLong("respawn_cooldown_minutes", 15);
     }
+
+    public int getBackpackBaseSize() {
+        return config.getInt("backpack.base_size", 9);
+    }
+
+    public int getBackpackSizePerLevel() {
+        return config.getInt("backpack.size_per_level", 9);
+    }
+
+    public int getBackpackMaxSize() {
+        return config.getInt("backpack.max_size", 54);
+    }
+
+    public boolean isArmorSlotEnabled() {
+        return config.getBoolean("backpack.armor_slot_enabled", true);
+    }
 }

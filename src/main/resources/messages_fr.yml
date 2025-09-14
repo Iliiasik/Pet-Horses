@@ -69,6 +69,8 @@ menu:
     status_cooldown: "&cLe cheval se rétablit"
     status_ready: "&aLe cheval est prêt"
     cooldown_remaining: "Temps restant : &f{time}"
+  backpack:
+    title: "Sac à dos du cheval"
   customize:
     title: "Personnalisation du Cheval"
     name_item: "&6Changer le nom"

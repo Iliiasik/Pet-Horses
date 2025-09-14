@@ -1,0 +1,92 @@
+# General
+error:
+  players_only: "&cDieser Befehl ist nur für Spieler verfügbar!"
+  unknown_command: "&cUnbekannter Befehl."
+  player_not_found: "&cSpieler nicht gefunden oder offline."
+
+# Plugin
+plugin:
+  enabled: "NomadHorses erfolgreich aktiviert!"
+  disabled: "NomadHorses deaktiviert!"
+  autosave: "Automatisches Speichern abgeschlossen!"
+
+# Horse
+horse:
+  hidden: "&aDein Pferd ist versteckt."
+  following: "&aDas Pferd wird dir jetzt folgen."
+  staying: "&aDas Pferd bleibt an Ort und Stelle."
+  death_cooldown: "&cDein Pferd ist gestorben! Du kannst es in {minutes} Minuten erneut rufen."
+  not_yours: "&cDas ist nicht dein Pferd!"
+  already_has_passenger: "&cJemand reitet bereits dieses Pferd!"
+  passenger_mounted: "&aDu bist auf das Pferd aufgestiegen."
+  passenger_informed_owner: "&a{passenger} ist auf dein Pferd aufgestiegen."
+  cooldown_active: "&cDein Pferd erholt sich noch! Verbleibende Zeit: {time}"
+  level_up: "&aDein Pferd hat Level {level} erreicht!"
+
+# Passenger System
+passenger:
+  usage_allow: "&cVerwendung: /horse allowpassenger <player_name>"
+  usage_remove: "&cVerwendung: /horse removepassenger <player_name>"
+  allowed: "&aDu hast {player} erlaubt, dein Pferd zu reiten."
+  informed_allowed: "&a{owner} hat dir erlaubt, ihr Pferd zu reiten."
+  removed: "&cDu hast {player} die Erlaubnis entzogen, dein Pferd zu reiten."
+  informed_removed: "&c{owner} hat dir die Erlaubnis entzogen, ihr Pferd zu reiten."
+  no_permission: "&cDer Besitzer des Pferdes hat dir keine Erlaubnis gegeben zu reiten."
+  list_empty: "&eDu hast keine autorisierten Passagiere."
+  list_header: "&6Autorisierte Passagiere:"
+  list_item: "&7- {player}"
+
+# Help
+help:
+  title: "&6----- Pferde-Befehle &e/horse &6-----"
+  stats: "&e/horse &7- Pferdestatistiken anzeigen"
+  summon: "&e/horse summon &7- Beschwöre dein Pferd"
+  hide: "&e/horse hide &7- Verstecke dein Pferd"
+  follow: "&e/horse follow &7- Pferd folgt dir"
+  stay: "&e/horse stay &7- Pferd bleibt stehen"
+  customize: "&e/horse customize &7- Passe das Aussehen des Pferdes an"
+  allowpassenger: "&e/horse allowpassenger <name> &7- Erlaube einem Spieler das Reiten"
+  removepassenger: "&e/horse removepassenger <name> &7- Reitberechtigung entziehen"
+  passengers: "&e/horse passengers &7- Zeige autorisierte Passagiere"
+  help: "&e/horse help &7- Zeige diese Hilfe"
+
+# Input System
+input:
+  prompt: "&eGib einen Wert im Chat ein oder 'cancel' zum Abbrechen"
+  cancel_keyword: "cancel"
+  cancelled: "&cAktion abgebrochen"
+
+# Menus
+menu:
+  stats:
+    title: "Pferdestatistiken"
+    level: "Level: &e{level}"
+    experience: "Erfahrung: &f{current}&7/&f{required}"
+    xp_to_next: "XP bis zum nächsten Level: &f{remaining}"
+    speed: "Geschwindigkeit: &e{value}%"
+    health: "Gesundheit: &e{value} ❤"
+    jump_strength: "Sprungkraft: &e{value}%"
+    status_cooldown: "&cPferd erholt sich"
+    status_ready: "&aPferd ist bereit"
+    cooldown_remaining: "Verbleibende Zeit: &f{time}"
+  backpack:
+    title: "Pferderucksack"
+  customize:
+    title: "Pferdeanpassung"
+    name_item: "&6Name ändern"
+    current_name: "Aktueller Name: &f{name}"
+    no_name: "Keiner"
+    name_prompt_1: "&eKlicke, dann eingeben"
+    name_prompt_2: "&eEinen neuen Namen im Chat eingeben"
+    enter_name_prompt: "&eGib einen neuen Namen für dein Pferd im Chat ein:"
+    name_changed: "&aPferdename geändert zu: &f{name}"
+    color_changed: "&aFarbe des Pferdes geändert!"
+    save_item: "&aÄnderungen speichern"
+    saved: "&aÄnderungen gespeichert!"
+    color_white: "Weiß"
+    color_creamy: "Cremefarben"
+    color_chestnut: "Kastanie"
+    color_brown: "Braun"
+    color_black: "Schwarz"
+    color_gray: "Grau"
+    color_dark_brown: "Dunkelbraun"

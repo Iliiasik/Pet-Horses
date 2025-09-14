@@ -1,9 +1,8 @@
 package nomadhorses.storage;
 
 import org.bukkit.entity.Horse;
+import org.bukkit.inventory.ItemStack;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 public class HorseData {
@@ -20,6 +19,8 @@ public class HorseData {
     private double blocksTraveled = 0.0;
     private int totalJumps = 0;
     private double totalBlocksTraveled = 0.0;
+    private ItemStack[] backpackItems = new ItemStack[0];
+    private ItemStack armorItem = null;
 
     public UUID getHorseId() { return horseId; }
     public void setHorseId(UUID horseId) { this.horseId = horseId; }
@@ -47,4 +48,13 @@ public class HorseData {
     public void setTotalJumps(int totalJumps) { this.totalJumps = totalJumps; }
     public double getTotalBlocksTraveled() { return totalBlocksTraveled; }
     public void setTotalBlocksTraveled(double totalBlocksTraveled) { this.totalBlocksTraveled = totalBlocksTraveled; }
+    public ItemStack[] getBackpackItems() { return backpackItems; }
+    public void setBackpackItems(ItemStack[] backpackItems) { this.backpackItems = backpackItems; }
+    public ItemStack getArmorItem() { return armorItem; }
+    public void setArmorItem(ItemStack armorItem) { this.armorItem = armorItem; }
+
+    public int getBackpackSize(int baseSize, int sizePerLevel, int maxSize) {
+        int calculatedSize = baseSize + (level * sizePerLevel);
+        return Math.min(calculatedSize, maxSize);
+    }
 }

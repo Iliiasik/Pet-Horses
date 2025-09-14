@@ -69,6 +69,8 @@ menu:
     status_cooldown: "&cЛошадь восстанавливается"
     status_ready: "&aЛошадь готова"
     cooldown_remaining: "Осталось: &f{time}"
+  backpack:
+    title: "Рюкзак лошади"
   customize:
     title: "Кастомизация лошади"
     name_item: "&6Изменить имя"

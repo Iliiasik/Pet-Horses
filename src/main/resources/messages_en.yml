@@ -69,6 +69,8 @@ menu:
     status_cooldown: "&cHorse is recovering"
     status_ready: "&aHorse is ready"
     cooldown_remaining: "Time left: &f{time}"
+  backpack:
+      title: "Horse Backpack"
   customize:
     title: "Horse Customization"
     name_item: "&6Change Name"

@@ -69,6 +69,8 @@ menu:
     status_cooldown: "&c马正在恢复中"
     status_ready: "&a马已准备好"
     cooldown_remaining: "剩余时间：&f{time}"
+  backpack:
+    title: "马背包"
   customize:
     title: "马匹自定义"
     name_item: "&6更改名称"

@@ -1,0 +1,92 @@
+# General
+error:
+  players_only: "&cこのコマンドはプレイヤーのみ利用可能です！"
+  unknown_command: "&c不明なコマンドです。"
+  player_not_found: "&cプレイヤーが見つからないかオフラインです。"
+
+# Plugin
+plugin:
+  enabled: "NomadHorses が正常に有効化されました！"
+  disabled: "NomadHorses が無効化されました！"
+  autosave: "自動保存が完了しました！"
+
+# Horse
+horse:
+  hidden: "&aあなたの馬は隠されています。"
+  following: "&a馬があなたを追従します。"
+  staying: "&a馬はその場に留まります。"
+  death_cooldown: "&cあなたの馬が死亡しました！{minutes}分後に再召喚できます。"
+  not_yours: "&cこれはあなたの馬ではありません！"
+  already_has_passenger: "&cこの馬には既に乗っている人がいます！"
+  passenger_mounted: "&a馬に乗りました。"
+  passenger_informed_owner: "&a{passenger} があなたの馬に乗りました。"
+  cooldown_active: "&c馬はまだ回復中です！残り時間: {time}"
+  level_up: "&aあなたの馬はレベル {level} に到達しました！"
+
+# Passenger System
+passenger:
+  usage_allow: "&c使い方: /horse allowpassenger <player_name>"
+  usage_remove: "&c使い方: /horse removepassenger <player_name>"
+  allowed: "&a{player} があなたの馬に乗ることを許可されました。"
+  informed_allowed: "&a{owner} があなたに馬に乗ることを許可しました。"
+  removed: "&c{player} の馬に乗る権限を取り消しました。"
+  informed_removed: "&c{owner} があなたの馬に乗る権限を取り消しました。"
+  no_permission: "&c馬の所有者はあなたに乗る許可を与えていません。"
+  list_empty: "&e許可された乗客はいません。"
+  list_header: "&6許可された乗客:"
+  list_item: "&7- {player}"
+
+# Help
+help:
+  title: "&6----- 馬コマンド &e/horse &6-----"
+  stats: "&e/horse &7- 馬のステータスを表示"
+  summon: "&e/horse summon &7- 馬を召喚"
+  hide: "&e/horse hide &7- 馬を隠す"
+  follow: "&e/horse follow &7- 馬が追従"
+  stay: "&e/horse stay &7- 馬はその場に留まる"
+  customize: "&e/horse customize &7- 馬の外見をカスタマイズ"
+  allowpassenger: "&e/horse allowpassenger <name> &7- プレイヤーの乗馬を許可"
+  removepassenger: "&e/horse removepassenger <name> &7- 乗馬権限を取り消す"
+  passengers: "&e/horse passengers &7- 許可された乗客を表示"
+  help: "&e/horse help &7- このヘルプを表示"
+
+# Input System
+input:
+  prompt: "&eチャットで値を入力するか 'cancel' でキャンセル"
+  cancel_keyword: "cancel"
+  cancelled: "&c操作がキャンセルされました"
+
+# Menus
+menu:
+  stats:
+    title: "馬のステータス"
+    level: "レベル: &e{level}"
+    experience: "経験値: &f{current}&7/&f{required}"
+    xp_to_next: "次のレベルまでのXP: &f{remaining}"
+    speed: "スピード: &e{value}%"
+    health: "体力: &e{value} ❤"
+    jump_strength: "ジャンプ力: &e{value}%"
+    status_cooldown: "&c馬は回復中"
+    status_ready: "&a馬は準備完了"
+    cooldown_remaining: "残り時間: &f{time}"
+  backpack:
+    title: "馬のバックパック"
+  customize:
+    title: "馬のカスタマイズ"
+    name_item: "&6名前を変更"
+    current_name: "現在の名前: &f{name}"
+    no_name: "なし"
+    name_prompt_1: "&eクリックして、次に入力"
+    name_prompt_2: "&eチャットで新しい名前を入力"
+    enter_name_prompt: "&e馬の新しい名前をチャットで入力してください:"
+    name_changed: "&a馬の名前が変更されました: &f{name}"
+    color_changed: "&a馬の色が変更されました！"
+    save_item: "&a変更を保存"
+    saved: "&a変更が保存されました！"
+    color_white: "白"
+    color_creamy: "クリーム色"
+    color_chestnut: "栗色"
+    color_brown: "茶色"
+    color_black: "黒"
+    color_gray: "灰色"
+    color_dark_brown: "濃い茶色"

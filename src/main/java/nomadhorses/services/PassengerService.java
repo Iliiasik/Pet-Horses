@@ -3,7 +3,6 @@ package nomadhorses.services;
 import nomadhorses.NomadHorses;
 import nomadhorses.storage.HorseDataManager;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 

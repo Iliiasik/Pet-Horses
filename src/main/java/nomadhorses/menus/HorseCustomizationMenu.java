@@ -130,13 +130,15 @@ public class HorseCustomizationMenu implements Listener {
                 if (event.getSlot() == 26) {
                     player.closeInventory();
                     player.sendMessage(localizationManager.getMessage("menu.customize.saved"));
-                    Entity horse = plugin.getServer().getEntity(data.getHorseId());
-                    if (horse instanceof Horse h) {
-                        h.setColor(data.getColor());
-                        h.setStyle(data.getStyle());
-                        if (data.getHorseName() != null) {
-                            h.setCustomName(data.getHorseName());
-                            h.setCustomNameVisible(true);
+                    if (data.getHorseId() != null) {
+                        Entity horse = plugin.getServer().getEntity(data.getHorseId());
+                        if (horse instanceof Horse h) {
+                            h.setColor(data.getColor());
+                            h.setStyle(data.getStyle());
+                            if (data.getHorseName() != null) {
+                                h.setCustomName(data.getHorseName());
+                                h.setCustomNameVisible(true);
+                            }
                         }
                     }
                     return;

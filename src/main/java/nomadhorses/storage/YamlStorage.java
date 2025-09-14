@@ -4,6 +4,7 @@ import nomadhorses.NomadHorses;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Horse;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +52,19 @@ public class YamlStorage implements StorageStrategy {
                 data.setBlocksTraveled(dataConfig.getDouble(key + ".blocksTraveled", 0.0));
                 data.setTotalJumps(dataConfig.getInt(key + ".totalJumps", 0));
                 data.setTotalBlocksTraveled(dataConfig.getDouble(key + ".totalBlocksTraveled", 0.0));
+
+                if (dataConfig.contains(key + ".backpack")) {
+                    List<?> backpackList = dataConfig.getList(key + ".backpack");
+                    if (backpackList != null) {
+                        ItemStack[] backpackItems = backpackList.toArray(new ItemStack[0]);
+                        data.setBackpackItems(backpackItems);
+                    }
+                }
+
+                if (dataConfig.contains(key + ".armor")) {
+                    data.setArmorItem(dataConfig.getItemStack(key + ".armor"));
+                }
+
                 horsesData.put(playerId, data);
 
                 if (dataConfig.contains(key + ".passengers")) {
@@ -89,6 +103,14 @@ public class YamlStorage implements StorageStrategy {
         dataConfig.set(key + ".totalJumps", data.getTotalJumps());
         dataConfig.set(key + ".totalBlocksTraveled", data.getTotalBlocksTraveled());
 
+        if (data.getBackpackItems() != null && data.getBackpackItems().length > 0) {
+            dataConfig.set(key + ".backpack", Arrays.asList(data.getBackpackItems()));
+        } else {
+            dataConfig.set(key + ".backpack", null);
+        }
+
+        dataConfig.set(key + ".armor", data.getArmorItem());
+
         if (passengerPermissions.containsKey(data.getOwnerId())) {
             List<String> passengers = passengerPermissions.get(data.getOwnerId()).stream()
                     .map(UUID::toString)
@@ -115,6 +137,14 @@ public class YamlStorage implements StorageStrategy {
             dataConfig.set(key + ".blocksTraveled", data.getBlocksTraveled());
             dataConfig.set(key + ".totalJumps", data.getTotalJumps());
             dataConfig.set(key + ".totalBlocksTraveled", data.getTotalBlocksTraveled());
+
+            if (data.getBackpackItems() != null && data.getBackpackItems().length > 0) {
+                dataConfig.set(key + ".backpack", Arrays.asList(data.getBackpackItems()));
+            } else {
+                dataConfig.set(key + ".backpack", null);
+            }
+
+            dataConfig.set(key + ".armor", data.getArmorItem());
 
             if (passengerPermissions.containsKey(entry.getKey())) {
                 List<String> passengers = passengerPermissions.get(entry.getKey()).stream()

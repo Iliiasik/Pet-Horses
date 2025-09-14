@@ -24,5 +24,13 @@ stats:
   jump_base: 0.6
   jump_max_bonus: 0.6
 
+# Horse backpack configuration
+# IMPORTANT. Size must be between 9 and 54, and must be a multiple of 9
+backpack:
+  base_size: 9
+  size_per_level: 9
+  max_size: 54
+  armor_slot_enabled: true
+
 # Cooldown in minutes before a dead horse can be respawned
 respawn_cooldown_minutes: 15

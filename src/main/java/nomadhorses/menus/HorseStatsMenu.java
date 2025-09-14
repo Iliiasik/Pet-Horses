@@ -5,7 +5,6 @@ import nomadhorses.config.LocalizationManager;
 import nomadhorses.services.HorseService;
 import nomadhorses.storage.HorseData;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;

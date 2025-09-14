@@ -5,6 +5,7 @@ import nomadhorses.config.ConfigManager;
 import nomadhorses.config.LocalizationManager;
 import nomadhorses.listeners.*;
 import nomadhorses.menus.HorseCustomizationMenu;
+import nomadhorses.services.HorseBackpackService;
 import nomadhorses.services.HorseService;
 import nomadhorses.services.PassengerService;
 import nomadhorses.storage.HorseDataManager;
@@ -17,6 +18,7 @@ public class NomadHorses extends JavaPlugin {
     private HorseService horseService;
     private PassengerService passengerService;
     private ChatInputListener chatInputListener;
+    private HorseBackpackService horseBackpackService;
 
     @Override
     public void onEnable() {
@@ -31,6 +33,7 @@ public class NomadHorses extends JavaPlugin {
         this.horseService = new HorseService(this);
         this.passengerService = new PassengerService(this);
         this.chatInputListener = new ChatInputListener(this);
+        this.horseBackpackService = new HorseBackpackService(this);
 
         getCommand("horse").setExecutor(new HorseCommandExecutor(this));
 
@@ -40,6 +43,9 @@ public class NomadHorses extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MenuClickListener(this), this);
         getServer().getPluginManager().registerEvents(new HorseCustomizationMenu(this), this);
         getServer().getPluginManager().registerEvents(chatInputListener, this);
+        getServer().getPluginManager().registerEvents(new HorseBackpackListener(this), this);
+        getServer().getPluginManager().registerEvents(new BackpackInventoryListener(this), this);
+        getServer().getPluginManager().registerEvents(new HorseArmorListener(this), this);
 
         startAutoSaveTask();
         getLogger().info(localizationManager.getMessage("plugin.enabled"));
@@ -74,6 +80,10 @@ public class NomadHorses extends JavaPlugin {
 
     public ChatInputListener getChatInputListener() {
         return chatInputListener;
+    }
+
+    public HorseBackpackService getHorseBackpackService() {
+        return horseBackpackService;
     }
 
     private void startAutoSaveTask() {

@@ -2,12 +2,17 @@ package nomadhorses.storage;
 
 import nomadhorses.NomadHorses;
 import nomadhorses.config.ConfigManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Horse;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.sql.*;
 import java.util.*;
 import java.util.logging.Logger;
+
 
 public class DatabaseStorage implements StorageStrategy {
     private final NomadHorses plugin;
@@ -50,7 +55,9 @@ public class DatabaseStorage implements StorageStrategy {
                         "jumps INT NOT NULL DEFAULT 0," +
                         "blocks_traveled DOUBLE NOT NULL DEFAULT 0.0," +
                         "total_jumps INT NOT NULL DEFAULT 0," +
-                        "total_blocks_traveled DOUBLE NOT NULL DEFAULT 0.0" +
+                        "total_blocks_traveled DOUBLE NOT NULL DEFAULT 0.0," +
+                        "backpack_data LONGBLOB," +
+                        "armor_data LONGBLOB" +
                         ")");
                 stmt.executeUpdate("CREATE TABLE IF NOT EXISTS nomad_horse_passengers (" +
                         "owner_uuid VARCHAR(36)," +
@@ -86,6 +93,20 @@ public class DatabaseStorage implements StorageStrategy {
                 data.setBlocksTraveled(rs.getDouble("blocks_traveled"));
                 data.setTotalJumps(rs.getInt("total_jumps"));
                 data.setTotalBlocksTraveled(rs.getDouble("total_blocks_traveled"));
+
+                byte[] backpackData = rs.getBytes("backpack_data");
+                if (backpackData != null && backpackData.length > 0) {
+                    data.setBackpackItems(deserializeItemStacks(backpackData));
+                }
+
+                byte[] armorData = rs.getBytes("armor_data");
+                if (armorData != null && armorData.length > 0) {
+                    ItemStack[] armor = deserializeItemStacks(armorData);
+                    if (armor.length > 0) {
+                        data.setArmorItem(armor[0]);
+                    }
+                }
+
                 horsesData.put(playerId, data);
             }
         } catch (SQLException e) {
@@ -117,13 +138,14 @@ public class DatabaseStorage implements StorageStrategy {
         if (connection == null || data.getOwnerId() == null) return;
         try (PreparedStatement stmt = connection.prepareStatement(
                 "INSERT INTO nomad_horses (player_uuid, level, experience, color, style, horse_name, " +
-                        "death_time, jumps, blocks_traveled, total_jumps, total_blocks_traveled) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+                        "death_time, jumps, blocks_traveled, total_jumps, total_blocks_traveled, backpack_data, armor_data) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "level = VALUES(level), experience = VALUES(experience), color = VALUES(color), " +
                         "style = VALUES(style), horse_name = VALUES(horse_name), death_time = VALUES(death_time), " +
                         "jumps = VALUES(jumps), blocks_traveled = VALUES(blocks_traveled), " +
-                        "total_jumps = VALUES(total_jumps), total_blocks_traveled = VALUES(total_blocks_traveled)")) {
+                        "total_jumps = VALUES(total_jumps), total_blocks_traveled = VALUES(total_blocks_traveled), " +
+                        "backpack_data = VALUES(backpack_data), armor_data = VALUES(armor_data)")) {
             stmt.setString(1, data.getOwnerId().toString());
             stmt.setInt(2, data.getLevel());
             stmt.setInt(3, data.getExperience());
@@ -135,6 +157,20 @@ public class DatabaseStorage implements StorageStrategy {
             stmt.setDouble(9, data.getBlocksTraveled());
             stmt.setInt(10, data.getTotalJumps());
             stmt.setDouble(11, data.getTotalBlocksTraveled());
+
+            if (data.getBackpackItems() != null && data.getBackpackItems().length > 0) {
+                stmt.setBytes(12, serializeItemStacks(data.getBackpackItems()));
+            } else {
+                stmt.setNull(12, Types.BLOB);
+            }
+
+            if (data.getArmorItem() != null) {
+                ItemStack[] armor = {data.getArmorItem()};
+                stmt.setBytes(13, serializeItemStacks(armor));
+            } else {
+                stmt.setNull(13, Types.BLOB);
+            }
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             logger.warning("Error saving player data to DB: " + e.getMessage());
@@ -168,13 +204,14 @@ public class DatabaseStorage implements StorageStrategy {
     private void saveAllHorses() throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(
                 "INSERT INTO nomad_horses (player_uuid, level, experience, color, style, horse_name, " +
-                        "death_time, jumps, blocks_traveled, total_jumps, total_blocks_traveled) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+                        "death_time, jumps, blocks_traveled, total_jumps, total_blocks_traveled, backpack_data, armor_data) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "level = VALUES(level), experience = VALUES(experience), color = VALUES(color), " +
                         "style = VALUES(style), horse_name = VALUES(horse_name), death_time = VALUES(death_time), " +
                         "jumps = VALUES(jumps), blocks_traveled = VALUES(blocks_traveled), " +
-                        "total_jumps = VALUES(total_jumps), total_blocks_traveled = VALUES(total_blocks_traveled)")) {
+                        "total_jumps = VALUES(total_jumps), total_blocks_traveled = VALUES(total_blocks_traveled), " +
+                        "backpack_data = VALUES(backpack_data), armor_data = VALUES(armor_data)")) {
             for (HorseData data : horsesData.values()) {
                 stmt.setString(1, data.getOwnerId().toString());
                 stmt.setInt(2, data.getLevel());
@@ -187,6 +224,20 @@ public class DatabaseStorage implements StorageStrategy {
                 stmt.setDouble(9, data.getBlocksTraveled());
                 stmt.setInt(10, data.getTotalJumps());
                 stmt.setDouble(11, data.getTotalBlocksTraveled());
+
+                if (data.getBackpackItems() != null && data.getBackpackItems().length > 0) {
+                    stmt.setBytes(12, serializeItemStacks(data.getBackpackItems()));
+                } else {
+                    stmt.setNull(12, Types.BLOB);
+                }
+
+                if (data.getArmorItem() != null) {
+                    ItemStack[] armor = {data.getArmorItem()};
+                    stmt.setBytes(13, serializeItemStacks(armor));
+                } else {
+                    stmt.setNull(13, Types.BLOB);
+                }
+
                 stmt.addBatch();
             }
             stmt.executeBatch();
@@ -232,7 +283,6 @@ public class DatabaseStorage implements StorageStrategy {
                 stmt.setString(2, passengerUUID.toString());
                 stmt.executeUpdate();
             } catch (SQLException e) {
-                logger.warning("Error adding passenger permission to DB: " + e.getMessage());
             }
         }
     }
@@ -247,7 +297,6 @@ public class DatabaseStorage implements StorageStrategy {
                 stmt.setString(2, passengerUUID.toString());
                 stmt.executeUpdate();
             } catch (SQLException e) {
-                logger.warning("Error removing passenger permission from DB: " + e.getMessage());
             }
         }
     }
@@ -275,6 +324,44 @@ public class DatabaseStorage implements StorageStrategy {
             return Horse.Style.valueOf(styleStr);
         } catch (IllegalArgumentException e) {
             return Horse.Style.NONE;
+        }
+    }
+
+    private byte[] serializeItemStacks(ItemStack[] items) {
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
+
+            dataOutput.writeInt(items.length);
+            for (ItemStack item : items) {
+                dataOutput.writeObject(item);
+            }
+
+            dataOutput.close();
+            return outputStream.toByteArray();
+        } catch (Exception e) {
+            logger.warning("Error serializing item stacks: " + e.getMessage());
+            return new byte[0];
+        }
+    }
+
+    private ItemStack[] deserializeItemStacks(byte[] data) {
+        try {
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
+            BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
+
+            int size = dataInput.readInt();
+            ItemStack[] items = new ItemStack[size];
+
+            for (int i = 0; i < size; i++) {
+                items[i] = (ItemStack) dataInput.readObject();
+            }
+
+            dataInput.close();
+            return items;
+        } catch (Exception e) {
+            logger.warning("Error deserializing item stacks: " + e.getMessage());
+            return new ItemStack[0];
         }
     }
 }

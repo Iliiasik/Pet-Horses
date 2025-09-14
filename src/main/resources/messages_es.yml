@@ -69,6 +69,8 @@ menu:
     status_cooldown: "&cEl caballo se está recuperando"
     status_ready: "&aEl caballo está listo"
     cooldown_remaining: "Tiempo restante: &f{time}"
+  backpack:
+    title: "Mochila del caballo"
   customize:
     title: "Personalización del Caballo"
     name_item: "&6Cambiar nombre"
