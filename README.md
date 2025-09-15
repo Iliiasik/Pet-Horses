@@ -6,13 +6,7 @@
 
 [![Modrinth Downloads][modrinth-downloads-shield]][modrinth-downloads-url]
 
-[github-downloads-shield]: https://img.shields.io/github/downloads/Iliiasik/Nomad-Horses/total.svg?style=for-the-badge&logo=github
-[github-downloads-url]: https://github.com/Iliiasik/Nomad-Horses/releases
-
-[spigot-downloads-shield]: https://img.shields.io/badge/SpigotMC-Downloads-blue?style=for-the-badge&logo=spigot
-[spigot-downloads-url]: https://www.spigotmc.org/resources/nomad-horses.128733/
-
-[modrinth-downloads-shield]: https://img.shields.io/badge/Modrinth-Downloads-green?style=for-the-badge&logo=modrinth
+[modrinth-downloads-shield]: https://img.shields.io/modrinth/dt/nomad-horses?color=green&style=for-the-badge&logo=modrinth
 [modrinth-downloads-url]: https://modrinth.com/plugin/nomad-horses
 
 <div style="display: flex; justify-content: center; gap: 8px; margin-top: 6px; font-size: 1.2em;">
