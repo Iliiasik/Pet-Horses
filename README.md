@@ -1,7 +1,6 @@
-<h1>
+<h3>
   NOMAD HORSES
-  <img width="27" height="27" alt="HORSE" src="https://github.com/user-attachments/assets/b505c936-97ca-459b-b605-0b8fc1a792ee"/>
-</h1>
+</h3>
 
 
 [![Modrinth Downloads][modrinth-downloads-shield]][modrinth-downloads-url]
@@ -9,16 +8,10 @@
 [modrinth-downloads-shield]: https://img.shields.io/modrinth/dt/nomad-horses?color=green&style=for-the-badge&logo=modrinth
 [modrinth-downloads-url]: https://modrinth.com/plugin/nomad-horses
 
-<div style="display: flex; justify-content: center; gap: 8px; margin-top: 6px; font-size: 1.2em;">
-  <code>1.20</code>
-  <code>1.20.1</code>
-  <code>1.20.2</code>
-  <code>1.20.3</code>
-  <code>1.20.4</code>
-  <code>1.20.5</code>
-  <code>1.20.6</code>
-  <code>1.21</code>
-</div>
+[![CurseForge Downloads][curseforge-downloads-shield]][curseforge-downloads-url]
+
+[curseforge-downloads-shield]: https://cf.way2muchnoise.eu/full_1347084_downloads.svg
+[curseforge-downloads-url]: https://www.curseforge.com/minecraft/bukkit-plugins/nomad-horses
 
 ## Description
 
