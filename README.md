@@ -1,5 +1,5 @@
 <h3>
-  NOMAD HORSES
+  PET HORSES
 </h3>
 
 
@@ -15,7 +15,7 @@
 
 ## Description
 
-Nomad Horses enhances horse gameplay by giving **each player their own personal horse pet**.  
+Pet Horses enhances horse gameplay by giving **each player their own personal horse pet**.  
 It adds **passive leveling**, **summon/hide functionality**, **customization via GUI**, **passenger permissions**, and a **personal inventory to carry items**.  
 Over time, your horse becomes faster, jumps higher, and gains more health.
 
@@ -90,8 +90,6 @@ The inventory **expands as the horse levels up**.
 All settings can be **customized in the configuration file**, including the option to **enable or disable horse armor saving**.
 
 ---
-
-This plugin was developed for nomadic-style servers focused on constant movement without elytra.
 
 - Supports multiple languages: English (en), Russian (ru), Spanish (es), French (fr), Chinese (zh), Portuguese (pt), German (de), Japanese (ja), Korean (ko), Italian (it)
 - Storage options: YAML (small servers 0-70 players) or MariaDB (large servers 100+ players)
