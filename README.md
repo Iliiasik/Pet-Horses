@@ -11,7 +11,7 @@
 [![CurseForge Downloads][curseforge-downloads-shield]][curseforge-downloads-url]
 
 [curseforge-downloads-shield]: https://cf.way2muchnoise.eu/full_1347084_downloads.svg
-[curseforge-downloads-url]: https://www.curseforge.com/minecraft/bukkit-plugins/nomad-horses
+[curseforge-downloads-url]: https://www.curseforge.com/minecraft/bukkit-plugins/pet-horses
 
 ## Description
 
