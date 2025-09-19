@@ -1,17 +1,17 @@
-package nomadhorses;
+package pethorses;
 
-import nomadhorses.commands.HorseCommandExecutor;
-import nomadhorses.config.ConfigManager;
-import nomadhorses.config.LocalizationManager;
-import nomadhorses.listeners.*;
-import nomadhorses.menus.HorseCustomizationMenu;
-import nomadhorses.services.HorseBackpackService;
-import nomadhorses.services.HorseService;
-import nomadhorses.services.PassengerService;
-import nomadhorses.storage.HorseDataManager;
+import pethorses.commands.HorseCommandExecutor;
+import pethorses.config.ConfigManager;
+import pethorses.config.LocalizationManager;
+import pethorses.listeners.*;
+import pethorses.menus.HorseCustomizationMenu;
+import pethorses.services.HorseBackpackService;
+import pethorses.services.HorseService;
+import pethorses.services.PassengerService;
+import pethorses.storage.HorseDataManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class NomadHorses extends JavaPlugin {
+public class PetHorses extends JavaPlugin {
     private ConfigManager configManager;
     private LocalizationManager localizationManager;
     private HorseDataManager horseDataManager;

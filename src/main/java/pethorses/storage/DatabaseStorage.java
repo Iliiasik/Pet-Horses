@@ -1,7 +1,7 @@
-package nomadhorses.storage;
+package pethorses.storage;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.config.ConfigManager;
+import pethorses.PetHorses;
+import pethorses.config.ConfigManager;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 
 public class DatabaseStorage implements StorageStrategy {
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
     private final Logger logger;
     private Connection connection;
     private final String dbHost;
@@ -27,7 +27,7 @@ public class DatabaseStorage implements StorageStrategy {
     private final Map<UUID, HorseData> horsesData = new HashMap<>();
     private final Map<UUID, Set<UUID>> passengerPermissions = new HashMap<>();
 
-    public DatabaseStorage(NomadHorses plugin, ConfigManager configManager) {
+    public DatabaseStorage(PetHorses plugin, ConfigManager configManager) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
         this.dbHost = configManager.getDatabaseHost();
@@ -44,7 +44,7 @@ public class DatabaseStorage implements StorageStrategy {
             String url = "jdbc:mariadb://" + dbHost + ":" + dbPort + "/" + dbName;
             this.connection = DriverManager.getConnection(url, dbUser, dbPassword);
             try (Statement stmt = connection.createStatement()) {
-                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS nomad_horses (" +
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS pet_horses (" +
                         "player_uuid VARCHAR(36) PRIMARY KEY," +
                         "level INT NOT NULL DEFAULT 1," +
                         "experience INT NOT NULL DEFAULT 0," +
@@ -59,7 +59,7 @@ public class DatabaseStorage implements StorageStrategy {
                         "backpack_data LONGBLOB," +
                         "armor_data LONGBLOB" +
                         ")");
-                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS nomad_horse_passengers (" +
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS pet_horse_passengers (" +
                         "owner_uuid VARCHAR(36)," +
                         "passenger_uuid VARCHAR(36)," +
                         "PRIMARY KEY (owner_uuid, passenger_uuid))");
@@ -78,7 +78,7 @@ public class DatabaseStorage implements StorageStrategy {
     private void loadHorsesFromDatabase() {
         if (connection == null) return;
         try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM nomad_horses")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM pet_horses")) {
             while (rs.next()) {
                 UUID playerId = UUID.fromString(rs.getString("player_uuid"));
                 HorseData data = new HorseData();
@@ -117,7 +117,7 @@ public class DatabaseStorage implements StorageStrategy {
     private void loadPassengersFromDatabase() {
         if (connection == null) return;
         try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM nomad_horse_passengers")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM pet_horse_passengers")) {
             while (rs.next()) {
                 UUID ownerId = UUID.fromString(rs.getString("owner_uuid"));
                 UUID passengerId = UUID.fromString(rs.getString("passenger_uuid"));
@@ -137,7 +137,7 @@ public class DatabaseStorage implements StorageStrategy {
     public void saveHorseData(HorseData data) {
         if (connection == null || data.getOwnerId() == null) return;
         try (PreparedStatement stmt = connection.prepareStatement(
-                "INSERT INTO nomad_horses (player_uuid, level, experience, color, style, horse_name, " +
+                "INSERT INTO pet_horses (player_uuid, level, experience, color, style, horse_name, " +
                         "death_time, jumps, blocks_traveled, total_jumps, total_blocks_traveled, backpack_data, armor_data) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
@@ -203,7 +203,7 @@ public class DatabaseStorage implements StorageStrategy {
 
     private void saveAllHorses() throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(
-                "INSERT INTO nomad_horses (player_uuid, level, experience, color, style, horse_name, " +
+                "INSERT INTO pet_horses (player_uuid, level, experience, color, style, horse_name, " +
                         "death_time, jumps, blocks_traveled, total_jumps, total_blocks_traveled, backpack_data, armor_data) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
@@ -246,7 +246,7 @@ public class DatabaseStorage implements StorageStrategy {
 
     private void saveAllPassengers() throws SQLException {
         try (PreparedStatement clearStmt = connection.prepareStatement(
-                "DELETE FROM nomad_horse_passengers WHERE owner_uuid = ?")) {
+                "DELETE FROM pet_horse_passengers WHERE owner_uuid = ?")) {
             for (UUID ownerId : passengerPermissions.keySet()) {
                 clearStmt.setString(1, ownerId.toString());
                 clearStmt.addBatch();
@@ -255,7 +255,7 @@ public class DatabaseStorage implements StorageStrategy {
         }
 
         try (PreparedStatement insertStmt = connection.prepareStatement(
-                "INSERT INTO nomad_horse_passengers (owner_uuid, passenger_uuid) VALUES (?, ?)")) {
+                "INSERT INTO pet_horse_passengers (owner_uuid, passenger_uuid) VALUES (?, ?)")) {
             for (Map.Entry<UUID, Set<UUID>> entry : passengerPermissions.entrySet()) {
                 UUID ownerId = entry.getKey();
                 for (UUID passengerId : entry.getValue()) {
@@ -278,7 +278,7 @@ public class DatabaseStorage implements StorageStrategy {
         passengerPermissions.computeIfAbsent(ownerUUID, k -> new HashSet<>()).add(passengerUUID);
         if (connection != null) {
             try (PreparedStatement stmt = connection.prepareStatement(
-                    "INSERT INTO nomad_horse_passengers (owner_uuid, passenger_uuid) VALUES (?, ?)")) {
+                    "INSERT INTO pet_horse_passengers (owner_uuid, passenger_uuid) VALUES (?, ?)")) {
                 stmt.setString(1, ownerUUID.toString());
                 stmt.setString(2, passengerUUID.toString());
                 stmt.executeUpdate();
@@ -292,7 +292,7 @@ public class DatabaseStorage implements StorageStrategy {
         passengerPermissions.getOrDefault(ownerUUID, Collections.emptySet()).remove(passengerUUID);
         if (connection != null) {
             try (PreparedStatement stmt = connection.prepareStatement(
-                    "DELETE FROM nomad_horse_passengers WHERE owner_uuid = ? AND passenger_uuid = ?")) {
+                    "DELETE FROM pet_horse_passengers WHERE owner_uuid = ? AND passenger_uuid = ?")) {
                 stmt.setString(1, ownerUUID.toString());
                 stmt.setString(2, passengerUUID.toString());
                 stmt.executeUpdate();

@@ -6,8 +6,8 @@ error:
 
 # Plugin
 plugin:
-  enabled: "NomadHorses가 정상적으로 활성화되었습니다!"
-  disabled: "NomadHorses가 비활성화되었습니다!"
+  enabled: "PetHorses가 정상적으로 활성화되었습니다!"
+  disabled: "PetHorses가 비활성화되었습니다!"
   autosave: "자동 저장이 완료되었습니다!"
 
 # Horse

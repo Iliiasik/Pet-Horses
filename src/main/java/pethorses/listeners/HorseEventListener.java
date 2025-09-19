@@ -1,9 +1,9 @@
-package nomadhorses.listeners;
+package pethorses.listeners;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.config.LocalizationManager;
-import nomadhorses.services.HorseService;
-import nomadhorses.services.PassengerService;
+import pethorses.PetHorses;
+import pethorses.config.LocalizationManager;
+import pethorses.services.HorseService;
+import pethorses.services.PassengerService;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,12 +13,12 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class HorseEventListener implements Listener {
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
     private final HorseService horseService;
     private final PassengerService passengerService;
     private final LocalizationManager localizationManager;
 
-    public HorseEventListener(NomadHorses plugin) {
+    public HorseEventListener(PetHorses plugin) {
         this.plugin = plugin;
         this.horseService = plugin.getHorseService();
         this.passengerService = plugin.getPassengerService();

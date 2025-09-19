@@ -1,11 +1,11 @@
-package nomadhorses.commands;
+package pethorses.commands;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.config.LocalizationManager;
-import nomadhorses.services.HorseService;
-import nomadhorses.services.PassengerService;
-import nomadhorses.menus.HorseCustomizationMenu;
-import nomadhorses.menus.HorseStatsMenu;
+import pethorses.PetHorses;
+import pethorses.config.LocalizationManager;
+import pethorses.services.HorseService;
+import pethorses.services.PassengerService;
+import pethorses.menus.HorseCustomizationMenu;
+import pethorses.menus.HorseStatsMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,12 +16,12 @@ import java.util.Set;
 import java.util.UUID;
 
 public class HorseCommandExecutor implements CommandExecutor {
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
     private final HorseService horseService;
     private final PassengerService passengerService;
     private final LocalizationManager localizationManager;
 
-    public HorseCommandExecutor(NomadHorses plugin) {
+    public HorseCommandExecutor(PetHorses plugin) {
         this.plugin = plugin;
         this.horseService = plugin.getHorseService();
         this.passengerService = plugin.getPassengerService();

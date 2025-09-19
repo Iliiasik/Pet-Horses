@@ -1,8 +1,8 @@
-package nomadhorses.services;
+package pethorses.services;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.config.ConfigManager;
-import nomadhorses.storage.HorseData;
+import pethorses.PetHorses;
+import pethorses.config.ConfigManager;
+import pethorses.storage.HorseData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
@@ -12,10 +12,10 @@ import org.bukkit.inventory.ItemStack;
 import java.util.UUID;
 
 public class HorseBackpackService {
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
     private final ConfigManager configManager;
 
-    public HorseBackpackService(NomadHorses plugin) {
+    public HorseBackpackService(PetHorses plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
     }

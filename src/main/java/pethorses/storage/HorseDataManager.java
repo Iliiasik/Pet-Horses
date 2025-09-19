@@ -1,7 +1,7 @@
-package nomadhorses.storage;
+package pethorses.storage;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.config.ConfigManager;
+import pethorses.PetHorses;
+import pethorses.config.ConfigManager;
 
 import java.util.Set;
 import java.util.UUID;
@@ -9,7 +9,7 @@ import java.util.UUID;
 public class HorseDataManager {
     private final StorageStrategy storage;
 
-    public HorseDataManager(NomadHorses plugin) {
+    public HorseDataManager(PetHorses plugin) {
         ConfigManager configManager = new ConfigManager(plugin);
         if (configManager.isDatabaseEnabled()) {
             this.storage = new DatabaseStorage(plugin, configManager);

@@ -1,7 +1,7 @@
-package nomadhorses.listeners;
+package pethorses.listeners;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.services.HorseBackpackService;
+import pethorses.PetHorses;
+import pethorses.services.HorseBackpackService;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,10 +10,10 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 public class HorseBackpackListener implements Listener {
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
     private final HorseBackpackService backpackService;
 
-    public HorseBackpackListener(NomadHorses plugin) {
+    public HorseBackpackListener(PetHorses plugin) {
         this.plugin = plugin;
         this.backpackService = new HorseBackpackService(plugin);
     }

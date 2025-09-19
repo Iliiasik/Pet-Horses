@@ -1,6 +1,6 @@
-package nomadhorses.storage;
+package pethorses.storage;
 
-import nomadhorses.NomadHorses;
+import pethorses.PetHorses;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Horse;
@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class YamlStorage implements StorageStrategy {
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
     private final Logger logger;
     private final File dataFile;
     private FileConfiguration dataConfig;
@@ -21,7 +21,7 @@ public class YamlStorage implements StorageStrategy {
     private final Map<UUID, HorseData> horsesData = new HashMap<>();
     private final Map<UUID, Set<UUID>> passengerPermissions = new HashMap<>();
 
-    public YamlStorage(NomadHorses plugin) {
+    public YamlStorage(PetHorses plugin) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
         this.dataFile = new File(plugin.getDataFolder(), "horses_data.yml");

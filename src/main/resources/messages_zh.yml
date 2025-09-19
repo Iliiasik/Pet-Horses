@@ -6,8 +6,8 @@ error:
 
 # Plugin
 plugin:
-  enabled: "NomadHorses 已成功启用！"
-  disabled: "NomadHorses 已禁用！"
+  enabled: "PetHorses 已成功启用！"
+  disabled: "PetHorses 已禁用！"
   autosave: "自动保存完成！"
 
 # Horse

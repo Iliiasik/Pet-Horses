@@ -1,15 +1,15 @@
-package nomadhorses.listeners;
+package pethorses.listeners;
 
-import nomadhorses.NomadHorses;
+import pethorses.PetHorses;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class MenuClickListener implements Listener {
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
 
-    public MenuClickListener(NomadHorses plugin) {
+    public MenuClickListener(PetHorses plugin) {
         this.plugin = plugin;
     }
 

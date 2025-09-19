@@ -1,7 +1,7 @@
-package nomadhorses.listeners;
+package pethorses.listeners;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.services.HorseService;
+import pethorses.PetHorses;
+import pethorses.services.HorseService;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class HorseMovementListener implements Listener {
     private final HorseService horseService;
 
-    public HorseMovementListener(NomadHorses plugin) {
+    public HorseMovementListener(PetHorses plugin) {
         this.horseService = plugin.getHorseService();
     }
 

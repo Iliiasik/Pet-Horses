@@ -1,7 +1,7 @@
-package nomadhorses.services;
+package pethorses.services;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.storage.HorseDataManager;
+import pethorses.PetHorses;
+import pethorses.storage.HorseDataManager;
 
 import java.util.Set;
 import java.util.UUID;
@@ -9,7 +9,7 @@ import java.util.UUID;
 public class PassengerService {
     private final HorseDataManager dataManager;
 
-    public PassengerService(NomadHorses plugin) {
+    public PassengerService(PetHorses plugin) {
         this.dataManager = plugin.getHorseDataManager();
     }
 

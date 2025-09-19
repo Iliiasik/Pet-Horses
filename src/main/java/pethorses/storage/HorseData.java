@@ -1,4 +1,4 @@
-package nomadhorses.storage;
+package pethorses.storage;
 
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.ItemStack;

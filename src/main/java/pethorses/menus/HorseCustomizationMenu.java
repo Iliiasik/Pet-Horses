@@ -1,9 +1,9 @@
-package nomadhorses.menus;
+package pethorses.menus;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.config.LocalizationManager;
-import nomadhorses.storage.HorseData;
-import nomadhorses.services.HorseService;
+import pethorses.PetHorses;
+import pethorses.config.LocalizationManager;
+import pethorses.storage.HorseData;
+import pethorses.services.HorseService;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -20,17 +20,17 @@ import java.util.Arrays;
 
 public class HorseCustomizationMenu implements Listener {
     private static final int INVENTORY_SIZE = 27;
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
     private final HorseService horseService;
     private final LocalizationManager localizationManager;
 
-    public HorseCustomizationMenu(NomadHorses plugin) {
+    public HorseCustomizationMenu(PetHorses plugin) {
         this.plugin = plugin;
         this.horseService = plugin.getHorseService();
         this.localizationManager = plugin.getLocalizationManager();
     }
 
-    public static void open(Player player, NomadHorses plugin) {
+    public static void open(Player player, PetHorses plugin) {
         HorseCustomizationMenu instance = new HorseCustomizationMenu(plugin);
         LocalizationManager lm = plugin.getLocalizationManager();
         HorseService hs = plugin.getHorseService();

@@ -1,13 +1,13 @@
-package nomadhorses.config;
+package pethorses.config;
 
-import nomadhorses.NomadHorses;
+import pethorses.PetHorses;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigManager {
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
     private FileConfiguration config;
 
-    public ConfigManager(NomadHorses plugin) {
+    public ConfigManager(PetHorses plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
         this.config.options().copyDefaults(true);

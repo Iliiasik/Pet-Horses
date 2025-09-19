@@ -6,8 +6,8 @@ error:
 
 # Plugin
 plugin:
-  enabled: "NomadHorses successfully enabled!"
-  disabled: "NomadHorses disabled!"
+  enabled: "PetHorses successfully enabled!"
+  disabled: "PetHorses disabled!"
   autosave: "Autosave completed!"
 
 # Horse

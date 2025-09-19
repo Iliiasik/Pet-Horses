@@ -1,7 +1,7 @@
-package nomadhorses.listeners;
+package pethorses.listeners;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.config.LocalizationManager;
+import pethorses.PetHorses;
+import pethorses.config.LocalizationManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,10 +14,10 @@ import java.util.function.Consumer;
 
 public class ChatInputListener implements Listener {
     private final Map<UUID, Consumer<String>> inputCallbacks = new HashMap<>();
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
     private final LocalizationManager localizationManager;
 
-    public ChatInputListener(NomadHorses plugin) {
+    public ChatInputListener(PetHorses plugin) {
         this.plugin = plugin;
         this.localizationManager = plugin.getLocalizationManager();
     }

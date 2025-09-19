@@ -1,4 +1,4 @@
-package nomadhorses.storage;
+package pethorses.storage;
 
 import java.util.Set;
 import java.util.UUID;

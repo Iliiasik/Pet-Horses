@@ -6,8 +6,8 @@ error:
 
 # Plugin
 plugin:
-  enabled: "NomadHorses успешно запущен!"
-  disabled: "NomadHorses отключен!"
+  enabled: "PetHorses успешно запущен!"
+  disabled: "PetHorses отключен!"
   autosave: "Автосохранение завершено!"
 
 # Horse

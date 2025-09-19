@@ -1,9 +1,9 @@
-package nomadhorses.menus;
+package pethorses.menus;
 
-import nomadhorses.NomadHorses;
-import nomadhorses.config.LocalizationManager;
-import nomadhorses.services.HorseService;
-import nomadhorses.storage.HorseData;
+import pethorses.PetHorses;
+import pethorses.config.LocalizationManager;
+import pethorses.services.HorseService;
+import pethorses.storage.HorseData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,7 +21,7 @@ public class HorseStatsMenu {
     private static final int SLOT_JUMP = 14;
     private static final int SLOT_STATUS = 15;
 
-    public static void open(Player player, NomadHorses plugin) {
+    public static void open(Player player, PetHorses plugin) {
         LocalizationManager lm = plugin.getLocalizationManager();
         HorseService horseService = plugin.getHorseService();
         HorseData data = horseService.getHorseData(player.getUniqueId());

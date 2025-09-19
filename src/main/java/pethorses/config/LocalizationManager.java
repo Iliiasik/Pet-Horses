@@ -1,6 +1,6 @@
-package nomadhorses.config;
+package pethorses.config;
 
-import nomadhorses.NomadHorses;
+import pethorses.PetHorses;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -9,10 +9,10 @@ import java.io.File;
 import java.io.InputStream;
 
 public class LocalizationManager {
-    private final NomadHorses plugin;
+    private final PetHorses plugin;
     private FileConfiguration messages;
 
-    public LocalizationManager(NomadHorses plugin) {
+    public LocalizationManager(PetHorses plugin) {
         this.plugin = plugin;
         loadMessages();
     }

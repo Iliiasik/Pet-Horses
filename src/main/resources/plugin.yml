@@ -1,6 +1,6 @@
-name: NomadHorses
+name: PetHorses
 version: 1.2.5
-main: nomadhorses.NomadHorses
+main: pethorses.PetHorses
 api-version: 1.20.6
 authors: [IB]
 commands:
@@ -8,6 +8,6 @@ commands:
     description: Manage your personal horse
     usage: /horse [summon|hide|follow|stay|stats|customize|allowpassenger|removepassenger|passengers|help]
 permissions:
-  nomadhorses.passenger:
+  pethorses.passenger:
     description: Allows riding other horses with permission
     default: true
