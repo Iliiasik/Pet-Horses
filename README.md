@@ -6,7 +6,7 @@
 [![Modrinth Downloads][modrinth-downloads-shield]][modrinth-downloads-url]
 
 [modrinth-downloads-shield]: https://img.shields.io/modrinth/dt/nomad-horses?color=green&style=for-the-badge&logo=modrinth
-[modrinth-downloads-url]: https://modrinth.com/plugin/nomad-horses
+[modrinth-downloads-url]: https://modrinth.com/plugin/pet-horses
 
 [![CurseForge Downloads][curseforge-downloads-shield]][curseforge-downloads-url]
 
