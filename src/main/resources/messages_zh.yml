@@ -69,6 +69,10 @@ menu:
     status_cooldown: "&c马正在恢复中"
     status_ready: "&a马已准备好"
     cooldown_remaining: "剩余时间：&f{time}"
+    total_blocks: "总方块数: &e{value}"
+    total_blocks_description: "&7总共行走的距离"
+    total_jumps: "总跳跃数: &e{value}"
+    total_jumps_description: "&7总共完成的跳跃"
   backpack:
     title: "马背包"
   customize:

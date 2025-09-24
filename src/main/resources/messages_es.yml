@@ -69,6 +69,9 @@ menu:
     status_cooldown: "&cEl caballo se está recuperando"
     status_ready: "&aEl caballo está listo"
     cooldown_remaining: "Tiempo restante: &f{time}"
+    total_blocks: "Bloques Totales: &e{value}"
+    total_blocks_description: "&7Distancia total recorrida"
+    total_jumps: "Saltos Totales: &e{value}"
   backpack:
     title: "Mochila del caballo"
   customize:

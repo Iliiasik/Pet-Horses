@@ -20,6 +20,8 @@ public class HorseStatsMenu {
     private static final int SLOT_HEALTH = 13;
     private static final int SLOT_JUMP = 14;
     private static final int SLOT_STATUS = 15;
+    private static final int SLOT_TOTAL_BLOCKS = 34;
+    private static final int SLOT_TOTAL_JUMPS = 35;
 
     public static void open(Player player, PetHorses plugin) {
         LocalizationManager lm = plugin.getLocalizationManager();
@@ -34,10 +36,10 @@ public class HorseStatsMenu {
                 .replace("{level}", String.valueOf(data.getLevel())));
         levelMeta.setLore(Arrays.asList(
                 lm.getMessage("menu.stats.experience")
-                        .replace("{current}", String.valueOf(data.getExperience()))
-                        .replace("{required}", String.valueOf(horseService.getXpRequiredForNextLevel(data.getLevel()))),
+                        .replace("{current}", formatNumber(data.getExperience()))
+                        .replace("{required}", formatNumber(horseService.getXpRequiredForNextLevel(data.getLevel()))),
                 lm.getMessage("menu.stats.xp_to_next")
-                        .replace("{remaining}", String.valueOf(horseService.getXpRequiredForNextLevel(data.getLevel()) - data.getExperience()))
+                        .replace("{remaining}", formatNumber(horseService.getXpRequiredForNextLevel(data.getLevel()) - data.getExperience()))
         ));
         levelItem.setItemMeta(levelMeta);
         inv.setItem(SLOT_LEVEL, levelItem);
@@ -76,6 +78,40 @@ public class HorseStatsMenu {
         statusItem.setItemMeta(statusMeta);
         inv.setItem(SLOT_STATUS, statusItem);
 
+        ItemStack totalBlocksItem = new ItemStack(Material.FILLED_MAP);
+        ItemMeta totalBlocksMeta = totalBlocksItem.getItemMeta();
+        totalBlocksMeta.setDisplayName(lm.getMessage("menu.stats.total_blocks")
+                .replace("{value}", formatNumber(data.getTotalBlocksTraveled())));
+        totalBlocksMeta.setLore(Arrays.asList(
+                lm.getMessage("menu.stats.total_blocks_description")
+        ));
+        totalBlocksItem.setItemMeta(totalBlocksMeta);
+        inv.setItem(SLOT_TOTAL_BLOCKS, totalBlocksItem);
+
+        ItemStack totalJumpsItem = new ItemStack(Material.FEATHER);
+        ItemMeta totalJumpsMeta = totalJumpsItem.getItemMeta();
+        totalJumpsMeta.setDisplayName(lm.getMessage("menu.stats.total_jumps")
+                .replace("{value}", formatNumber(data.getTotalJumps())));
+        totalJumpsMeta.setLore(Arrays.asList(
+                lm.getMessage("menu.stats.total_jumps_description")
+        ));
+        totalJumpsItem.setItemMeta(totalJumpsMeta);
+        inv.setItem(SLOT_TOTAL_JUMPS, totalJumpsItem);
+
         player.openInventory(inv);
+    }
+
+    private static String formatNumber(double number) {
+        if (number < 1000) {
+            return String.format("%.0f", number);
+        } else if (number < 1000000) {
+            return String.format("%.1fк", number / 1000).replace(".0", "");
+        } else {
+            return String.format("%.1fкк", number / 1000000).replace(".0", "");
+        }
+    }
+
+    private static String formatNumber(int number) {
+        return formatNumber((double) number);
     }
 }

@@ -69,6 +69,10 @@ menu:
     status_cooldown: "&cCavalo está se recuperando"
     status_ready: "&aCavalo pronto"
     cooldown_remaining: "Tempo restante: &f{time}"
+    total_blocks: "Blocos Totais: &e{value}"
+    total_blocks_description: "&7Distância total percorrida"
+    total_jumps: "Saltos Totais: &e{value}"
+    total_jumps_description: "&7Total de saltos realizados"
   backpack:
     title: "Mochila do cavalo"
   customize:

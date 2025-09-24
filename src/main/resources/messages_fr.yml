@@ -69,6 +69,10 @@ menu:
     status_cooldown: "&cLe cheval se rétablit"
     status_ready: "&aLe cheval est prêt"
     cooldown_remaining: "Temps restant : &f{time}"
+    total_blocks: "Blocs Totaux: &e{value}"
+    total_blocks_description: "&7Distance totale parcourue"
+    total_jumps: "Sauts Totaux: &e{value}"
+    total_jumps_description: "&7Nombre total de sauts effectués"
   backpack:
     title: "Sac à dos du cheval"
   customize:

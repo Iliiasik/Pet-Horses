@@ -69,6 +69,10 @@ menu:
     status_cooldown: "&c말 회복 중"
     status_ready: "&a말 준비 완료"
     cooldown_remaining: "남은 시간: &f{time}"
+    total_blocks: "총 블록: &e{value}"
+    total_blocks_description: "&7총 이동 거리"
+    total_jumps: "총 점프: &e{value}"
+    total_jumps_description: "&7총 점프 횟수"
   backpack:
     title: "말 배낭"
   customize:

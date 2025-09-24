@@ -69,6 +69,10 @@ menu:
     status_cooldown: "&c馬は回復中"
     status_ready: "&a馬は準備完了"
     cooldown_remaining: "残り時間: &f{time}"
+    total_blocks: "合計ブロック数: &e{value}"
+    total_blocks_description: "&7移動した総距離"
+    total_jumps: "合計ジャンプ数: &e{value}"
+    total_jumps_description: "&7行った総ジャンプ数"
   backpack:
     title: "馬のバックパック"
   customize:

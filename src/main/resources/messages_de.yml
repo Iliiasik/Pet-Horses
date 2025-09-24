@@ -69,6 +69,10 @@ menu:
     status_cooldown: "&cPferd erholt sich"
     status_ready: "&aPferd ist bereit"
     cooldown_remaining: "Verbleibende Zeit: &f{time}"
+    total_blocks: "Gesamtblöcke: &e{value}"
+    total_blocks_description: "&7Gesamte zurückgelegte Strecke"
+    total_jumps: "Gesamtsprünge: &e{value}"
+    total_jumps_description: "&7Insgesamt gemachte Sprünge"
   backpack:
     title: "Pferderucksack"
   customize:

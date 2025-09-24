@@ -69,6 +69,10 @@ menu:
     status_cooldown: "&cHorse is recovering"
     status_ready: "&aHorse is ready"
     cooldown_remaining: "Time left: &f{time}"
+    total_blocks: "Total Blocks: &e{value}"
+    total_blocks_description: "&7Total distance traveled"
+    total_jumps: "Total Jumps: &e{value}"
+    total_jumps_description: "&7Total jumps made"
   backpack:
       title: "Horse Backpack"
   customize:
