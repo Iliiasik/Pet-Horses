@@ -1,21 +1,21 @@
 <h3>
-  NOMAD HORSES
+  PET HORSES
 </h3>
 
 
 [![Modrinth Downloads][modrinth-downloads-shield]][modrinth-downloads-url]
 
-[modrinth-downloads-shield]: https://img.shields.io/modrinth/dt/nomad-horses?color=green&style=for-the-badge&logo=modrinth
-[modrinth-downloads-url]: https://modrinth.com/plugin/nomad-horses
+[modrinth-downloads-shield]: https://img.shields.io/modrinth/dt/pet-horses?color=green&style=for-the-badge&logo=modrinth
+[modrinth-downloads-url]: https://modrinth.com/plugin/pet-horses
 
 [![CurseForge Downloads][curseforge-downloads-shield]][curseforge-downloads-url]
 
 [curseforge-downloads-shield]: https://cf.way2muchnoise.eu/full_1347084_downloads.svg
-[curseforge-downloads-url]: https://www.curseforge.com/minecraft/bukkit-plugins/nomad-horses
+[curseforge-downloads-url]: https://www.curseforge.com/minecraft/bukkit-plugins/pet-horses
 
 ## Description
 
-Nomad Horses enhances horse gameplay by giving **each player their own personal horse pet**.  
+Pet Horses enhances horse gameplay by giving **each player their own personal horse pet**.  
 It adds **passive leveling**, **summon/hide functionality**, **customization via GUI**, **passenger permissions**, and a **personal inventory to carry items**.  
 Over time, your horse becomes faster, jumps higher, and gains more health.
 
@@ -90,8 +90,6 @@ The inventory **expands as the horse levels up**.
 All settings can be **customized in the configuration file**, including the option to **enable or disable horse armor saving**.
 
 ---
-
-This plugin was developed for nomadic-style servers focused on constant movement without elytra.
 
 - Supports multiple languages: English (en), Russian (ru), Spanish (es), French (fr), Chinese (zh), Portuguese (pt), German (de), Japanese (ja), Korean (ko), Italian (it)
 - Storage options: YAML (small servers 0-70 players) or MariaDB (large servers 100+ players)
