@@ -90,3 +90,5 @@ menu:
     color_black: "Preto"
     color_gray: "Cinza"
     color_dark_brown: "Marrom Escuro"
+    color_prefix: "Cor: "
+    click_to_select: "Clique para selecionar"

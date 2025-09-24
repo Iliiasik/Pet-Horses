@@ -90,3 +90,5 @@ menu:
     color_black: "黒"
     color_gray: "灰色"
     color_dark_brown: "濃い茶色"
+    color_prefix: "色: "
+    click_to_select: "クリックして選択"

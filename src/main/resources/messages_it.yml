@@ -90,3 +90,5 @@ menu:
     color_black: "Nero"
     color_gray: "Grigio"
     color_dark_brown: "Marrone Scuro"
+    color_prefix: "Colore: "
+    click_to_select: "Clicca per selezionare"

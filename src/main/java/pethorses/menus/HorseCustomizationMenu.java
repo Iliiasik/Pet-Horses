@@ -31,19 +31,18 @@ public class HorseCustomizationMenu implements Listener {
     }
 
     public static void open(Player player, PetHorses plugin) {
-        HorseCustomizationMenu instance = new HorseCustomizationMenu(plugin);
         LocalizationManager lm = plugin.getLocalizationManager();
         HorseService hs = plugin.getHorseService();
         Inventory inv = plugin.getServer().createInventory(null, INVENTORY_SIZE, lm.getMessage("menu.customize.title"));
         HorseData data = hs.getHorseData(player.getUniqueId());
 
-        setColorItem(inv, 10, Horse.Color.WHITE, Material.WHITE_WOOL, lm.getMessage("menu.customize.color_white"));
-        setColorItem(inv, 11, Horse.Color.CREAMY, Material.BONE_MEAL, lm.getMessage("menu.customize.color_creamy"));
-        setColorItem(inv, 12, Horse.Color.CHESTNUT, Material.ACACIA_PLANKS, lm.getMessage("menu.customize.color_chestnut"));
-        setColorItem(inv, 13, Horse.Color.BROWN, Material.SPRUCE_PLANKS, lm.getMessage("menu.customize.color_brown"));
-        setColorItem(inv, 14, Horse.Color.BLACK, Material.BLACK_WOOL, lm.getMessage("menu.customize.color_black"));
-        setColorItem(inv, 15, Horse.Color.GRAY, Material.LIGHT_GRAY_WOOL, lm.getMessage("menu.customize.color_gray"));
-        setColorItem(inv, 16, Horse.Color.DARK_BROWN, Material.DARK_OAK_PLANKS, lm.getMessage("menu.customize.color_dark_brown"));
+        setColorItem(inv, 10, Horse.Color.WHITE, Material.WHITE_WOOL, lm.getMessage("menu.customize.color_white"), lm);
+        setColorItem(inv, 11, Horse.Color.CREAMY, Material.BONE_MEAL, lm.getMessage("menu.customize.color_creamy"), lm);
+        setColorItem(inv, 12, Horse.Color.CHESTNUT, Material.ACACIA_PLANKS, lm.getMessage("menu.customize.color_chestnut"), lm);
+        setColorItem(inv, 13, Horse.Color.BROWN, Material.SPRUCE_PLANKS, lm.getMessage("menu.customize.color_brown"), lm);
+        setColorItem(inv, 14, Horse.Color.BLACK, Material.BLACK_WOOL, lm.getMessage("menu.customize.color_black"), lm);
+        setColorItem(inv, 15, Horse.Color.GRAY, Material.LIGHT_GRAY_WOOL, lm.getMessage("menu.customize.color_gray"), lm);
+        setColorItem(inv, 16, Horse.Color.DARK_BROWN, Material.DARK_OAK_PLANKS, lm.getMessage("menu.customize.color_dark_brown"), lm);
 
         ItemStack nameItem = new ItemStack(Material.NAME_TAG);
         ItemMeta nameMeta = nameItem.getItemMeta();
@@ -66,11 +65,13 @@ public class HorseCustomizationMenu implements Listener {
         player.openInventory(inv);
     }
 
-    private static void setColorItem(Inventory inv, int slot, Horse.Color color, Material icon, String colorName) {
+    private static void setColorItem(Inventory inv, int slot, Horse.Color color, Material icon, String colorName, LocalizationManager lm) {
         ItemStack item = new ItemStack(icon);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GOLD + "Color: " + ChatColor.YELLOW + colorName);
-        meta.setLore(Arrays.asList(ChatColor.GRAY + "Click to select"));
+        if (meta == null) return;
+        meta.setDisplayName(ChatColor.GOLD + lm.getMessage("menu.customize.color_prefix")
+                + ChatColor.YELLOW + colorName);
+        meta.setLore(Arrays.asList(ChatColor.GRAY + lm.getMessage("menu.customize.click_to_select")));
         item.setItemMeta(meta);
         inv.setItem(slot, item);
     }

@@ -90,3 +90,5 @@ menu:
     color_black: "黑色"
     color_gray: "灰色"
     color_dark_brown: "深棕色"
+    color_prefix: "颜色: "
+    click_to_select: "点击选择"

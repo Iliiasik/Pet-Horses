@@ -90,3 +90,5 @@ menu:
     color_black: "검은색"
     color_gray: "회색"
     color_dark_brown: "진한 갈색"
+    color_prefix: "색상: "
+    click_to_select: "클릭하여 선택"
