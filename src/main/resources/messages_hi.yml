@@ -1,0 +1,98 @@
+# General
+error:
+  players_only: "&cयह कमांड केवल खिलाड़ियों के लिए उपलब्ध है!"
+  unknown_command: "&cअज्ञात कमांड।"
+  player_not_found: "&cखिलाड़ी नहीं मिला या ऑफ़लाइन है।"
+
+# Plugin
+plugin:
+  enabled: "PetHorses सफलतापूर्वक सक्रिय किया गया!"
+  disabled: "PetHorses निष्क्रिय कर दिया गया!"
+  autosave: "स्वतः सहेजना पूरा हुआ!"
+
+# Horse
+horse:
+  hidden: "&aआपका घोड़ा छिपा दिया गया है।"
+  following: "&aघोड़ा अब आपका पीछा करेगा।"
+  staying: "&aघोड़ा अपनी जगह पर रहेगा।"
+  death_cooldown: "&cआपका घोड़ा मर गया! आप इसे {minutes} मिनट में फिर से बुला सकते हैं।"
+  not_yours: "&cयह आपका घोड़ा नहीं है!"
+  already_has_passenger: "&cकोई पहले से ही इस घोड़े पर सवार है!"
+  passenger_mounted: "&aआप घोड़े पर सवार हो गए।"
+  passenger_informed_owner: "&a{passenger} आपके घोड़े पर सवार हो गया है।"
+  cooldown_active: "&cआपका घोड़ा अभी भी ठीक हो रहा है! शेष समय: {time}"
+  level_up: "&aआपका घोड़ा स्तर {level} पर पहुँच गया है!"
+
+# Passenger System
+passenger:
+  usage_allow: "&cप्रयोग: /horse allowpassenger <player_name>"
+  usage_remove: "&cप्रयोग: /horse removepassenger <player_name>"
+  allowed: "&aआपने {player} को अपने घोड़े पर सवार होने की अनुमति दी।"
+  informed_allowed: "&a{owner} ने आपको अपने घोड़े पर सवार होने की अनुमति दी है।"
+  removed: "&cआपने {player} की अनुमति रद्द कर दी।"
+  informed_removed: "&c{owner} ने आपकी सवारी की अनुमति रद्द कर दी है।"
+  no_permission: "&cघोड़े के मालिक ने आपको अनुमति नहीं दी है।"
+  list_empty: "&eआपके पास कोई अधिकृत यात्री नहीं है।"
+  list_header: "&6अधिकृत यात्री:"
+  list_item: "&7- {player}"
+
+# Help
+help:
+  title: "&6----- घोड़े के कमांड्स &e/horse &6-----"
+  stats: "&e/horse &7- घोड़े के आँकड़े दिखाएँ"
+  summon: "&e/horse summon &7- अपना घोड़ा बुलाएँ"
+  hide: "&e/horse hide &7- अपना घोड़ा छुपाएँ"
+  follow: "&e/horse follow &7- घोड़ा आपका पीछा करेगा"
+  stay: "&e/horse stay &7- घोड़ा अपनी जगह पर रहेगा"
+  customize: "&e/horse customize &7- घोड़े का रूप बदलें"
+  allowpassenger: "&e/horse allowpassenger <name> &7- खिलाड़ी को सवारी की अनुमति दें"
+  removepassenger: "&e/horse removepassenger <name> &7- सवारी की अनुमति रद्द करें"
+  passengers: "&e/horse passengers &7- अधिकृत यात्रियों की सूची"
+  help: "&e/horse help &7- यह सहायता दिखाएँ"
+
+# Input System
+input:
+  prompt: "&eचैट में एक मान दर्ज करें या 'cancel' टाइप करें रद्द करने के लिए"
+  cancel_keyword: "cancel"
+  cancelled: "&cक्रिया रद्द कर दी गई"
+
+# Menus
+menu:
+  stats:
+    title: "घोड़े के आँकड़े"
+    level: "स्तर: &e{level}"
+    experience: "अनुभव: &f{current}&7/&f{required}"
+    xp_to_next: "अगले स्तर तक XP: &f{remaining}"
+    speed: "गति: &e{value}%"
+    health: "स्वास्थ्य: &e{value} ❤"
+    jump_strength: "कूदने की शक्ति: &e{value}%"
+    status_cooldown: "&cघोड़ा ठीक हो रहा है"
+    status_ready: "&aघोड़ा तैयार है"
+    cooldown_remaining: "शेष समय: &f{time}"
+    total_blocks: "कुल ब्लॉक्स: &e{value}"
+    total_blocks_description: "&7कुल दूरी तय की गई"
+    total_jumps: "कुल छलाँगें: &e{value}"
+    total_jumps_description: "&7कुल छलाँगों की संख्या"
+  backpack:
+    title: "घोड़े का बैकपैक"
+  customize:
+    title: "घोड़े का अनुकूलन"
+    name_item: "&6नाम बदलें"
+    current_name: "वर्तमान नाम: &f{name}"
+    no_name: "कोई नहीं"
+    name_prompt_1: "&eक्लिक करें, फिर दर्ज करें"
+    name_prompt_2: "&eचैट में नया नाम"
+    enter_name_prompt: "&eचैट में अपने घोड़े के लिए नया नाम दर्ज करें:"
+    name_changed: "&aघोड़े का नाम बदलकर कर दिया गया: &f{name}"
+    color_changed: "&aघोड़े का रंग बदल दिया गया!"
+    save_item: "&aपरिवर्तन सहेजें"
+    saved: "&aपरिवर्तन सहेज लिए गए!"
+    color_white: "सफेद"
+    color_creamy: "क्रीमी"
+    color_chestnut: "चेस्टनट"
+    color_brown: "भूरा"
+    color_black: "काला"
+    color_gray: "धूसर"
+    color_dark_brown: "गहरा भूरा"
+    color_prefix: "रंग: "
+    click_to_select: "चुनने के लिए क्लिक करें"

@@ -1,0 +1,98 @@
+# General
+error:
+  players_only: "&cهذا الأمر متاح للاعبين فقط!"
+  unknown_command: "&cأمر غير معروف."
+  player_not_found: "&cلم يتم العثور على اللاعب أو هو غير متصل."
+
+# Plugin
+plugin:
+  enabled: "تم تفعيل PetHorses بنجاح!"
+  disabled: "تم تعطيل PetHorses!"
+  autosave: "تم الحفظ التلقائي!"
+
+# Horse
+horse:
+  hidden: "&aحصانك مخفي."
+  following: "&aسيقوم الحصان الآن باتباعك."
+  staying: "&aسيبقى الحصان في مكانه."
+  death_cooldown: "&cلقد مات حصانك! يمكنك استدعاؤه مرة أخرى خلال {minutes} دقيقة."
+  not_yours: "&cهذا ليس حصانك!"
+  already_has_passenger: "&cهناك شخص يركب هذا الحصان بالفعل!"
+  passenger_mounted: "&aلقد ركبت الحصان."
+  passenger_informed_owner: "&a{passenger} ركب حصانك."
+  cooldown_active: "&cحصانك لا يزال يتعافى! الوقت المتبقي: {time}"
+  level_up: "&aوصل حصانك إلى المستوى {level}!"
+
+# Passenger System
+passenger:
+  usage_allow: "&cالاستخدام: /horse allowpassenger <player_name>"
+  usage_remove: "&cالاستخدام: /horse removepassenger <player_name>"
+  allowed: "&aلقد سمحت لـ {player} بركوب حصانك."
+  informed_allowed: "&a{owner} سمح لك بركوب حصانه."
+  removed: "&cلقد ألغيت إذن {player} لركوب حصانك."
+  informed_removed: "&c{owner} ألغى إذنك لركوب حصانه."
+  no_permission: "&cمالك الحصان لم يمنحك إذن الركوب."
+  list_empty: "&eليس لديك ركاب مصرح لهم."
+  list_header: "&6الركاب المصرح لهم:"
+  list_item: "&7- {player}"
+
+# Help
+help:
+  title: "&6----- أوامر الحصان &e/horse &6-----"
+  stats: "&e/horse &7- عرض إحصائيات الحصان"
+  summon: "&e/horse summon &7- استدعاء حصانك"
+  hide: "&e/horse hide &7- إخفاء حصانك"
+  follow: "&e/horse follow &7- الحصان سيتبعك"
+  stay: "&e/horse stay &7- الحصان سيبقى في مكانه"
+  customize: "&e/horse customize &7- تخصيص مظهر الحصان"
+  allowpassenger: "&e/horse allowpassenger <name> &7- السماح للاعب بالركوب"
+  removepassenger: "&e/horse removepassenger <name> &7- إلغاء إذن الركوب"
+  passengers: "&e/horse passengers &7- عرض الركاب المصرح لهم"
+  help: "&e/horse help &7- عرض هذه المساعدة"
+
+# Input System
+input:
+  prompt: "&eأدخل قيمة في الدردشة أو 'cancel' للإلغاء"
+  cancel_keyword: "cancel"
+  cancelled: "&cتم إلغاء الإجراء"
+
+# Menus
+menu:
+  stats:
+    title: "إحصائيات الحصان"
+    level: "المستوى: &e{level}"
+    experience: "الخبرة: &f{current}&7/&f{required}"
+    xp_to_next: "XP للمستوى التالي: &f{remaining}"
+    speed: "السرعة: &e{value}%"
+    health: "الصحة: &e{value} ❤"
+    jump_strength: "قوة القفز: &e{value}%"
+    status_cooldown: "&cالحصان يتعافى"
+    status_ready: "&aالحصان جاهز"
+    cooldown_remaining: "الوقت المتبقي: &f{time}"
+    total_blocks: "إجمالي الكتل: &e{value}"
+    total_blocks_description: "&7إجمالي المسافة المقطوعة"
+    total_jumps: "إجمالي القفزات: &e{value}"
+    total_jumps_description: "&7إجمالي القفزات المنجزة"
+  backpack:
+    title: "حقيبة الحصان"
+  customize:
+    title: "تخصيص الحصان"
+    name_item: "&6تغيير الاسم"
+    current_name: "الاسم الحالي: &f{name}"
+    no_name: "لا يوجد"
+    name_prompt_1: "&eانقر، ثم أدخل"
+    name_prompt_2: "&eاسم جديد في الدردشة"
+    enter_name_prompt: "&eأدخل اسمًا جديدًا لحصانك في الدردشة:"
+    name_changed: "&aتم تغيير اسم الحصان إلى: &f{name}"
+    color_changed: "&aتم تغيير لون الحصان!"
+    save_item: "&aحفظ التغييرات"
+    saved: "&aتم حفظ التغييرات!"
+    color_white: "أبيض"
+    color_creamy: "كريمي"
+    color_chestnut: "كستنائي"
+    color_brown: "بني"
+    color_black: "أسود"
+    color_gray: "رمادي"
+    color_dark_brown: "بني غامق"
+    color_prefix: "اللون: "
+    click_to_select: "انقر للاختيار"

@@ -1,4 +1,4 @@
-# Language for the plugin. Available: 'en', 'ru', 'es', 'fr', 'zh', 'pt', 'de', 'ja', 'ko', 'it'
+# Language for the plugin. Available: 'en', 'ru', 'es', 'fr', 'zh', 'pt', 'de', 'ja', 'ko', 'it', 'hi, 'ar'
 language: 'en'
 
 # Database configuration (MariaDB only) false - yaml storage

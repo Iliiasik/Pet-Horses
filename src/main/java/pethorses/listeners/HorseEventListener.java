@@ -1,5 +1,6 @@
 package pethorses.listeners;
 
+import org.bukkit.Material;
 import pethorses.PetHorses;
 import pethorses.config.LocalizationManager;
 import pethorses.services.HorseService;
@@ -31,6 +32,8 @@ public class HorseEventListener implements Listener {
 
         Player owner = (Player) horse.getOwner();
         if (owner == null) return;
+
+        event.getDrops().removeIf(item -> item.getType() == Material.SADDLE || item.getType() == Material.LEATHER);
 
         horseService.onHorseDeath(owner.getUniqueId());
         owner.sendMessage(localizationManager.getMessage("horse.death_cooldown")

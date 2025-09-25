@@ -1,5 +1,6 @@
 package pethorses.services;
 
+import org.bukkit.util.Vector;
 import pethorses.PetHorses;
 import pethorses.config.ConfigManager;
 import pethorses.storage.HorseData;
@@ -97,13 +98,20 @@ public class HorseService {
                     cancel();
                     return;
                 }
-                if (horse.getLocation().distance(player.getLocation()) > 10) {
-                    horse.teleport(player.getLocation());
-                } else {
-                    horse.getPathfinder().moveTo(player, 1.0);
+
+                Location playerLoc = player.getLocation();
+                Location horseLoc = horse.getLocation();
+                double distance = horseLoc.distance(playerLoc);
+
+                if (distance > 10) {
+                    horse.teleport(playerLoc);
+                } else if (distance > 2) {
+                    Vector direction = playerLoc.toVector().subtract(horseLoc.toVector()).normalize();
+                    Location targetLoc = playerLoc.clone().subtract(direction.multiply(2));
+                    horse.getPathfinder().moveTo(targetLoc, 1.5);
                 }
             }
-        }.runTaskTimer(plugin, 0L, 20L);
+        }.runTaskTimer(plugin, 0L, 10L);
     }
 
     public void hideHorse(UUID playerId) {
@@ -188,6 +196,14 @@ public class HorseService {
             if (player != null) {
                 player.sendMessage(plugin.getLocalizationManager().getMessage("horse.level_up")
                         .replace("{level}", String.valueOf(data.getLevel())));
+
+                if (data.getHorseId() != null) {
+                    Entity entity = Bukkit.getEntity(data.getHorseId());
+                    if (entity instanceof Horse horse) {
+                        Location loc = horse.getLocation();
+                        horse.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, loc.add(0, 1, 0), 20, 0.5, 0.5, 0.5, 0.1);
+                    }
+                }
             }
 
             if (data.getHorseId() != null) {
