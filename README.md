@@ -91,7 +91,7 @@ All settings can be **customized in the configuration file**, including the opti
 
 ---
 
-- Supports multiple languages: English (en), Russian (ru), Spanish (es), French (fr), Chinese (zh), Portuguese (pt), German (de), Japanese (ja), Korean (ko), Italian (it)
+- Supports multiple languages: English (en), Russian (ru), Spanish (es), French (fr), Chinese (zh), Portuguese (pt), German (de), Japanese (ja), Korean (ko), Italian (it), Hindi (hi), Arabic (ar)
 - Storage options: YAML (small servers 0-70 players) or MariaDB (large servers 100+ players)
 - Easy to add new languages by translating localization files
 
