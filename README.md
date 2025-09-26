@@ -2,7 +2,6 @@
   PET HORSES
 </h3>
 
-
 [![Modrinth Downloads][modrinth-downloads-shield]][modrinth-downloads-url]
 
 [modrinth-downloads-shield]: https://img.shields.io/modrinth/dt/pet-horses?color=green&style=for-the-badge&logo=modrinth
@@ -12,6 +11,8 @@
 
 [curseforge-downloads-shield]: https://cf.way2muchnoise.eu/full_1347084_downloads.svg
 [curseforge-downloads-url]: https://www.curseforge.com/minecraft/bukkit-plugins/pet-horses
+
+[![CodeFactor](https://www.codefactor.io/repository/github/iliiasik/pet-horses/badge/main)](https://www.codefactor.io/repository/github/iliiasik/pet-horses/overview/main)
 
 ## Description
 
