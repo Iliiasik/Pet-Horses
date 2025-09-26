@@ -283,6 +283,7 @@ public class DatabaseStorage implements StorageStrategy {
                 stmt.setString(2, passengerUUID.toString());
                 stmt.executeUpdate();
             } catch (SQLException e) {
+                logger.warning("Error adding passenger: " + e.getMessage());
             }
         }
     }
@@ -297,6 +298,7 @@ public class DatabaseStorage implements StorageStrategy {
                 stmt.setString(2, passengerUUID.toString());
                 stmt.executeUpdate();
             } catch (SQLException e) {
+                logger.warning("Error removing passenger: " + e.getMessage());
             }
         }
     }
