@@ -23,8 +23,9 @@ Over time, your horse becomes faster, jumps higher, and gains more health.
 ---
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/3b0104be-6d4d-4662-99e6-d74c9bc09344" width="400" height="200" alt="Horse Level">
+  <img src="https://github.com/user-attachments/assets/10266d22-d672-45f7-a5fc-9ed59a512f14" width="400" height="200" alt="Horse Level">
 </p>
+
 
 Horses that die can be **respawned** after a configurable cooldown. All settings can be adjusted in the plugin's configuration:
 
@@ -71,6 +72,7 @@ respawn_cooldown_minutes: 15
   <img src="https://github.com/user-attachments/assets/6209fd9c-4c8c-4054-81bd-13d4089fc516" width="400" height="200" alt="Customize Horse">
   <img src="https://github.com/user-attachments/assets/e78bb678-6543-4ff5-8a22-25d8eef61dd3" width="417" height="217" alt="Horse GUI">
 </p>
+
 
 Horses can be customized in appearance through a GUI. You can summon or hide your horse at any time, make it follow you, or leave it standing in place. Other players cannot ride your horse without your permission.
 
