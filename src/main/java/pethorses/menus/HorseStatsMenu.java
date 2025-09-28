@@ -46,12 +46,12 @@ public class HorseStatsMenu {
         setMenuItem(inv, SLOT_JUMP, Material.RABBIT_FOOT, lm.getMessage("menu.stats.jump_strength")
                 .replace("{value}", String.format("%.1f", 40 + (60 * (data.getLevel() / 20.0)))), null);
 
-        boolean isOnCooldown = horseService.isOnCooldown(player.getUniqueId());
+        boolean isOnCooldown = horseService.isOnCooldown(data);
         setMenuItem(inv, SLOT_STATUS, isOnCooldown ? Material.REDSTONE : Material.LIME_DYE,
                 isOnCooldown ? lm.getMessage("menu.stats.status_cooldown") : lm.getMessage("menu.stats.status_ready"),
                 isOnCooldown ? Arrays.asList(
                         lm.getMessage("menu.stats.cooldown_remaining")
-                                .replace("{time}", horseService.getCooldownLeftFormatted(player.getUniqueId()))
+                                .replace("{time}", horseService.getCooldownLeftFormatted(data))
                 ) : null);
 
         setMenuItem(inv, SLOT_TOTAL_BLOCKS, Material.FILLED_MAP, lm.getMessage("menu.stats.total_blocks")

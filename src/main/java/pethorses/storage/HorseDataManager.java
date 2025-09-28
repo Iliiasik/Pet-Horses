@@ -2,6 +2,8 @@ package pethorses.storage;
 
 import pethorses.PetHorses;
 import pethorses.config.ConfigManager;
+import pethorses.storage.database.DatabaseStorage;
+import pethorses.storage.yaml.YamlStorage;
 
 import java.util.Set;
 import java.util.UUID;

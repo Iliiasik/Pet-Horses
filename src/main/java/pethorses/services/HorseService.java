@@ -31,25 +31,33 @@ public class HorseService {
 
     public void summonHorse(Player player) {
         UUID playerId = player.getUniqueId();
-        if (isOnCooldown(playerId)) {
+        HorseData data = getHorseData(playerId);
+
+        if (isOnCooldown(data)) {
             player.sendMessage(plugin.getLocalizationManager().getMessage("horse.cooldown_active")
-                    .replace("{time}", getCooldownLeftFormatted(playerId)));
+                    .replace("{time}", getCooldownLeftFormatted(data)));
             return;
         }
 
-        hideHorse(playerId);
-        HorseData data = getHorseData(playerId);
+        hideHorse(data);
         data.setOwnerId(playerId);
 
-        Horse horse = (Horse) player.getWorld().spawnEntity(player.getLocation(), EntityType.HORSE);
-        horse.setOwner(player);
+        Horse horse = spawnHorse(player.getLocation(), player, data);
+        setFollowing(data, true);
+
+        if (data.isFollowing()) {
+            makeHorseFollow(player, data, horse);
+        }
+    }
+
+    private Horse spawnHorse(Location location, Player owner, HorseData data) {
+        Horse horse = (Horse) owner.getWorld().spawnEntity(location, EntityType.HORSE);
+        horse.setOwner(owner);
         horse.setTamed(true);
         horse.setAdult();
         horse.setCanPickupItems(false);
         horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
-
         backpackService.handleArmorForHorse(horse, data);
-
         horse.setColor(data.getColor());
         horse.setStyle(data.getStyle());
 
@@ -58,52 +66,39 @@ public class HorseService {
             horse.setCustomNameVisible(true);
         }
 
-        applyHorseStats(horse, data.getLevel());
+        applyHorseStats(horse, data);
         data.setHorseId(horse.getUniqueId());
-        setFollowing(playerId, true);
-
-        if (isFollowing(playerId)) {
-            makeHorseFollow(player);
-        }
+        return horse;
     }
 
-    public void applyHorseStats(Horse horse, int level) {
-        double speed = configManager.getSpeedBase() + (configManager.getSpeedMaxBonus() * (level / 20.0));
-        horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
-
+    public void applyHorseStats(Horse horse, HorseData data) {
+        int level = data.getLevel();
+        horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)
+                .setBaseValue(configManager.getSpeedBase() + (configManager.getSpeedMaxBonus() * (level / 20.0)));
         double maxHealth = configManager.getHealthBase() + (configManager.getHealthMaxBonus() * (level / 20.0));
         horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
         horse.setHealth(maxHealth);
+        horse.getAttribute(Attribute.GENERIC_JUMP_STRENGTH)
+                .setBaseValue(configManager.getJumpBase() + (configManager.getJumpMaxBonus() * (level / 20.0)));
 
-        double jumpStrength = configManager.getJumpBase() + (configManager.getJumpMaxBonus() * (level / 20.0));
-        horse.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(jumpStrength);
+        data.setJumps(0);
+        data.setBlocksTraveled(0.0);
 
-        HorseData ownerData = getHorseData(((Player) horse.getOwner()).getUniqueId());
-        ownerData.setJumps(0);
-        ownerData.setBlocksTraveled(0.0);
-
-        if (ownerData.getHorseName() != null && !ownerData.getHorseName().isEmpty()) {
-            horse.setCustomName(ownerData.getHorseNameColor() + ownerData.getHorseName());
+        if (data.getHorseName() != null && !data.getHorseName().isEmpty()) {
+            horse.setCustomName(data.getHorseNameColor() + data.getHorseName());
             horse.setCustomNameVisible(true);
         }
     }
 
-    public void makeHorseFollow(Player player) {
-        HorseData data = getHorseData(player.getUniqueId());
-        if (data.getHorseId() == null) return;
-
-        Entity entity = Bukkit.getEntity(data.getHorseId());
-        if (!(entity instanceof Horse horse)) return;
-
+    public void makeHorseFollow(Player player, HorseData data, Horse horse) {
         horse.getPathfinder().stopPathfinding();
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!isFollowing(player.getUniqueId()) || horse.isDead() || !player.isOnline()) {
+                if (!data.isFollowing() || horse.isDead() || !player.isOnline()) {
                     cancel();
                     return;
                 }
-
                 Location playerLoc = player.getLocation();
                 Location horseLoc = horse.getLocation();
                 double distance = horseLoc.distance(playerLoc);
@@ -119,77 +114,88 @@ public class HorseService {
         }.runTaskTimer(plugin, 0L, 10L);
     }
 
-    public void hideHorse(UUID playerId) {
-        HorseData data = dataManager.getHorseData(playerId);
+    public void hideHorse(HorseData data) {
         if (data == null || data.getHorseId() == null) return;
-
         Entity entity = Bukkit.getEntity(data.getHorseId());
         if (entity instanceof Horse horse) {
-            backpackService.saveHorseArmorFromEntity(playerId, horse);
+            backpackService.saveHorseArmorFromEntity(data.getOwnerId(), horse);
         }
-
         if (entity != null) entity.remove();
         data.setHorseId(null);
     }
 
-    public void onHorseDeath(UUID playerId) {
-        HorseData data = dataManager.getHorseData(playerId);
+    public void onHorseDeath(UUID playerId, Horse horse) {
+        HorseData data = getHorseData(playerId);
         if (data == null) return;
 
-        Entity entity = Bukkit.getEntity(data.getHorseId());
-        if (entity instanceof Horse horse) {
-            backpackService.saveHorseArmorFromEntity(playerId, horse);
+        if (configManager.isBackpackDropOnDeath()) {
+            dropBackpackItems(horse, data);
+            data.setBackpackItems(new ItemStack[0]);
         }
+        backpackService.saveHorseArmorFromEntity(playerId, horse);
 
         data.setDeathTime(System.currentTimeMillis());
         data.setHorseId(null);
-        dataManager.saveHorseData(data);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                dataManager.saveHorseData(data);
+            }
+        }.runTaskAsynchronously(plugin);
     }
 
-    public boolean isOnCooldown(UUID playerId) {
-        HorseData data = dataManager.getHorseData(playerId);
-        if (data == null) return false;
+    private void dropBackpackItems(Horse horse, HorseData data) {
+        ItemStack[] items = data.getBackpackItems();
+        if (items == null) return;
+        for (ItemStack item : items) {
+            if (item != null && item.getType() != Material.AIR) {
+                horse.getWorld().dropItem(horse.getLocation(), item);
+            }
+        }
+    }
 
+    public boolean isOnCooldown(HorseData data) {
+        if (data == null) return false;
         long cooldownDuration = configManager.getRespawnCooldownMinutes() * 60 * 1000;
         return System.currentTimeMillis() - data.getDeathTime() < cooldownDuration;
     }
 
-    public String getCooldownLeftFormatted(UUID playerId) {
-        HorseData data = dataManager.getHorseData(playerId);
-        if (data == null) return "0s";
-
+    public String getCooldownLeftFormatted(HorseData data) {
+        if (data == null) return "00:00";
         long left = (configManager.getRespawnCooldownMinutes() * 60 * 1000 - (System.currentTimeMillis() - data.getDeathTime())) / 1000;
         long minutes = left / 60;
         long seconds = left % 60;
-        return minutes + "m " + seconds + "s";
+        return String.format("%02d:%02d", minutes, seconds);
     }
 
     public void addJump(UUID playerId) {
         HorseData data = getHorseData(playerId);
+        if (data == null) return;
         data.setJumps(data.getJumps() + 1);
         data.setTotalJumps(data.getTotalJumps() + 1);
 
         if (data.getJumps() >= 10) {
             int xpToAdd = data.getJumps() / 10;
             data.setJumps(data.getJumps() % 10);
-            addExperience(playerId, xpToAdd);
+            addExperience(data, xpToAdd);
         }
     }
 
     public void addTraveledBlocks(UUID playerId, double distance) {
         HorseData data = getHorseData(playerId);
+        if (data == null) return;
         data.setBlocksTraveled(data.getBlocksTraveled() + distance);
         data.setTotalBlocksTraveled(data.getTotalBlocksTraveled() + distance);
 
         if (data.getBlocksTraveled() >= 5.0) {
             int xpToAdd = (int) (data.getBlocksTraveled() / 5.0);
             data.setBlocksTraveled(data.getBlocksTraveled() % 5.0);
-            addExperience(playerId, xpToAdd);
+            addExperience(data, xpToAdd);
         }
     }
 
-    private void addExperience(UUID playerId, int amount) {
-        HorseData data = getHorseData(playerId);
+    private void addExperience(HorseData data, int amount) {
         data.setExperience(data.getExperience() + amount);
 
         int requiredExp = getXpRequiredForNextLevel(data.getLevel());
@@ -197,24 +203,17 @@ public class HorseService {
             data.setLevel(data.getLevel() + 1);
             data.setExperience(data.getExperience() - requiredExp);
 
-            Player player = Bukkit.getPlayer(playerId);
+            Player player = Bukkit.getPlayer(data.getOwnerId());
             if (player != null) {
                 player.sendMessage(plugin.getLocalizationManager().getMessage("horse.level_up")
                         .replace("{level}", String.valueOf(data.getLevel())));
-
                 if (data.getHorseId() != null) {
                     Entity entity = Bukkit.getEntity(data.getHorseId());
                     if (entity instanceof Horse horse) {
                         Location loc = horse.getLocation();
                         horse.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, loc.add(0, 1, 0), 20, 0.5, 0.5, 0.5, 0.1);
+                        applyHorseStats(horse, data);
                     }
-                }
-            }
-
-            if (data.getHorseId() != null) {
-                Entity entity = Bukkit.getEntity(data.getHorseId());
-                if (entity instanceof Horse horse) {
-                    applyHorseStats(horse, data.getLevel());
                 }
             }
         }
@@ -228,13 +227,7 @@ public class HorseService {
         return dataManager.getHorseData(playerId);
     }
 
-    public boolean isFollowing(UUID playerId) {
-        HorseData data = dataManager.getHorseData(playerId);
-        return data != null && data.isFollowing();
-    }
-
-    public void setFollowing(UUID playerId, boolean following) {
-        HorseData data = dataManager.getHorseData(playerId);
+    public void setFollowing(HorseData data, boolean following) {
         if (data != null) {
             data.setFollowing(following);
         }

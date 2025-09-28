@@ -6,10 +6,13 @@ import pethorses.services.HorseService;
 import pethorses.services.PassengerService;
 import pethorses.menus.HorseCustomizationMenu;
 import pethorses.menus.HorseStatsMenu;
+import pethorses.storage.HorseData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 import java.util.Set;
@@ -40,21 +43,28 @@ public class HorseCommandExecutor implements CommandExecutor {
             return true;
         }
 
+        HorseData data = horseService.getHorseData(player.getUniqueId());
+
         switch (args[0].toLowerCase()) {
             case "summon":
                 horseService.summonHorse(player);
                 break;
             case "hide":
-                horseService.hideHorse(player.getUniqueId());
+                horseService.hideHorse(data);
                 player.sendMessage(localizationManager.getMessage("horse.hidden"));
                 break;
             case "follow":
-                horseService.setFollowing(player.getUniqueId(), true);
-                horseService.makeHorseFollow(player);
+                horseService.setFollowing(data, true);
+                if (data.getHorseId() != null) {
+                    Entity entity = Bukkit.getEntity(data.getHorseId());
+                    if (entity instanceof Horse horse) {
+                        horseService.makeHorseFollow(player, data, horse);
+                    }
+                }
                 player.sendMessage(localizationManager.getMessage("horse.following"));
                 break;
             case "stay":
-                horseService.setFollowing(player.getUniqueId(), false);
+                horseService.setFollowing(data, false);
                 player.sendMessage(localizationManager.getMessage("horse.staying"));
                 break;
             case "customize":

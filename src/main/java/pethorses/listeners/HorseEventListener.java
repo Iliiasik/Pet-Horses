@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import pethorses.storage.HorseData;
 
 public class HorseEventListener implements Listener {
     private final PetHorses plugin;
@@ -35,11 +36,11 @@ public class HorseEventListener implements Listener {
 
         event.getDrops().removeIf(item -> item.getType() == Material.SADDLE || item.getType() == Material.LEATHER);
 
-        horseService.onHorseDeath(owner.getUniqueId());
+        horseService.onHorseDeath(owner.getUniqueId(), horse);
+
         owner.sendMessage(localizationManager.getMessage("horse.death_cooldown")
                 .replace("{minutes}", String.valueOf(plugin.getConfigManager().getRespawnCooldownMinutes())));
     }
-
     @EventHandler
     public void onHorseDamage(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Horse horse) || !horse.isTamed()) return;
@@ -83,7 +84,8 @@ public class HorseEventListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        horseService.hideHorse(event.getPlayer().getUniqueId());
+        HorseData data = horseService.getHorseData(event.getPlayer().getUniqueId());
+        horseService.hideHorse(data);
     }
 
     @EventHandler

@@ -31,6 +31,7 @@ backpack:
   size_per_level: 9
   max_size: 54
   armor_slot_enabled: true
+  drop_on_death: true
 
 # Cooldown in minutes before a dead horse can be respawned
 respawn_cooldown_minutes: 15

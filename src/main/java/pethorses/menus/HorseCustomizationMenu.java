@@ -145,101 +145,110 @@ public class HorseCustomizationMenu implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         String title = event.getView().getTitle();
         if (title.equals(ChatColor.DARK_AQUA + localizationManager.getMessage("menu.customize.title"))) {
-            event.setCancelled(true);
-            if (!(event.getWhoClicked() instanceof Player player)) return;
-            ItemStack clicked = event.getCurrentItem();
-            if (clicked == null || clicked.getType() == Material.AIR) return;
-            if (clicked.getType() == Material.LEATHER && event.getSlot() == 10) {
-                openColorMenu(player, plugin);
-                return;
-            }
-            if (clicked.getType() == Material.PAPER && event.getSlot() == 12) {
-                openNameColorMenu(player, plugin);
-                return;
-            }
-            HorseData data = horseService.getHorseData(player.getUniqueId());
-            if (clicked.getType() == Material.NAME_TAG && event.getSlot() == 14) {
-                player.closeInventory();
-                player.sendMessage(localizationManager.getMessage("menu.customize.enter_name_prompt"));
-                plugin.getChatInputListener().awaitInput(player, name -> {
-                    data.setHorseName(name);
-                    player.sendMessage(localizationManager.getMessage("menu.customize.name_changed").replace("{name}", name));
-                    open(player, plugin);
-                });
-                return;
-            }
-            if (clicked.getType() == Material.EMERALD && event.getSlot() == 16) {
-                player.closeInventory();
-                player.sendMessage(localizationManager.getMessage("menu.customize.saved"));
-                if (data.getHorseId() != null) {
-                    Entity horse = plugin.getServer().getEntity(data.getHorseId());
-                    if (horse instanceof Horse h) {
-                        h.setColor(data.getColor());
-                        h.setStyle(data.getStyle());
-                        if (data.getHorseName() != null) {
-                            h.setCustomName(data.getHorseNameColor() + data.getHorseName());
-                            h.setCustomNameVisible(true);
-                        }
+            handleMainMenuClick(event);
+        } else if (title.equals(ChatColor.GOLD + localizationManager.getMessage("menu.customize.color_menu_title"))) {
+            handleColorMenuClick(event);
+        } else if (title.equals(ChatColor.AQUA + localizationManager.getMessage("menu.customize.name_color_menu_title"))) {
+            handleNameColorMenuClick(event);
+        }
+    }
+
+    private void handleMainMenuClick(InventoryClickEvent event) {
+        event.setCancelled(true);
+        if (!(event.getWhoClicked() instanceof Player player)) return;
+        ItemStack clicked = event.getCurrentItem();
+        if (clicked == null || clicked.getType() == Material.AIR) return;
+        if (clicked.getType() == Material.LEATHER && event.getSlot() == 10) {
+            openColorMenu(player, plugin);
+            return;
+        }
+        if (clicked.getType() == Material.PAPER && event.getSlot() == 12) {
+            openNameColorMenu(player, plugin);
+            return;
+        }
+        HorseData data = horseService.getHorseData(player.getUniqueId());
+        if (clicked.getType() == Material.NAME_TAG && event.getSlot() == 14) {
+            player.closeInventory();
+            player.sendMessage(localizationManager.getMessage("menu.customize.enter_name_prompt"));
+            plugin.getChatInputListener().awaitInput(player, name -> {
+                data.setHorseName(name);
+                player.sendMessage(localizationManager.getMessage("menu.customize.name_changed").replace("{name}", name));
+                open(player, plugin);
+            });
+            return;
+        }
+        if (clicked.getType() == Material.EMERALD && event.getSlot() == 16) {
+            player.closeInventory();
+            player.sendMessage(localizationManager.getMessage("menu.customize.saved"));
+            if (data.getHorseId() != null) {
+                Entity horse = plugin.getServer().getEntity(data.getHorseId());
+                if (horse instanceof Horse h) {
+                    h.setColor(data.getColor());
+                    h.setStyle(data.getStyle());
+                    if (data.getHorseName() != null) {
+                        h.setCustomName(data.getHorseNameColor() + data.getHorseName());
+                        h.setCustomNameVisible(true);
                     }
                 }
-                return;
             }
         }
-        if (title.equals(ChatColor.GOLD + localizationManager.getMessage("menu.customize.color_menu_title"))) {
-            event.setCancelled(true);
-            if (!(event.getWhoClicked() instanceof Player player)) return;
-            ItemStack clicked = event.getCurrentItem();
-            if (clicked == null) return;
-            HorseData data = horseService.getHorseData(player.getUniqueId());
-            boolean updated = false;
-            switch (clicked.getType()) {
-                case WHITE_WOOL:
-                    data.setColor(Horse.Color.WHITE);
-                    updated = true;
-                    break;
-                case BONE_MEAL:
-                    data.setColor(Horse.Color.CREAMY);
-                    updated = true;
-                    break;
-                case ACACIA_PLANKS:
-                    data.setColor(Horse.Color.CHESTNUT);
-                    updated = true;
-                    break;
-                case SPRUCE_PLANKS:
-                    data.setColor(Horse.Color.BROWN);
-                    updated = true;
-                    break;
-                case BLACK_WOOL:
-                    data.setColor(Horse.Color.BLACK);
-                    updated = true;
-                    break;
-                case LIGHT_GRAY_WOOL:
-                    data.setColor(Horse.Color.GRAY);
-                    updated = true;
-                    break;
-                case DARK_OAK_PLANKS:
-                    data.setColor(Horse.Color.DARK_BROWN);
-                    updated = true;
-                    break;
-            }
-            if (updated) {
-                player.sendMessage(localizationManager.getMessage("menu.customize.color_changed"));
-                open(player, plugin);
-            }
+    }
+
+    private void handleColorMenuClick(InventoryClickEvent event) {
+        event.setCancelled(true);
+        if (!(event.getWhoClicked() instanceof Player player)) return;
+        ItemStack clicked = event.getCurrentItem();
+        if (clicked == null) return;
+        HorseData data = horseService.getHorseData(player.getUniqueId());
+        boolean updated = false;
+        switch (clicked.getType()) {
+            case WHITE_WOOL:
+                data.setColor(Horse.Color.WHITE);
+                updated = true;
+                break;
+            case BONE_MEAL:
+                data.setColor(Horse.Color.CREAMY);
+                updated = true;
+                break;
+            case ACACIA_PLANKS:
+                data.setColor(Horse.Color.CHESTNUT);
+                updated = true;
+                break;
+            case SPRUCE_PLANKS:
+                data.setColor(Horse.Color.BROWN);
+                updated = true;
+                break;
+            case BLACK_WOOL:
+                data.setColor(Horse.Color.BLACK);
+                updated = true;
+                break;
+            case LIGHT_GRAY_WOOL:
+                data.setColor(Horse.Color.GRAY);
+                updated = true;
+                break;
+            case DARK_OAK_PLANKS:
+                data.setColor(Horse.Color.DARK_BROWN);
+                updated = true;
+                break;
         }
-        if (title.equals(ChatColor.AQUA + localizationManager.getMessage("menu.customize.name_color_menu_title"))) {
-            event.setCancelled(true);
-            if (!(event.getWhoClicked() instanceof Player player)) return;
-            ItemStack clicked = event.getCurrentItem();
-            if (clicked == null) return;
-            HorseData data = horseService.getHorseData(player.getUniqueId());
-            for (int i = 0; i < nameColorMaterials.length; i++) {
-                if (clicked.getType() == nameColorMaterials[i]) {
-                    data.setHorseNameColor(nameChatColors[i]);
-                    break;
-                }
-            }
+        if (updated) {
+            player.sendMessage(localizationManager.getMessage("menu.customize.color_changed"));
             open(player, plugin);
         }
+    }
+
+    private void handleNameColorMenuClick(InventoryClickEvent event) {
+        event.setCancelled(true);
+        if (!(event.getWhoClicked() instanceof Player player)) return;
+        ItemStack clicked = event.getCurrentItem();
+        if (clicked == null) return;
+        HorseData data = horseService.getHorseData(player.getUniqueId());
+        for (int i = 0; i < nameColorMaterials.length; i++) {
+            if (clicked.getType() == nameColorMaterials[i]) {
+                data.setHorseNameColor(nameChatColors[i]);
+                break;
+            }
+        }
+        open(player, plugin);
     }
 }

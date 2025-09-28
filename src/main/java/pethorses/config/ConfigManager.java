@@ -93,4 +93,8 @@ public class ConfigManager {
     public boolean isArmorSlotEnabled() {
         return config.getBoolean("backpack.armor_slot_enabled", true);
     }
+
+    public boolean isBackpackDropOnDeath() {
+        return config.getBoolean("backpack.drop_on_death", true);
+    }
 }

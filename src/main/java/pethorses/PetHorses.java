@@ -26,27 +26,9 @@ public class PetHorses extends JavaPlugin {
         if (!getDataFolder().exists()) {
             getDataFolder().mkdirs();
         }
-
-        this.configManager = new ConfigManager(this);
-        this.localizationManager = new LocalizationManager(this);
-        this.horseDataManager = new HorseDataManager(this);
-        this.horseService = new HorseService(this);
-        this.passengerService = new PassengerService(this);
-        this.chatInputListener = new ChatInputListener(this);
-        this.horseBackpackService = new HorseBackpackService(this);
-
+        initServices();
         getCommand("horse").setExecutor(new HorseCommandExecutor(this));
-
-        getServer().getPluginManager().registerEvents(new HorseEventListener(this), this);
-        getServer().getPluginManager().registerEvents(new HorseMovementListener(this), this);
-        getServer().getPluginManager().registerEvents(new HorseStatsMenuListener(this), this);
-        getServer().getPluginManager().registerEvents(new MenuClickListener(this), this);
-        getServer().getPluginManager().registerEvents(new HorseCustomizationMenu(this), this);
-        getServer().getPluginManager().registerEvents(chatInputListener, this);
-        getServer().getPluginManager().registerEvents(new HorseBackpackListener(this), this);
-        getServer().getPluginManager().registerEvents(new BackpackInventoryListener(this), this);
-        getServer().getPluginManager().registerEvents(new HorseArmorListener(this), this);
-
+        registerListeners();
         startAutoSaveTask();
         getLogger().info(localizationManager.getMessage("plugin.enabled"));
     }
@@ -56,6 +38,28 @@ public class PetHorses extends JavaPlugin {
         horseDataManager.saveAllData();
         horseDataManager.close();
         getLogger().info(localizationManager.getMessage("plugin.disabled"));
+    }
+
+    private void initServices() {
+        this.configManager = new ConfigManager(this);
+        this.localizationManager = new LocalizationManager(this);
+        this.horseDataManager = new HorseDataManager(this);
+        this.horseService = new HorseService(this);
+        this.passengerService = new PassengerService(this);
+        this.chatInputListener = new ChatInputListener(this);
+        this.horseBackpackService = new HorseBackpackService(this);
+    }
+
+    private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new HorseEventListener(this), this);
+        getServer().getPluginManager().registerEvents(new HorseMovementListener(this), this);
+        getServer().getPluginManager().registerEvents(new HorseStatsMenuListener(this), this);
+        getServer().getPluginManager().registerEvents(new MenuClickListener(this), this);
+        getServer().getPluginManager().registerEvents(new HorseCustomizationMenu(this), this);
+        getServer().getPluginManager().registerEvents(chatInputListener, this);
+        getServer().getPluginManager().registerEvents(new HorseBackpackListener(this), this);
+        getServer().getPluginManager().registerEvents(new BackpackInventoryListener(this), this);
+        getServer().getPluginManager().registerEvents(new HorseArmorListener(this), this);
     }
 
     public ConfigManager getConfigManager() {
@@ -80,10 +84,6 @@ public class PetHorses extends JavaPlugin {
 
     public ChatInputListener getChatInputListener() {
         return chatInputListener;
-    }
-
-    public HorseBackpackService getHorseBackpackService() {
-        return horseBackpackService;
     }
 
     private void startAutoSaveTask() {
