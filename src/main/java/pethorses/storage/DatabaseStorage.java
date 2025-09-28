@@ -2,6 +2,7 @@ package pethorses.storage;
 
 import pethorses.PetHorses;
 import pethorses.config.ConfigManager;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -12,7 +13,6 @@ import java.io.ByteArrayOutputStream;
 import java.sql.*;
 import java.util.*;
 import java.util.logging.Logger;
-
 
 public class DatabaseStorage implements StorageStrategy {
     private final PetHorses plugin;
@@ -51,6 +51,7 @@ public class DatabaseStorage implements StorageStrategy {
                         "color VARCHAR(20) NOT NULL DEFAULT 'BROWN'," +
                         "style VARCHAR(20) NOT NULL DEFAULT 'NONE'," +
                         "horse_name VARCHAR(32)," +
+                        "horse_name_color VARCHAR(16)," +
                         "death_time BIGINT NOT NULL DEFAULT 0," +
                         "jumps INT NOT NULL DEFAULT 0," +
                         "blocks_traveled DOUBLE NOT NULL DEFAULT 0.0," +
@@ -88,6 +89,12 @@ public class DatabaseStorage implements StorageStrategy {
                 data.setColor(parseColor(rs.getString("color")));
                 data.setStyle(parseStyle(rs.getString("style")));
                 data.setHorseName(rs.getString("horse_name"));
+                String colorStr = rs.getString("horse_name_color");
+                if (colorStr != null) {
+                    data.setHorseNameColor(parseChatColor(colorStr));
+                } else {
+                    data.setHorseNameColor(ChatColor.WHITE);
+                }
                 data.setDeathTime(rs.getLong("death_time"));
                 data.setJumps(rs.getInt("jumps"));
                 data.setBlocksTraveled(rs.getDouble("blocks_traveled"));
@@ -137,12 +144,12 @@ public class DatabaseStorage implements StorageStrategy {
     public void saveHorseData(HorseData data) {
         if (connection == null || data.getOwnerId() == null) return;
         try (PreparedStatement stmt = connection.prepareStatement(
-                "INSERT INTO pet_horses (player_uuid, level, experience, color, style, horse_name, " +
+                "INSERT INTO pet_horses (player_uuid, level, experience, color, style, horse_name, horse_name_color, " +
                         "death_time, jumps, blocks_traveled, total_jumps, total_blocks_traveled, backpack_data, armor_data) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "level = VALUES(level), experience = VALUES(experience), color = VALUES(color), " +
-                        "style = VALUES(style), horse_name = VALUES(horse_name), death_time = VALUES(death_time), " +
+                        "style = VALUES(style), horse_name = VALUES(horse_name), horse_name_color = VALUES(horse_name_color), death_time = VALUES(death_time), " +
                         "jumps = VALUES(jumps), blocks_traveled = VALUES(blocks_traveled), " +
                         "total_jumps = VALUES(total_jumps), total_blocks_traveled = VALUES(total_blocks_traveled), " +
                         "backpack_data = VALUES(backpack_data), armor_data = VALUES(armor_data)")) {
@@ -152,23 +159,24 @@ public class DatabaseStorage implements StorageStrategy {
             stmt.setString(4, data.getColor().name());
             stmt.setString(5, data.getStyle().name());
             stmt.setString(6, data.getHorseName());
-            stmt.setLong(7, data.getDeathTime());
-            stmt.setInt(8, data.getJumps());
-            stmt.setDouble(9, data.getBlocksTraveled());
-            stmt.setInt(10, data.getTotalJumps());
-            stmt.setDouble(11, data.getTotalBlocksTraveled());
+            stmt.setString(7, data.getHorseNameColor().name());
+            stmt.setLong(8, data.getDeathTime());
+            stmt.setInt(9, data.getJumps());
+            stmt.setDouble(10, data.getBlocksTraveled());
+            stmt.setInt(11, data.getTotalJumps());
+            stmt.setDouble(12, data.getTotalBlocksTraveled());
 
             if (data.getBackpackItems() != null && data.getBackpackItems().length > 0) {
-                stmt.setBytes(12, serializeItemStacks(data.getBackpackItems()));
+                stmt.setBytes(13, serializeItemStacks(data.getBackpackItems()));
             } else {
-                stmt.setNull(12, Types.BLOB);
+                stmt.setNull(13, Types.BLOB);
             }
 
             if (data.getArmorItem() != null) {
                 ItemStack[] armor = {data.getArmorItem()};
-                stmt.setBytes(13, serializeItemStacks(armor));
+                stmt.setBytes(14, serializeItemStacks(armor));
             } else {
-                stmt.setNull(13, Types.BLOB);
+                stmt.setNull(14, Types.BLOB);
             }
 
             stmt.executeUpdate();
@@ -203,12 +211,12 @@ public class DatabaseStorage implements StorageStrategy {
 
     private void saveAllHorses() throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(
-                "INSERT INTO pet_horses (player_uuid, level, experience, color, style, horse_name, " +
+                "INSERT INTO pet_horses (player_uuid, level, experience, color, style, horse_name, horse_name_color, " +
                         "death_time, jumps, blocks_traveled, total_jumps, total_blocks_traveled, backpack_data, armor_data) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "level = VALUES(level), experience = VALUES(experience), color = VALUES(color), " +
-                        "style = VALUES(style), horse_name = VALUES(horse_name), death_time = VALUES(death_time), " +
+                        "style = VALUES(style), horse_name = VALUES(horse_name), horse_name_color = VALUES(horse_name_color), death_time = VALUES(death_time), " +
                         "jumps = VALUES(jumps), blocks_traveled = VALUES(blocks_traveled), " +
                         "total_jumps = VALUES(total_jumps), total_blocks_traveled = VALUES(total_blocks_traveled), " +
                         "backpack_data = VALUES(backpack_data), armor_data = VALUES(armor_data)")) {
@@ -219,23 +227,24 @@ public class DatabaseStorage implements StorageStrategy {
                 stmt.setString(4, data.getColor().name());
                 stmt.setString(5, data.getStyle().name());
                 stmt.setString(6, data.getHorseName());
-                stmt.setLong(7, data.getDeathTime());
-                stmt.setInt(8, data.getJumps());
-                stmt.setDouble(9, data.getBlocksTraveled());
-                stmt.setInt(10, data.getTotalJumps());
-                stmt.setDouble(11, data.getTotalBlocksTraveled());
+                stmt.setString(7, data.getHorseNameColor().name());
+                stmt.setLong(8, data.getDeathTime());
+                stmt.setInt(9, data.getJumps());
+                stmt.setDouble(10, data.getBlocksTraveled());
+                stmt.setInt(11, data.getTotalJumps());
+                stmt.setDouble(12, data.getTotalBlocksTraveled());
 
                 if (data.getBackpackItems() != null && data.getBackpackItems().length > 0) {
-                    stmt.setBytes(12, serializeItemStacks(data.getBackpackItems()));
+                    stmt.setBytes(13, serializeItemStacks(data.getBackpackItems()));
                 } else {
-                    stmt.setNull(12, Types.BLOB);
+                    stmt.setNull(13, Types.BLOB);
                 }
 
                 if (data.getArmorItem() != null) {
                     ItemStack[] armor = {data.getArmorItem()};
-                    stmt.setBytes(13, serializeItemStacks(armor));
+                    stmt.setBytes(14, serializeItemStacks(armor));
                 } else {
-                    stmt.setNull(13, Types.BLOB);
+                    stmt.setNull(14, Types.BLOB);
                 }
 
                 stmt.addBatch();
@@ -326,6 +335,14 @@ public class DatabaseStorage implements StorageStrategy {
             return Horse.Style.valueOf(styleStr);
         } catch (IllegalArgumentException e) {
             return Horse.Style.NONE;
+        }
+    }
+
+    private ChatColor parseChatColor(String colorStr) {
+        try {
+            return ChatColor.valueOf(colorStr);
+        } catch (Exception e) {
+            return ChatColor.WHITE;
         }
     }
 

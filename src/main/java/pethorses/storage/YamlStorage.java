@@ -1,6 +1,7 @@
 package pethorses.storage;
 
 import pethorses.PetHorses;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Horse;
@@ -47,6 +48,7 @@ public class YamlStorage implements StorageStrategy {
                 data.setColor(parseColor(dataConfig.getString(key + ".color", "BROWN")));
                 data.setStyle(parseStyle(dataConfig.getString(key + ".style", "NONE")));
                 data.setHorseName(dataConfig.getString(key + ".name"));
+                data.setHorseNameColor(parseChatColor(dataConfig.getString(key + ".horseNameColor", "WHITE")));
                 data.setDeathTime(dataConfig.getLong(key + ".deathTime", 0));
                 data.setJumps(dataConfig.getInt(key + ".jumps", 0));
                 data.setBlocksTraveled(dataConfig.getDouble(key + ".blocksTraveled", 0.0));
@@ -97,6 +99,7 @@ public class YamlStorage implements StorageStrategy {
         dataConfig.set(key + ".color", data.getColor().name());
         dataConfig.set(key + ".style", data.getStyle().name());
         dataConfig.set(key + ".name", data.getHorseName());
+        dataConfig.set(key + ".horseNameColor", data.getHorseNameColor().name());
         dataConfig.set(key + ".deathTime", data.getDeathTime());
         dataConfig.set(key + ".jumps", data.getJumps());
         dataConfig.set(key + ".blocksTraveled", data.getBlocksTraveled());
@@ -132,6 +135,7 @@ public class YamlStorage implements StorageStrategy {
             dataConfig.set(key + ".color", data.getColor().name());
             dataConfig.set(key + ".style", data.getStyle().name());
             dataConfig.set(key + ".name", data.getHorseName());
+            dataConfig.set(key + ".horseNameColor", data.getHorseNameColor().name());
             dataConfig.set(key + ".deathTime", data.getDeathTime());
             dataConfig.set(key + ".jumps", data.getJumps());
             dataConfig.set(key + ".blocksTraveled", data.getBlocksTraveled());
@@ -192,6 +196,14 @@ public class YamlStorage implements StorageStrategy {
             return Horse.Style.valueOf(styleStr);
         } catch (IllegalArgumentException e) {
             return Horse.Style.NONE;
+        }
+    }
+
+    private ChatColor parseChatColor(String colorStr) {
+        try {
+            return ChatColor.valueOf(colorStr);
+        } catch (Exception e) {
+            return ChatColor.WHITE;
         }
     }
 }

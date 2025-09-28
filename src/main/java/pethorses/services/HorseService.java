@@ -54,7 +54,7 @@ public class HorseService {
         horse.setStyle(data.getStyle());
 
         if (data.getHorseName() != null && !data.getHorseName().isEmpty()) {
-            horse.setCustomName(data.getHorseName());
+            horse.setCustomName(data.getHorseNameColor() + data.getHorseName());
             horse.setCustomNameVisible(true);
         }
 
@@ -81,6 +81,11 @@ public class HorseService {
         HorseData ownerData = getHorseData(((Player) horse.getOwner()).getUniqueId());
         ownerData.setJumps(0);
         ownerData.setBlocksTraveled(0.0);
+
+        if (ownerData.getHorseName() != null && !ownerData.getHorseName().isEmpty()) {
+            horse.setCustomName(ownerData.getHorseNameColor() + ownerData.getHorseName());
+            horse.setCustomNameVisible(true);
+        }
     }
 
     public void makeHorseFollow(Player player) {

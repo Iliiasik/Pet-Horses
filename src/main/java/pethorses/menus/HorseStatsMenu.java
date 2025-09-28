@@ -14,14 +14,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 
 public class HorseStatsMenu {
-    private static final int INVENTORY_SIZE = 36;
-    private static final int SLOT_LEVEL = 11;
-    private static final int SLOT_SPEED = 12;
-    private static final int SLOT_HEALTH = 13;
-    private static final int SLOT_JUMP = 14;
-    private static final int SLOT_STATUS = 15;
-    private static final int SLOT_TOTAL_BLOCKS = 34;
-    private static final int SLOT_TOTAL_JUMPS = 35;
+    private static final int INVENTORY_SIZE = 27;
+    private static final int SLOT_LEVEL = 10;
+    private static final int SLOT_SPEED = 11;
+    private static final int SLOT_HEALTH = 12;
+    private static final int SLOT_JUMP = 13;
+    private static final int SLOT_STATUS = 14;
+    private static final int SLOT_TOTAL_BLOCKS = 16;
+    private static final int SLOT_TOTAL_JUMPS = 17;
 
     public static void open(Player player, PetHorses plugin) {
         LocalizationManager lm = plugin.getLocalizationManager();
@@ -30,75 +30,51 @@ public class HorseStatsMenu {
 
         Inventory inv = Bukkit.createInventory(null, INVENTORY_SIZE, lm.getMessage("menu.stats.title"));
 
-        ItemStack levelItem = new ItemStack(Material.EXPERIENCE_BOTTLE);
-        ItemMeta levelMeta = levelItem.getItemMeta();
-        levelMeta.setDisplayName(lm.getMessage("menu.stats.level")
-                .replace("{level}", String.valueOf(data.getLevel())));
-        levelMeta.setLore(Arrays.asList(
-                lm.getMessage("menu.stats.experience")
-                        .replace("{current}", formatNumber(data.getExperience()))
-                        .replace("{required}", formatNumber(horseService.getXpRequiredForNextLevel(data.getLevel()))),
-                lm.getMessage("menu.stats.xp_to_next")
-                        .replace("{remaining}", formatNumber(horseService.getXpRequiredForNextLevel(data.getLevel()) - data.getExperience()))
-        ));
-        levelItem.setItemMeta(levelMeta);
-        inv.setItem(SLOT_LEVEL, levelItem);
-
-        ItemStack speedItem = new ItemStack(Material.SUGAR);
-        ItemMeta speedMeta = speedItem.getItemMeta();
-        speedMeta.setDisplayName(lm.getMessage("menu.stats.speed")
-                .replace("{value}", String.format("%.1f", 100.0 + (data.getLevel() * 5))));
-        speedItem.setItemMeta(speedMeta);
-        inv.setItem(SLOT_SPEED, speedItem);
-
-        ItemStack healthItem = new ItemStack(Material.APPLE);
-        ItemMeta healthMeta = healthItem.getItemMeta();
-        healthMeta.setDisplayName(lm.getMessage("menu.stats.health")
-                .replace("{value}", String.format("%.1f", 15 + (15 * (data.getLevel() / 20.0)))));
-        healthItem.setItemMeta(healthMeta);
-        inv.setItem(SLOT_HEALTH, healthItem);
-
-        ItemStack jumpItem = new ItemStack(Material.RABBIT_FOOT);
-        ItemMeta jumpMeta = jumpItem.getItemMeta();
-        jumpMeta.setDisplayName(lm.getMessage("menu.stats.jump_strength")
-                .replace("{value}", String.format("%.1f", 40 + (60 * (data.getLevel() / 20.0)))));
-        jumpItem.setItemMeta(jumpMeta);
-        inv.setItem(SLOT_JUMP, jumpItem);
+        setMenuItem(inv, SLOT_LEVEL, Material.EXPERIENCE_BOTTLE, lm.getMessage("menu.stats.level")
+                        .replace("{level}", String.valueOf(data.getLevel())),
+                Arrays.asList(
+                        lm.getMessage("menu.stats.experience")
+                                .replace("{current}", formatNumber(data.getExperience()))
+                                .replace("{required}", formatNumber(horseService.getXpRequiredForNextLevel(data.getLevel()))),
+                        lm.getMessage("menu.stats.xp_to_next")
+                                .replace("{remaining}", formatNumber(horseService.getXpRequiredForNextLevel(data.getLevel()) - data.getExperience()))
+                ));
+        setMenuItem(inv, SLOT_SPEED, Material.SUGAR, lm.getMessage("menu.stats.speed")
+                .replace("{value}", String.format("%.1f", 100.0 + (data.getLevel() * 5))), null);
+        setMenuItem(inv, SLOT_HEALTH, Material.APPLE, lm.getMessage("menu.stats.health")
+                .replace("{value}", String.format("%.1f", 15 + (15 * (data.getLevel() / 20.0)))), null);
+        setMenuItem(inv, SLOT_JUMP, Material.RABBIT_FOOT, lm.getMessage("menu.stats.jump_strength")
+                .replace("{value}", String.format("%.1f", 40 + (60 * (data.getLevel() / 20.0)))), null);
 
         boolean isOnCooldown = horseService.isOnCooldown(player.getUniqueId());
-        ItemStack statusItem = new ItemStack(isOnCooldown ? Material.RED_STAINED_GLASS_PANE : Material.LIME_STAINED_GLASS_PANE);
-        ItemMeta statusMeta = statusItem.getItemMeta();
-        statusMeta.setDisplayName(isOnCooldown ? lm.getMessage("menu.stats.status_cooldown") : lm.getMessage("menu.stats.status_ready"));
-        if (isOnCooldown) {
-            statusMeta.setLore(Arrays.asList(
-                    lm.getMessage("menu.stats.cooldown_remaining")
-                            .replace("{time}", horseService.getCooldownLeftFormatted(player.getUniqueId()))
-            ));
-        }
-        statusItem.setItemMeta(statusMeta);
-        inv.setItem(SLOT_STATUS, statusItem);
+        setMenuItem(inv, SLOT_STATUS, isOnCooldown ? Material.REDSTONE : Material.LIME_DYE,
+                isOnCooldown ? lm.getMessage("menu.stats.status_cooldown") : lm.getMessage("menu.stats.status_ready"),
+                isOnCooldown ? Arrays.asList(
+                        lm.getMessage("menu.stats.cooldown_remaining")
+                                .replace("{time}", horseService.getCooldownLeftFormatted(player.getUniqueId()))
+                ) : null);
 
-        ItemStack totalBlocksItem = new ItemStack(Material.FILLED_MAP);
-        ItemMeta totalBlocksMeta = totalBlocksItem.getItemMeta();
-        totalBlocksMeta.setDisplayName(lm.getMessage("menu.stats.total_blocks")
-                .replace("{value}", formatNumber(data.getTotalBlocksTraveled())));
-        totalBlocksMeta.setLore(Arrays.asList(
-                lm.getMessage("menu.stats.total_blocks_description")
-        ));
-        totalBlocksItem.setItemMeta(totalBlocksMeta);
-        inv.setItem(SLOT_TOTAL_BLOCKS, totalBlocksItem);
-
-        ItemStack totalJumpsItem = new ItemStack(Material.FEATHER);
-        ItemMeta totalJumpsMeta = totalJumpsItem.getItemMeta();
-        totalJumpsMeta.setDisplayName(lm.getMessage("menu.stats.total_jumps")
-                .replace("{value}", formatNumber(data.getTotalJumps())));
-        totalJumpsMeta.setLore(Arrays.asList(
-                lm.getMessage("menu.stats.total_jumps_description")
-        ));
-        totalJumpsItem.setItemMeta(totalJumpsMeta);
-        inv.setItem(SLOT_TOTAL_JUMPS, totalJumpsItem);
+        setMenuItem(inv, SLOT_TOTAL_BLOCKS, Material.FILLED_MAP, lm.getMessage("menu.stats.total_blocks")
+                        .replace("{value}", formatNumber(data.getTotalBlocksTraveled())),
+                Arrays.asList(
+                        lm.getMessage("menu.stats.total_blocks_description")
+                ));
+        setMenuItem(inv, SLOT_TOTAL_JUMPS, Material.FEATHER, lm.getMessage("menu.stats.total_jumps")
+                        .replace("{value}", formatNumber(data.getTotalJumps())),
+                Arrays.asList(
+                        lm.getMessage("menu.stats.total_jumps_description")
+                ));
 
         player.openInventory(inv);
+    }
+
+    private static void setMenuItem(Inventory inv, int slot, Material material, String displayName, java.util.List<String> lore) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(displayName);
+        if (lore != null) meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(slot, item);
     }
 
     private static String formatNumber(double number) {
