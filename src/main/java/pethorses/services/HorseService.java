@@ -103,12 +103,14 @@ public class HorseService {
                 Location horseLoc = horse.getLocation();
                 double distance = horseLoc.distance(playerLoc);
 
+                double speed = player.isSprinting() ? 2.5 : 1.5;
+
                 if (distance > 10) {
                     horse.teleport(playerLoc);
                 } else if (distance > 2) {
                     Vector direction = playerLoc.toVector().subtract(horseLoc.toVector()).normalize();
                     Location targetLoc = playerLoc.clone().subtract(direction.multiply(2));
-                    horse.getPathfinder().moveTo(targetLoc, 1.5);
+                    horse.getPathfinder().moveTo(targetLoc, speed);
                 }
             }
         }.runTaskTimer(plugin, 0L, 10L);

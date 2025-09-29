@@ -92,6 +92,8 @@ public class HorseEventListener implements Listener {
     public void onFallDamage(org.bukkit.event.entity.EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Horse)) return;
         if (event.getCause() != org.bukkit.event.entity.EntityDamageEvent.DamageCause.FALL) return;
-        event.setCancelled(true);
+        if (!plugin.getConfigManager().isFallDamageAllowed()) {
+            event.setCancelled(true);
+        }
     }
 }

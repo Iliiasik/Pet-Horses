@@ -1,8 +1,8 @@
 # General
 error:
-  players_only: "&1Este comando está disponível apenas para jogadores!"
-  unknown_command: "&1Comando desconhecido."
-  player_not_found: "&1Jogador não encontrado ou offline."
+  players_only: "&bEste comando está disponível apenas para jogadores!"
+  unknown_command: "&bComando desconhecido."
+  player_not_found: "&bJogador não encontrado ou offline."
 
 # Plugin
 plugin:
@@ -15,23 +15,23 @@ horse:
   hidden: "&9Seu cavalo está escondido."
   following: "&9O cavalo agora irá segui-lo."
   staying: "&9O cavalo ficará no lugar."
-  death_cooldown: "&1Seu cavalo morreu! Você pode convocá-lo novamente em &9{minutes} &1minutos."
-  not_yours: "&1Este não é o seu cavalo!"
-  already_has_passenger: "&1Alguém já está montando este cavalo!"
+  death_cooldown: "&bSeu cavalo morreu! Você pode convocá-lo novamente em &9{minutes} &1minutos."
+  not_yours: "&bEste não é o seu cavalo!"
+  already_has_passenger: "&bAlguém já está montando este cavalo!"
   passenger_mounted: "&9Você montou no cavalo."
   passenger_informed_owner: "&9{passenger} montou no seu cavalo."
-  cooldown_active: "&1Seu cavalo ainda está se recuperando! Tempo restante: &b{time}"
+  cooldown_active: "&bSeu cavalo ainda está se recuperando! Tempo restante: &b{time}"
   level_up: "&bSeu cavalo atingiu o nível &9{level}&b!"
 
 # Passenger System
 passenger:
-  usage_allow: "&1Uso: /horse allowpassenger <nome_do_jogador>"
-  usage_remove: "&1Uso: /horse removepassenger <nome_do_jogador>"
+  usage_allow: "&bUso: /horse allowpassenger <nome_do_jogador>"
+  usage_remove: "&bUso: /horse removepassenger <nome_do_jogador>"
   allowed: "&9Você permitiu que &b{player} &9montasse seu cavalo."
   informed_allowed: "&9{owner} permitiu que você montasse no cavalo dele."
   removed: "&1Você revogou a permissão de &b{player}&1 para montar seu cavalo."
-  informed_removed: "&1{owner} revogou sua permissão para montar no cavalo dele."
-  no_permission: "&1O dono do cavalo não deu permissão para você montar."
+  informed_removed: "&b{owner} revogou sua permissão para montar no cavalo dele."
+  no_permission: "&bO dono do cavalo não deu permissão para você montar."
   list_empty: "&bVocê não tem passageiros autorizados."
   list_header: "&3Passageiros autorizados:"
   list_item: "&9- {player}"
@@ -54,7 +54,7 @@ help:
 input:
   prompt: "&3Digite um valor no chat ou 'cancel' para cancelar"
   cancel_keyword: "cancel"
-  cancelled: "&1Ação cancelada"
+  cancelled: "&bAção cancelada"
 
 # Menus
 menu:

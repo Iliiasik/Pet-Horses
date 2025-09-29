@@ -1,8 +1,8 @@
 # General
 error:
-  players_only: "&1此命令仅限玩家使用！"
-  unknown_command: "&1未知命令。"
-  player_not_found: "&1未找到玩家或玩家离线。"
+  players_only: "&b此命令仅限玩家使用！"
+  unknown_command: "&b未知命令。"
+  player_not_found: "&b未找到玩家或玩家离线。"
 
 # Plugin
 plugin:
@@ -15,23 +15,23 @@ horse:
   hidden: "&9你的马已隐藏。"
   following: "&9马现在会跟随你。"
   staying: "&9马会停留在原地。"
-  death_cooldown: "&1你的马已死亡！你可以在 &9{minutes} &1分钟后再次召唤它。"
-  not_yours: "&1这不是你的马！"
-  already_has_passenger: "&1已有玩家骑在这匹马上！"
+  death_cooldown: "&b你的马已死亡！你可以在 &9{minutes} &1分钟后再次召唤它。"
+  not_yours: "&b这不是你的马！"
+  already_has_passenger: "&b已有玩家骑在这匹马上！"
   passenger_mounted: "&9你已骑上马。"
   passenger_informed_owner: "&9{passenger} 已骑上你的马。"
-  cooldown_active: "&1你的马仍在恢复中！剩余时间：&b{time}"
+  cooldown_active: "&b你的马仍在恢复中！剩余时间：&b{time}"
   level_up: "&b你的马已达到等级 &9{level}&b！"
 
 # Passenger System
 passenger:
-  usage_allow: "&1用法：/horse allowpassenger <玩家名>"
-  usage_remove: "&1用法：/horse removepassenger <玩家名>"
+  usage_allow: "&b用法：/horse allowpassenger <玩家名>"
+  usage_remove: "&b用法：/horse removepassenger <玩家名>"
   allowed: "&9你已允许 &b{player} &9骑你的马。"
   informed_allowed: "&9{owner} 已允许你骑他的马。"
   removed: "&1你已撤销 &b{player}&1 骑你的马的权限。"
-  informed_removed: "&1{owner} 已撤销你骑他的马的权限。"
-  no_permission: "&1马的主人未授予你骑乘权限。"
+  informed_removed: "&b{owner} 已撤销你骑他的马的权限。"
+  no_permission: "&b马的主人未授予你骑乘权限。"
   list_empty: "&b你没有授权乘客。"
   list_header: "&3已授权乘客："
   list_item: "&9- {player}"
@@ -54,7 +54,7 @@ help:
 input:
   prompt: "&3在聊天中输入一个值或输入 'cancel' 取消"
   cancel_keyword: "cancel"
-  cancelled: "&1操作已取消"
+  cancelled: "&b操作已取消"
 
 # Menus
 menu:

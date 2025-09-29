@@ -1,8 +1,8 @@
 # General
 error:
-  players_only: "&1このコマンドはプレイヤーのみ利用可能です！"
-  unknown_command: "&1不明なコマンドです。"
-  player_not_found: "&1プレイヤーが見つからないかオフラインです。"
+  players_only: "&bこのコマンドはプレイヤーのみ利用可能です！"
+  unknown_command: "&b不明なコマンドです。"
+  player_not_found: "&bプレイヤーが見つからないかオフラインです。"
 
 # Plugin
 plugin:
@@ -15,23 +15,23 @@ horse:
   hidden: "&9あなたの馬は隠されています。"
   following: "&9馬があなたを追従します。"
   staying: "&9馬はその場に留まります。"
-  death_cooldown: "&1あなたの馬が死亡しました！&9{minutes} &1分後に再召喚できます。"
-  not_yours: "&1これはあなたの馬ではありません！"
-  already_has_passenger: "&1この馬には既に乗っている人がいます！"
+  death_cooldown: "&bあなたの馬が死亡しました！&9{minutes} &1分後に再召喚できます。"
+  not_yours: "&bこれはあなたの馬ではありません！"
+  already_has_passenger: "&bこの馬には既に乗っている人がいます！"
   passenger_mounted: "&9馬に乗りました。"
   passenger_informed_owner: "&9{passenger} があなたの馬に乗りました。"
-  cooldown_active: "&1馬はまだ回復中です！残り時間: &b{time}"
+  cooldown_active: "&b馬はまだ回復中です！残り時間: &b{time}"
   level_up: "&bあなたの馬はレベル &9{level}&b に到達しました！"
 
 # Passenger System
 passenger:
-  usage_allow: "&1使い方: /horse allowpassenger <player_name>"
-  usage_remove: "&1使い方: /horse removepassenger <player_name>"
+  usage_allow: "&b使い方: /horse allowpassenger <player_name>"
+  usage_remove: "&b使い方: /horse removepassenger <player_name>"
   allowed: "&9{player} があなたの馬に乗ることを許可されました。"
   informed_allowed: "&9{owner} があなたに馬に乗ることを許可しました。"
   removed: "&1{player} の馬に乗る権限を取り消しました。"
-  informed_removed: "&1{owner} があなたの馬に乗る権限を取り消しました。"
-  no_permission: "&1馬の所有者はあなたに乗る許可を与えていません。"
+  informed_removed: "&b{owner} があなたの馬に乗る権限を取り消しました。"
+  no_permission: "&b馬の所有者はあなたに乗る許可を与えていません。"
   list_empty: "&b許可された乗客はいません。"
   list_header: "&3許可された乗客:"
   list_item: "&9- {player}"
@@ -54,7 +54,7 @@ help:
 input:
   prompt: "&3チャットで値を入力するか 'cancel' でキャンセル"
   cancel_keyword: "cancel"
-  cancelled: "&1操作がキャンセルされました"
+  cancelled: "&b操作がキャンセルされました"
 
 # Menus
 menu:

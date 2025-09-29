@@ -1,8 +1,8 @@
 # General
 error:
-  players_only: "&1Questo comando è disponibile solo per i giocatori!"
-  unknown_command: "&1Comando sconosciuto."
-  player_not_found: "&1Giocatore non trovato o offline."
+  players_only: "&bQuesto comando è disponibile solo per i giocatori!"
+  unknown_command: "&bComando sconosciuto."
+  player_not_found: "&bGiocatore non trovato o offline."
 
 # Plugin
 plugin:
@@ -15,23 +15,23 @@ horse:
   hidden: "&9Il tuo cavallo è nascosto."
   following: "&9Il cavallo ti seguirà ora."
   staying: "&9Il cavallo rimarrà fermo."
-  death_cooldown: "&1Il tuo cavallo è morto! Puoi evocarlo di nuovo tra &9{minutes} &1minuti."
-  not_yours: "&1Questo non è il tuo cavallo!"
-  already_has_passenger: "&1Qualcuno sta già cavalcando questo cavallo!"
+  death_cooldown: "&bIl tuo cavallo è morto! Puoi evocarlo di nuovo tra &9{minutes} &1minuti."
+  not_yours: "&bQuesto non è il tuo cavallo!"
+  already_has_passenger: "&bQualcuno sta già cavalcando questo cavallo!"
   passenger_mounted: "&9Hai montato il cavallo."
   passenger_informed_owner: "&9{passenger} ha montato il tuo cavallo."
-  cooldown_active: "&1Il tuo cavallo si sta ancora riprendendo! Tempo rimasto: &b{time}"
+  cooldown_active: "&bIl tuo cavallo si sta ancora riprendendo! Tempo rimasto: &b{time}"
   level_up: "&bIl tuo cavallo ha raggiunto il livello &9{level}&b!"
 
 # Passenger System
 passenger:
-  usage_allow: "&1Uso: /horse allowpassenger <player_name>"
-  usage_remove: "&1Uso: /horse removepassenger <player_name>"
+  usage_allow: "&bUso: /horse allowpassenger <player_name>"
+  usage_remove: "&bUso: /horse removepassenger <player_name>"
   allowed: "&9Hai permesso a &b{player} &9di cavalcare il tuo cavallo."
   informed_allowed: "&9{owner} ti ha permesso di cavalcare il suo cavallo."
   removed: "&1Hai revocato il permesso a &b{player}&1 di cavalcare il tuo cavallo."
-  informed_removed: "&1{owner} ha revocato il tuo permesso di cavalcare il suo cavallo."
-  no_permission: "&1Il proprietario del cavallo non ti ha dato il permesso di cavalcare."
+  informed_removed: "&b{owner} ha revocato il tuo permesso di cavalcare il suo cavallo."
+  no_permission: "&bIl proprietario del cavallo non ti ha dato il permesso di cavalcare."
   list_empty: "&bNon hai passeggeri autorizzati."
   list_header: "&3Passeggeri autorizzati:"
   list_item: "&9- {player}"
@@ -54,7 +54,7 @@ help:
 input:
   prompt: "&3Inserisci un valore in chat o 'cancel' per annullare"
   cancel_keyword: "cancel"
-  cancelled: "&1Azione annullata"
+  cancelled: "&bAzione annullata"
 
 # Menus
 menu:

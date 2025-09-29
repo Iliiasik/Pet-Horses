@@ -78,6 +78,10 @@ public class ConfigManager {
         return config.getLong("respawn_cooldown_minutes", 15);
     }
 
+    public boolean isFallDamageAllowed() {
+        return config.getBoolean("allow_fall_damage", false);
+    }
+
     public int getBackpackBaseSize() {
         return config.getInt("backpack.base_size", 9);
     }

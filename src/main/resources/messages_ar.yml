@@ -1,8 +1,8 @@
 # General
 error:
-  players_only: "&1هذا الأمر متاح للاعبين فقط!"
-  unknown_command: "&1أمر غير معروف."
-  player_not_found: "&1لم يتم العثور على اللاعب أو هو غير متصل."
+  players_only: "&bهذا الأمر متاح للاعبين فقط!"
+  unknown_command: "&bأمر غير معروف."
+  player_not_found: "&bلم يتم العثور على اللاعب أو هو غير متصل."
 
 # Plugin
 plugin:
@@ -15,23 +15,23 @@ horse:
   hidden: "&9حصانك مخفي."
   following: "&9سيقوم الحصان الآن باتباعك."
   staying: "&9سيبقى الحصان في مكانه."
-  death_cooldown: "&1لقد مات حصانك! يمكنك استدعاؤه مرة أخرى خلال &9{minutes} &1دقيقة."
-  not_yours: "&1هذا ليس حصانك!"
-  already_has_passenger: "&1هناك شخص يركب هذا الحصان بالفعل!"
+  death_cooldown: "&bلقد مات حصانك! يمكنك استدعاؤه مرة أخرى خلال &9{minutes} &1دقيقة."
+  not_yours: "&bهذا ليس حصانك!"
+  already_has_passenger: "&bهناك شخص يركب هذا الحصان بالفعل!"
   passenger_mounted: "&9لقد ركبت الحصان."
   passenger_informed_owner: "&9{passenger} ركب حصانك."
-  cooldown_active: "&1حصانك لا يزال يتعافى! الوقت المتبقي: &b{time}"
+  cooldown_active: "&bحصانك لا يزال يتعافى! الوقت المتبقي: &b{time}"
   level_up: "&bوصل حصانك إلى المستوى &9{level}&b!"
 
 # Passenger System
 passenger:
-  usage_allow: "&1الاستخدام: /horse allowpassenger <player_name>"
-  usage_remove: "&1الاستخدام: /horse removepassenger <player_name>"
+  usage_allow: "&bالاستخدام: /horse allowpassenger <player_name>"
+  usage_remove: "&bالاستخدام: /horse removepassenger <player_name>"
   allowed: "&9لقد سمحت لـ &b{player} &9بركوب حصانك."
   informed_allowed: "&9{owner} سمح لك بركوب حصانه."
   removed: "&1لقد ألغيت إذن &b{player}&1 لركوب حصانك."
-  informed_removed: "&1{owner} ألغى إذنك لركوب حصانه."
-  no_permission: "&1مالك الحصان لم يمنحك إذن الركوب."
+  informed_removed: "&b{owner} ألغى إذنك لركوب حصانه."
+  no_permission: "&bمالك الحصان لم يمنحك إذن الركوب."
   list_empty: "&bليس لديك ركاب مصرح لهم."
   list_header: "&3الركاب المصرح لهم:"
   list_item: "&9- {player}"
@@ -54,7 +54,7 @@ help:
 input:
   prompt: "&3أدخل قيمة في الدردشة أو 'cancel' للإلغاء"
   cancel_keyword: "cancel"
-  cancelled: "&1تم إلغاء الإجراء"
+  cancelled: "&bتم إلغاء الإجراء"
 
 # Menus
 menu:

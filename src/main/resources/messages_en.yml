@@ -1,8 +1,8 @@
 # General
 error:
-  players_only: "&1This command is only available to players!"
-  unknown_command: "&1Unknown command."
-  player_not_found: "&1Player not found or offline."
+  players_only: "&bThis command is only available to players!"
+  unknown_command: "&bUnknown command."
+  player_not_found: "&bPlayer not found or offline."
 
 # Plugin
 plugin:
@@ -15,23 +15,23 @@ horse:
   hidden: "&9Your horse is hidden."
   following: "&9The horse will now follow you."
   staying: "&9The horse will stay in place."
-  death_cooldown: "&1Your horse has died! You can summon it again in &9{minutes} &1minutes."
-  not_yours: "&1This is not your horse!"
-  already_has_passenger: "&1Someone is already riding this horse!"
+  death_cooldown: "&bYour horse has died! You can summon it again in &9{minutes} &1minutes."
+  not_yours: "&bThis is not your horse!"
+  already_has_passenger: "&bSomeone is already riding this horse!"
   passenger_mounted: "&9You have mounted the horse."
   passenger_informed_owner: "&9{passenger} has mounted your horse."
-  cooldown_active: "&1Your horse is still recovering! Time left: &b{time}"
+  cooldown_active: "&bYour horse is still recovering! Time left: &b{time}"
   level_up: "&bYour horse has reached level &9{level}&b!"
 
 # Passenger System
 passenger:
-  usage_allow: "&1Usage: /horse allowpassenger <player_name>"
-  usage_remove: "&1Usage: /horse removepassenger <player_name>"
+  usage_allow: "&bUsage: /horse allowpassenger <player_name>"
+  usage_remove: "&bUsage: /horse removepassenger <player_name>"
   allowed: "&9You have allowed &b{player} &9to ride your horse."
   informed_allowed: "&9{owner} has allowed you to ride their horse."
   removed: "&1You have revoked &b{player}&1's permission to ride your horse."
-  informed_removed: "&1{owner} has revoked your permission to ride their horse."
-  no_permission: "&1The horse's owner has not given you permission to ride."
+  informed_removed: "&b{owner} has revoked your permission to ride their horse."
+  no_permission: "&bThe horse's owner has not given you permission to ride."
   list_empty: "&bYou have no authorized passengers."
   list_header: "&3Authorized Passengers:"
   list_item: "&9- {player}"
@@ -54,7 +54,7 @@ help:
 input:
   prompt: "&3Enter a value in chat or 'cancel' to cancel"
   cancel_keyword: "cancel"
-  cancelled: "&1Action cancelled"
+  cancelled: "&bAction cancelled"
 
 # Menus
 menu:

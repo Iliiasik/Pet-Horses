@@ -1,8 +1,8 @@
 # General
 error:
-  players_only: "&1Dieser Befehl ist nur für Spieler verfügbar!"
-  unknown_command: "&1Unbekannter Befehl."
-  player_not_found: "&1Spieler nicht gefunden oder offline."
+  players_only: "&bDieser Befehl ist nur für Spieler verfügbar!"
+  unknown_command: "&bUnbekannter Befehl."
+  player_not_found: "&bSpieler nicht gefunden oder offline."
 
 # Plugin
 plugin:
@@ -15,23 +15,23 @@ horse:
   hidden: "&9Dein Pferd ist versteckt."
   following: "&9Das Pferd wird dir jetzt folgen."
   staying: "&9Das Pferd bleibt an Ort und Stelle."
-  death_cooldown: "&1Dein Pferd ist gestorben! Du kannst es in &9{minutes} &1Minuten erneut rufen."
-  not_yours: "&1Das ist nicht dein Pferd!"
-  already_has_passenger: "&1Jemand reitet bereits dieses Pferd!"
+  death_cooldown: "&bDein Pferd ist gestorben! Du kannst es in &9{minutes} &1Minuten erneut rufen."
+  not_yours: "&bDas ist nicht dein Pferd!"
+  already_has_passenger: "&bJemand reitet bereits dieses Pferd!"
   passenger_mounted: "&9Du bist auf das Pferd aufgestiegen."
   passenger_informed_owner: "&9{passenger} ist auf dein Pferd aufgestiegen."
-  cooldown_active: "&1Dein Pferd erholt sich noch! Verbleibende Zeit: &b{time}"
+  cooldown_active: "&bDein Pferd erholt sich noch! Verbleibende Zeit: &b{time}"
   level_up: "&bDein Pferd hat Level &9{level}&b erreicht!"
 
 # Passenger System
 passenger:
-  usage_allow: "&1Verwendung: /horse allowpassenger <player_name>"
-  usage_remove: "&1Verwendung: /horse removepassenger <player_name>"
+  usage_allow: "&bVerwendung: /horse allowpassenger <player_name>"
+  usage_remove: "&bVerwendung: /horse removepassenger <player_name>"
   allowed: "&9Du hast &b{player} &9erlaubt, dein Pferd zu reiten."
   informed_allowed: "&9{owner} hat dir erlaubt, ihr Pferd zu reiten."
   removed: "&1Du hast &b{player}&1 die Erlaubnis entzogen, dein Pferd zu reiten."
-  informed_removed: "&1{owner} hat dir die Erlaubnis entzogen, ihr Pferd zu reiten."
-  no_permission: "&1Der Besitzer des Pferdes hat dir keine Erlaubnis gegeben zu reiten."
+  informed_removed: "&b{owner} hat dir die Erlaubnis entzogen, ihr Pferd zu reiten."
+  no_permission: "&bDer Besitzer des Pferdes hat dir keine Erlaubnis gegeben zu reiten."
   list_empty: "&bDu hast keine autorisierten Passagiere."
   list_header: "&3Autorisierte Passagiere:"
   list_item: "&9- {player}"
@@ -54,7 +54,7 @@ help:
 input:
   prompt: "&3Gib einen Wert im Chat ein oder 'cancel' zum Abbrechen"
   cancel_keyword: "cancel"
-  cancelled: "&1Aktion abgebrochen"
+  cancelled: "&bAktion abgebrochen"
 
 # Menus
 menu:

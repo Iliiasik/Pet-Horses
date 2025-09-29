@@ -1,8 +1,8 @@
 # General
 error:
-  players_only: "&1यह कमांड केवल खिलाड़ियों के लिए उपलब्ध है!"
-  unknown_command: "&1अज्ञात कमांड।"
-  player_not_found: "&1खिलाड़ी नहीं मिला या ऑफ़लाइन है।"
+  players_only: "&bयह कमांड केवल खिलाड़ियों के लिए उपलब्ध है!"
+  unknown_command: "&bअज्ञात कमांड।"
+  player_not_found: "&bखिलाड़ी नहीं मिला या ऑफ़लाइन है।"
 
 # Plugin
 plugin:
@@ -15,23 +15,23 @@ horse:
   hidden: "&9आपका घोड़ा छिपा दिया गया है।"
   following: "&9घोड़ा अब आपका पीछा करेगा।"
   staying: "&9घोड़ा अपनी जगह पर रहेगा।"
-  death_cooldown: "&1आपका घोड़ा मर गया! आप इसे &9{minutes} &1मिनट में फिर से बुला सकते हैं।"
-  not_yours: "&1यह आपका घोड़ा नहीं है!"
-  already_has_passenger: "&1कोई पहले से ही इस घोड़े पर सवार है!"
+  death_cooldown: "&bआपका घोड़ा मर गया! आप इसे &9{minutes} &1मिनट में फिर से बुला सकते हैं।"
+  not_yours: "&bयह आपका घोड़ा नहीं है!"
+  already_has_passenger: "&bकोई पहले से ही इस घोड़े पर सवार है!"
   passenger_mounted: "&9आप घोड़े पर सवार हो गए।"
   passenger_informed_owner: "&9{passenger} आपके घोड़े पर सवार हो गया है।"
-  cooldown_active: "&1आपका घोड़ा अभी भी ठीक हो रहा है! शेष समय: &b{time}"
+  cooldown_active: "&bआपका घोड़ा अभी भी ठीक हो रहा है! शेष समय: &b{time}"
   level_up: "&bआपका घोड़ा स्तर &9{level}&b पर पहुँच गया है!"
 
 # Passenger System
 passenger:
-  usage_allow: "&1प्रयोग: /horse allowpassenger <player_name>"
-  usage_remove: "&1प्रयोग: /horse removepassenger <player_name>"
+  usage_allow: "&bप्रयोग: /horse allowpassenger <player_name>"
+  usage_remove: "&bप्रयोग: /horse removepassenger <player_name>"
   allowed: "&9आपने &b{player} &9को अपने घोड़े पर सवार होने की अनुमति दी।"
   informed_allowed: "&9{owner} ने आपको अपने घोड़े पर सवार होने की अनुमति दी है।"
   removed: "&1आपने &b{player}&1 की अनुमति रद्द कर दी।"
-  informed_removed: "&1{owner} ने आपकी सवारी की अनुमति रद्द कर दी है।"
-  no_permission: "&1घोड़े के मालिक ने आपको अनुमति नहीं दी है।"
+  informed_removed: "&b{owner} ने आपकी सवारी की अनुमति रद्द कर दी है।"
+  no_permission: "&bघोड़े के मालिक ने आपको अनुमति नहीं दी है।"
   list_empty: "&bआपके पास कोई अधिकृत यात्री नहीं है।"
   list_header: "&3अधिकृत यात्री:"
   list_item: "&9- {player}"
@@ -54,7 +54,7 @@ help:
 input:
   prompt: "&3चैट में एक मान दर्ज करें या 'cancel' टाइप करें रद्द करने के लिए"
   cancel_keyword: "cancel"
-  cancelled: "&1क्रिया रद्द कर दी गई"
+  cancelled: "&bक्रिया रद्द कर दी गई"
 
 # Menus
 menu:
