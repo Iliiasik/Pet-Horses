@@ -35,18 +35,32 @@ public class DatabaseStorage implements StorageStrategy {
 
     @Override
     public HorseData getHorseData(UUID playerId) {
-        return horsesData.computeIfAbsent(playerId, k -> new HorseData());
+        return horsesData.computeIfAbsent(playerId, k -> {
+            HorseData hd = new HorseData();
+            hd.setOwnerId(playerId);
+            return hd;
+        });
     }
 
     @Override
     public void saveHorseData(HorseData data) {
+        if (data.getOwnerId() == null) {
+            System.err.println("Attempted to save HorseData with null ownerId. Skipping save.");
+            return;
+        }
         horsesData.put(data.getOwnerId(), data);
         horseRepo.save(data);
     }
 
     @Override
     public void saveAllData() {
-        horsesData.values().forEach(horseRepo::save);
+        horsesData.values().forEach(hd -> {
+            if (hd != null && hd.getOwnerId() != null) {
+                horseRepo.save(hd);
+            } else {
+                System.err.println("Skipping save for HorseData with null ownerId.");
+            }
+        });
     }
 
     @Override
@@ -69,5 +83,9 @@ public class DatabaseStorage implements StorageStrategy {
 
     public void close() {
         dbManager.close();
+    }
+
+    public Set<UUID> getAllPlayerIds() {
+        return horsesData.keySet();
     }
 }

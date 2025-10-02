@@ -50,4 +50,13 @@ public class HorseDataManager {
             ((DatabaseStorage) storage).close();
         }
     }
+
+    public Set<UUID> getAllPlayerIds() {
+        if (storage instanceof YamlStorage) {
+            return ((YamlStorage) storage).getAllPlayerIds();
+        } else if (storage instanceof DatabaseStorage) {
+            return ((DatabaseStorage) storage).getAllPlayerIds();
+        }
+        return Set.of();
+    }
 }

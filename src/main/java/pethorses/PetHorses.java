@@ -11,6 +11,8 @@ import pethorses.services.PassengerService;
 import pethorses.storage.HorseDataManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.UUID;
+
 public class PetHorses extends JavaPlugin {
     private ConfigManager configManager;
     private LocalizationManager localizationManager;
@@ -35,6 +37,9 @@ public class PetHorses extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (UUID playerId : horseDataManager.getAllPlayerIds()) {
+            horseService.hideHorse(horseDataManager.getHorseData(playerId));
+        }
         horseDataManager.saveAllData();
         horseDataManager.close();
         getLogger().info(localizationManager.getMessage("plugin.disabled"));

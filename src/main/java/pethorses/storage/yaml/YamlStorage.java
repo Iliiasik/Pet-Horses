@@ -46,11 +46,19 @@ public class YamlStorage implements StorageStrategy {
 
     @Override
     public HorseData getHorseData(UUID playerId) {
-        return horsesData.computeIfAbsent(playerId, k -> new HorseData());
+        return horsesData.computeIfAbsent(playerId, k -> {
+            HorseData hd = new HorseData();
+            hd.setOwnerId(playerId);
+            return hd;
+        });
     }
 
     @Override
     public void saveHorseData(HorseData data) {
+        if (data.getOwnerId() == null) {
+            logger.warning("Attempted to save HorseData with null ownerId. Skipping save.");
+            return;
+        }
         horseRepo.save(data);
         passengerRepo.save(data.getOwnerId(), passengerPermissions.getOrDefault(data.getOwnerId(), Collections.emptySet()));
         saveToFile();
@@ -60,6 +68,10 @@ public class YamlStorage implements StorageStrategy {
     public void saveAllData() {
         dataConfig.getKeys(false).forEach(key -> dataConfig.set(key, null));
         for (Map.Entry<UUID, HorseData> entry : horsesData.entrySet()) {
+            if (entry.getKey() == null || entry.getValue() == null || entry.getValue().getOwnerId() == null) {
+                logger.warning("Skipping save for horse with null ownerId or HorseData.");
+                continue;
+            }
             horseRepo.save(entry.getValue());
             passengerRepo.save(entry.getKey(), passengerPermissions.getOrDefault(entry.getKey(), Collections.emptySet()));
         }
@@ -84,5 +96,9 @@ public class YamlStorage implements StorageStrategy {
     @Override
     public void removePassenger(UUID ownerUUID, UUID passengerUUID) {
         passengerPermissions.getOrDefault(ownerUUID, Collections.emptySet()).remove(passengerUUID);
+    }
+
+    public Set<UUID> getAllPlayerIds() {
+        return horsesData.keySet();
     }
 }
