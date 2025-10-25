@@ -1,9 +1,9 @@
 package pethorses.storage.database;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.ItemStack;
 import pethorses.storage.HorseData;
+import pethorses.util.TextUtil;
 
 import java.sql.*;
 import java.util.*;
@@ -58,7 +58,7 @@ public class HorseDataRepository {
                 data.setStyle(Horse.Style.valueOf(rs.getString("style")));
                 data.setHorseName(rs.getString("horse_name"));
                 String colorStr = rs.getString("horse_name_color");
-                data.setHorseNameColor(colorStr != null ? ChatColor.valueOf(colorStr) : ChatColor.WHITE);
+                data.setHorseNameColor(TextUtil.parseNamedTextColor(colorStr));
                 data.setDeathTime(rs.getLong("death_time"));
                 data.setJumps(rs.getInt("jumps"));
                 data.setBlocksTraveled(rs.getDouble("blocks_traveled"));
@@ -85,6 +85,7 @@ public class HorseDataRepository {
     }
 
     public void save(HorseData data) {
+        if (data == null || data.getOwnerId() == null) return;
         try (Connection conn = dbManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(
                      "INSERT INTO pet_horses (player_uuid, level, experience, color, style, horse_name, horse_name_color, " +
@@ -99,10 +100,10 @@ public class HorseDataRepository {
             stmt.setString(1, data.getOwnerId().toString());
             stmt.setInt(2, data.getLevel());
             stmt.setInt(3, data.getExperience());
-            stmt.setString(4, data.getColor().name());
-            stmt.setString(5, data.getStyle().name());
+            stmt.setString(4, (data.getColor() != null) ? data.getColor().name() : Horse.Color.BROWN.name());
+            stmt.setString(5, (data.getStyle() != null) ? data.getStyle().name() : Horse.Style.NONE.name());
             stmt.setString(6, data.getHorseName());
-            stmt.setString(7, data.getHorseNameColor().name());
+            stmt.setString(7, TextUtil.namedTextColorToKey(data.getHorseNameColor()));
             stmt.setLong(8, data.getDeathTime());
             stmt.setInt(9, data.getJumps());
             stmt.setDouble(10, data.getBlocksTraveled());

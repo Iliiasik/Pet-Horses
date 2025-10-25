@@ -1,12 +1,13 @@
 package pethorses.storage.yaml;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.configuration.file.FileConfiguration;
 import pethorses.storage.HorseData;
+import pethorses.util.TextUtil;
 
 import java.util.*;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 public class YamlHorseDataRepository {
     private final FileConfiguration config;
@@ -24,7 +25,7 @@ public class YamlHorseDataRepository {
         data.setColor(parseColor(config.getString(key + ".color", "BROWN")));
         data.setStyle(parseStyle(config.getString(key + ".style", "NONE")));
         data.setHorseName(config.getString(key + ".name"));
-        data.setHorseNameColor(parseChatColor(config.getString(key + ".horseNameColor", "WHITE")));
+        data.setHorseNameColor(parseNamedTextColor(config.getString(key + ".horseNameColor", null)));
         data.setDeathTime(config.getLong(key + ".deathTime", 0));
         data.setJumps(config.getInt(key + ".jumps", 0));
         data.setBlocksTraveled(config.getDouble(key + ".blocksTraveled", 0.0));
@@ -34,7 +35,15 @@ public class YamlHorseDataRepository {
         if (config.contains(key + ".backpack")) {
             List<?> backpackList = config.getList(key + ".backpack");
             if (backpackList != null) {
-                ItemStack[] backpackItems = backpackList.toArray(new ItemStack[0]);
+                ItemStack[] backpackItems = new ItemStack[backpackList.size()];
+                for (int i = 0; i < backpackList.size(); i++) {
+                    Object o = backpackList.get(i);
+                    if (o instanceof ItemStack) {
+                        backpackItems[i] = (ItemStack) o;
+                    } else {
+                        backpackItems[i] = null;
+                    }
+                }
                 data.setBackpackItems(backpackItems);
             }
         }
@@ -45,13 +54,18 @@ public class YamlHorseDataRepository {
     }
 
     public void save(HorseData data) {
+        if (data == null || data.getOwnerId() == null) {
+            return;
+        }
         String key = data.getOwnerId().toString();
         config.set(key + ".level", data.getLevel());
         config.set(key + ".experience", data.getExperience());
-        config.set(key + ".color", data.getColor().name());
-        config.set(key + ".style", data.getStyle().name());
+        config.set(key + ".color", (data.getColor() != null) ? data.getColor().name() : Horse.Color.BROWN.name());
+        config.set(key + ".style", (data.getStyle() != null) ? data.getStyle().name() : Horse.Style.NONE.name());
         config.set(key + ".name", data.getHorseName());
-        config.set(key + ".horseNameColor", data.getHorseNameColor().name());
+        NamedTextColor ntc = data.getHorseNameColor();
+        String saveColor = TextUtil.namedTextColorToKey(ntc);
+        config.set(key + ".horseNameColor", saveColor);
         config.set(key + ".deathTime", data.getDeathTime());
         config.set(key + ".jumps", data.getJumps());
         config.set(key + ".blocksTraveled", data.getBlocksTraveled());
@@ -73,8 +87,8 @@ public class YamlHorseDataRepository {
         try { return Horse.Style.valueOf(styleStr); }
         catch (Exception e) { return Horse.Style.NONE; }
     }
-    private ChatColor parseChatColor(String colorStr) {
-        try { return ChatColor.valueOf(colorStr); }
-        catch (Exception e) { return ChatColor.WHITE; }
+    private NamedTextColor parseNamedTextColor(String colorStr) {
+        if (colorStr == null) return net.kyori.adventure.text.format.NamedTextColor.WHITE;
+        return TextUtil.parseNamedTextColor(colorStr);
     }
 }

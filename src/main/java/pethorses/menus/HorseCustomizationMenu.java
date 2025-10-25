@@ -2,9 +2,12 @@ package pethorses.menus;
 
 import pethorses.PetHorses;
 import pethorses.config.LocalizationManager;
+import pethorses.inventory.MenuHolder;
 import pethorses.storage.HorseData;
 import pethorses.services.HorseService;
-import org.bukkit.ChatColor;
+import pethorses.util.TextUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
@@ -15,6 +18,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 
@@ -71,22 +75,22 @@ public class HorseCustomizationMenu implements Listener {
             "name_color_light_purple"
     };
 
-    private static final ChatColor[] nameChatColors = {
-            ChatColor.WHITE,
-            ChatColor.GRAY,
-            ChatColor.DARK_GRAY,
-            ChatColor.BLACK,
-            ChatColor.DARK_BLUE,
-            ChatColor.BLUE,
-            ChatColor.DARK_GREEN,
-            ChatColor.GREEN,
-            ChatColor.AQUA,
-            ChatColor.DARK_RED,
-            ChatColor.GOLD,
-            ChatColor.YELLOW,
-            ChatColor.GOLD,
-            ChatColor.DARK_PURPLE,
-            ChatColor.LIGHT_PURPLE
+    private static final NamedTextColor[] nameNamedColors = {
+            NamedTextColor.WHITE,
+            NamedTextColor.GRAY,
+            NamedTextColor.DARK_GRAY,
+            NamedTextColor.BLACK,
+            NamedTextColor.DARK_BLUE,
+            NamedTextColor.BLUE,
+            NamedTextColor.DARK_GREEN,
+            NamedTextColor.GREEN,
+            NamedTextColor.AQUA,
+            NamedTextColor.RED,
+            NamedTextColor.GOLD,
+            NamedTextColor.YELLOW,
+            NamedTextColor.GOLD,
+            NamedTextColor.DARK_PURPLE,
+            NamedTextColor.LIGHT_PURPLE
     };
 
     public HorseCustomizationMenu(PetHorses plugin) {
@@ -98,24 +102,26 @@ public class HorseCustomizationMenu implements Listener {
     public static void open(Player player, PetHorses plugin) {
         LocalizationManager lm = plugin.getLocalizationManager();
         HorseService hs = plugin.getHorseService();
-        Inventory inv = plugin.getServer().createInventory(null, INVENTORY_SIZE, ChatColor.DARK_AQUA + lm.getMessage("menu.customize.title"));
+        MenuHolder holder = new MenuHolder("customize_main");
+        Inventory inv = plugin.getServer().createInventory(holder, INVENTORY_SIZE, Component.text(lm.getMessage("menu.customize.title")));
         HorseData data = hs.getHorseData(player.getUniqueId());
 
-        setMenuItem(inv, 10, Material.LEATHER, ChatColor.GOLD + lm.getMessage("menu.customize.color_menu_title"), null);
-        setMenuItem(inv, 12, Material.PAPER, ChatColor.AQUA + lm.getMessage("menu.customize.name_color_menu_title"), null);
-        setMenuItem(inv, 14, Material.NAME_TAG, ChatColor.LIGHT_PURPLE + lm.getMessage("menu.customize.name_item"), Arrays.asList(
-                ChatColor.YELLOW + lm.getMessage("menu.customize.current_name").replace("{name}", data.getHorseName() == null ? lm.getMessage("menu.customize.no_name") : data.getHorseName()),
-                ChatColor.GRAY + lm.getMessage("menu.customize.name_prompt_1"),
-                ChatColor.GRAY + lm.getMessage("menu.customize.name_prompt_2")
+        setMenuItem(inv, 10, Material.LEATHER, lm.getMessage("menu.customize.color_menu_title"), null);
+        setMenuItem(inv, 12, Material.PAPER, lm.getMessage("menu.customize.name_color_menu_title"), null);
+        setMenuItem(inv, 14, Material.NAME_TAG, lm.getMessage("menu.customize.name_item"), Arrays.asList(
+                lm.getMessage("menu.customize.current_name").replace("{name}", data.getHorseName() == null ? lm.getMessage("menu.customize.no_name") : data.getHorseName()),
+                lm.getMessage("menu.customize.name_prompt_1"),
+                lm.getMessage("menu.customize.name_prompt_2")
         ));
-        setMenuItem(inv, 16, Material.EMERALD, ChatColor.GREEN + lm.getMessage("menu.customize.save_item"), null);
+        setMenuItem(inv, 16, Material.EMERALD, lm.getMessage("menu.customize.save_item"), null);
 
         player.openInventory(inv);
     }
 
     public static void openColorMenu(Player player, PetHorses plugin) {
         LocalizationManager lm = plugin.getLocalizationManager();
-        Inventory inv = plugin.getServer().createInventory(null, 27, ChatColor.GOLD + lm.getMessage("menu.customize.color_menu_title"));
+        MenuHolder holder = new MenuHolder("customize_color");
+        Inventory inv = plugin.getServer().createInventory(holder, 27, Component.text(lm.getMessage("menu.customize.color_menu_title")));
         for (int i = 0; i < horseColorsMaterials.length; i++) {
             setMenuItem(inv, 10 + i, horseColorsMaterials[i], lm.getMessage("menu.customize." + horseColorsKeys[i]), null);
         }
@@ -124,10 +130,10 @@ public class HorseCustomizationMenu implements Listener {
 
     public static void openNameColorMenu(Player player, PetHorses plugin) {
         LocalizationManager lm = plugin.getLocalizationManager();
-        Inventory inv = plugin.getServer().createInventory(null, 27, ChatColor.AQUA + lm.getMessage("menu.customize.name_color_menu_title"));
+        MenuHolder holder = new MenuHolder("customize_name_color");
+        Inventory inv = plugin.getServer().createInventory(holder, 27, Component.text(lm.getMessage("menu.customize.name_color_menu_title")));
         for (int i = 0; i < nameColorMaterials.length; i++) {
-            ChatColor color = (nameColorMaterials[i] == Material.BLACK_DYE) ? ChatColor.GRAY : nameChatColors[i];
-            setMenuItem(inv, nameColorSlots[i], nameColorMaterials[i], color + lm.getMessage("menu.customize." + nameColorKeys[i]), null);
+            setMenuItem(inv, nameColorSlots[i], nameColorMaterials[i], lm.getMessage("menu.customize." + nameColorKeys[i]), null);
         }
         player.openInventory(inv);
     }
@@ -135,20 +141,28 @@ public class HorseCustomizationMenu implements Listener {
     private static void setMenuItem(Inventory inv, int slot, Material material, String displayName, java.util.List<String> lore) {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(displayName);
-        if (lore != null) meta.setLore(lore);
-        item.setItemMeta(meta);
+        if (meta != null) {
+            meta.displayName(Component.text(displayName));
+            if (lore != null) {
+                java.util.List<Component> lc = new java.util.ArrayList<>();
+                for (String s : lore) lc.add(Component.text(s));
+                meta.lore(lc);
+            }
+            item.setItemMeta(meta);
+        }
         inv.setItem(slot, item);
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        String title = event.getView().getTitle();
-        if (title.equals(ChatColor.DARK_AQUA + localizationManager.getMessage("menu.customize.title"))) {
+        if (!(event.getWhoClicked() instanceof Player)) return;
+        if (!(event.getInventory().getHolder() instanceof MenuHolder holder)) return;
+        String id = holder.getId();
+        if ("customize_main".equals(id)) {
             handleMainMenuClick(event);
-        } else if (title.equals(ChatColor.GOLD + localizationManager.getMessage("menu.customize.color_menu_title"))) {
+        } else if ("customize_color".equals(id)) {
             handleColorMenuClick(event);
-        } else if (title.equals(ChatColor.AQUA + localizationManager.getMessage("menu.customize.name_color_menu_title"))) {
+        } else if ("customize_name_color".equals(id)) {
             handleNameColorMenuClick(event);
         }
     }
@@ -178,15 +192,24 @@ public class HorseCustomizationMenu implements Listener {
             return;
         }
         if (clicked.getType() == Material.EMERALD && event.getSlot() == 16) {
+            event.setCancelled(true);
             player.closeInventory();
             player.sendMessage(localizationManager.getMessage("menu.customize.saved"));
+            data.setOwnerId(player.getUniqueId());
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    plugin.getHorseDataManager().saveHorseData(data);
+                }
+            }.runTask(plugin);
+
             if (data.getHorseId() != null) {
                 Entity horse = plugin.getServer().getEntity(data.getHorseId());
                 if (horse instanceof Horse h) {
                     h.setColor(data.getColor());
                     h.setStyle(data.getStyle());
                     if (data.getHorseName() != null) {
-                        h.setCustomName(data.getHorseNameColor() + data.getHorseName());
+                        h.customName(TextUtil.colored(data.getHorseNameColor(), data.getHorseName()));
                         h.setCustomNameVisible(true);
                     }
                 }
@@ -202,34 +225,34 @@ public class HorseCustomizationMenu implements Listener {
         HorseData data = horseService.getHorseData(player.getUniqueId());
         boolean updated = false;
         switch (clicked.getType()) {
-            case WHITE_WOOL:
+            case WHITE_WOOL -> {
                 data.setColor(Horse.Color.WHITE);
                 updated = true;
-                break;
-            case BONE_MEAL:
+            }
+            case BONE_MEAL -> {
                 data.setColor(Horse.Color.CREAMY);
                 updated = true;
-                break;
-            case ACACIA_PLANKS:
+            }
+            case ACACIA_PLANKS -> {
                 data.setColor(Horse.Color.CHESTNUT);
                 updated = true;
-                break;
-            case SPRUCE_PLANKS:
+            }
+            case SPRUCE_PLANKS -> {
                 data.setColor(Horse.Color.BROWN);
                 updated = true;
-                break;
-            case BLACK_WOOL:
+            }
+            case BLACK_WOOL -> {
                 data.setColor(Horse.Color.BLACK);
                 updated = true;
-                break;
-            case LIGHT_GRAY_WOOL:
+            }
+            case LIGHT_GRAY_WOOL -> {
                 data.setColor(Horse.Color.GRAY);
                 updated = true;
-                break;
-            case DARK_OAK_PLANKS:
+            }
+            case DARK_OAK_PLANKS -> {
                 data.setColor(Horse.Color.DARK_BROWN);
                 updated = true;
-                break;
+            }
         }
         if (updated) {
             player.sendMessage(localizationManager.getMessage("menu.customize.color_changed"));
@@ -242,10 +265,10 @@ public class HorseCustomizationMenu implements Listener {
         if (!(event.getWhoClicked() instanceof Player player)) return;
         ItemStack clicked = event.getCurrentItem();
         if (clicked == null) return;
-        HorseData data = horseService.getHorseData(player.getUniqueId());
+        HorseData data = plugin.getHorseService().getHorseData(player.getUniqueId());
         for (int i = 0; i < nameColorMaterials.length; i++) {
             if (clicked.getType() == nameColorMaterials[i]) {
-                data.setHorseNameColor(nameChatColors[i]);
+                data.setHorseNameColor(nameNamedColors[i]);
                 break;
             }
         }

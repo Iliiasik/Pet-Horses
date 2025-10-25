@@ -1,6 +1,6 @@
 package pethorses.storage;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,7 +14,7 @@ public class HorseData {
     private Horse.Color color = Horse.Color.BROWN;
     private Horse.Style style = Horse.Style.NONE;
     private String horseName = null;
-    private ChatColor horseNameColor = ChatColor.WHITE;
+    private NamedTextColor horseNameColor = NamedTextColor.WHITE;
     private long deathTime = 0;
     private boolean isFollowing = true;
     private int jumps = 0;
@@ -38,8 +38,8 @@ public class HorseData {
     public void setStyle(Horse.Style style) { this.style = style; }
     public String getHorseName() { return horseName; }
     public void setHorseName(String horseName) { this.horseName = horseName; }
-    public ChatColor getHorseNameColor() { return horseNameColor; }
-    public void setHorseNameColor(ChatColor horseNameColor) { this.horseNameColor = horseNameColor; }
+    public NamedTextColor getHorseNameColor() { return horseNameColor; }
+    public void setHorseNameColor(NamedTextColor horseNameColor) { this.horseNameColor = horseNameColor; }
     public long getDeathTime() { return deathTime; }
     public void setDeathTime(long deathTime) { this.deathTime = deathTime; }
     public boolean isFollowing() { return isFollowing; }

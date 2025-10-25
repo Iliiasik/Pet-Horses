@@ -8,6 +8,8 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import pethorses.inventory.MenuHolder;
+import net.kyori.adventure.text.Component;
 
 import java.util.UUID;
 
@@ -33,8 +35,9 @@ public class HorseBackpackService {
                 configManager.getBackpackMaxSize()
         );
 
-        Inventory backpack = Bukkit.createInventory(null, backpackSize,
-                plugin.getLocalizationManager().getMessage("menu.backpack.title"));
+        MenuHolder holder = new MenuHolder("backpack_" + player.getUniqueId().toString());
+        Inventory backpack = Bukkit.createInventory(holder, backpackSize,
+                Component.text(plugin.getLocalizationManager().getMessage("menu.backpack.title")));
 
         if (data.getBackpackItems() != null && data.getBackpackItems().length > 0) {
             for (int i = 0; i < Math.min(data.getBackpackItems().length, backpackSize); i++) {

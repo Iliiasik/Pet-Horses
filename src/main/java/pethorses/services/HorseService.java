@@ -13,6 +13,8 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 import java.util.UUID;
 
@@ -62,7 +64,9 @@ public class HorseService {
         horse.setStyle(data.getStyle());
 
         if (data.getHorseName() != null && !data.getHorseName().isEmpty()) {
-            horse.setCustomName(data.getHorseNameColor() + data.getHorseName());
+            NamedTextColor ntc = data.getHorseNameColor();
+            Component comp = Component.text(data.getHorseName()).color(ntc != null ? ntc : NamedTextColor.WHITE);
+            horse.customName(comp);
             horse.setCustomNameVisible(true);
         }
 
@@ -73,19 +77,28 @@ public class HorseService {
 
     public void applyHorseStats(Horse horse, HorseData data) {
         int level = data.getLevel();
-        horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)
-                .setBaseValue(configManager.getSpeedBase() + (configManager.getSpeedMaxBonus() * (level / 20.0)));
+        var attrSpeed = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+        if (attrSpeed != null) {
+            attrSpeed.setBaseValue(configManager.getSpeedBase() + (configManager.getSpeedMaxBonus() * (level / 20.0)));
+        }
         double maxHealth = configManager.getHealthBase() + (configManager.getHealthMaxBonus() * (level / 20.0));
-        horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
-        horse.setHealth(maxHealth);
-        horse.getAttribute(Attribute.GENERIC_JUMP_STRENGTH)
-                .setBaseValue(configManager.getJumpBase() + (configManager.getJumpMaxBonus() * (level / 20.0)));
+        var attrHealth = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        if (attrHealth != null) {
+            attrHealth.setBaseValue(maxHealth);
+        }
+        horse.setHealth(Math.min(maxHealth, horse.getAttribute(Attribute.GENERIC_MAX_HEALTH) != null ? horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : maxHealth));
+        var attrJump = horse.getAttribute(Attribute.GENERIC_JUMP_STRENGTH);
+        if (attrJump != null) {
+            attrJump.setBaseValue(configManager.getJumpBase() + (configManager.getJumpMaxBonus() * (level / 20.0)));
+        }
 
         data.setJumps(0);
         data.setBlocksTraveled(0.0);
 
         if (data.getHorseName() != null && !data.getHorseName().isEmpty()) {
-            horse.setCustomName(data.getHorseNameColor() + data.getHorseName());
+            NamedTextColor ntc = data.getHorseNameColor();
+            Component comp = Component.text(data.getHorseName()).color(ntc != null ? ntc : NamedTextColor.WHITE);
+            horse.customName(comp);
             horse.setCustomNameVisible(true);
         }
     }
