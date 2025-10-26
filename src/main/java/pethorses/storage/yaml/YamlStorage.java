@@ -52,7 +52,7 @@ public class YamlStorage implements StorageStrategy {
             dataFile = candidate;
         }
 
-        logger.info("Horse data file path set to: " + dataFile.getAbsolutePath());
+        logger.fine("Horse data file path set to: " + dataFile.getAbsolutePath());
 
         if (!dataFile.exists()) {
             try {
@@ -151,7 +151,6 @@ public class YamlStorage implements StorageStrategy {
         Path tempPath = null;
         Exception lastTempEx = null;
 
-        // Try stable user.home location first
         try {
             Path homeTemp = new File(System.getProperty("user.home"), ".pethorses_temp").toPath();
             try {
@@ -168,7 +167,6 @@ public class YamlStorage implements StorageStrategy {
             logger.fine("Failed to prepare user.home temp dir: " + e.getMessage());
         }
 
-        // Fallback to system tmp
         if (tempPath == null) {
             try {
                 Path sysTmp = new File(System.getProperty("java.io.tmpdir")).toPath();
@@ -184,7 +182,7 @@ public class YamlStorage implements StorageStrategy {
 
         if (tempPath == null) {
             logger.severe("Unable to create any temp file for horse data; aborting save.");
-            logger.severe("Last temp error: " + String.valueOf(lastTempEx));
+            logger.severe("Last temp error: " + lastTempEx);
             return;
         }
 
@@ -211,7 +209,7 @@ public class YamlStorage implements StorageStrategy {
 
             try {
                 Files.write(targetPath, bytes, java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.TRUNCATE_EXISTING);
-                logger.info("Wrote directly to target file after move failure: " + targetPath);
+                logger.fine("Wrote directly to target file after move failure: " + targetPath);
                 try { Files.deleteIfExists(tempPath); } catch (IOException ignored) {}
             } catch (IOException writeEx) {
                 logger.severe("Direct write to target failed. temp=" + tempPath + " target=" + targetPath + " error=" + writeEx.getMessage());
