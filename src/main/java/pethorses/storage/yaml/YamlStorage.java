@@ -31,16 +31,23 @@ public class YamlStorage implements StorageStrategy {
         File parent = candidate.getParentFile();
         boolean parentOk = false;
         if (parent != null) {
-            if (parent.exists()) parentOk = true;
-            else {
+            if (parent.exists()) {
+                parentOk = true;
+            } else {
                 try {
                     parentOk = parent.mkdirs();
-                } catch (SecurityException ignored) {}
+                } catch (SecurityException ignored) {
+                }
             }
         }
         if (!parentOk) {
             File alt = new File(System.getProperty("java.io.tmpdir"), "PetHorses-" + System.currentTimeMillis());
-            try { if (alt.mkdirs()) parentOk = true; } catch (SecurityException ignored) {}
+            try {
+                if (alt.mkdirs()) {
+                    parentOk = true;
+                }
+            } catch (SecurityException ignored) {
+            }
             if (parentOk) {
                 dataFile = new File(alt, "horses_data.yml");
                 logger.warning("Using system temp directory for horse data: " + dataFile.getAbsolutePath());
@@ -57,8 +64,12 @@ public class YamlStorage implements StorageStrategy {
         if (!dataFile.exists()) {
             try {
                 boolean created = dataFile.createNewFile();
-                if (!created) logger.warning("Data file could not be created or already exists: " + dataFile.getAbsolutePath());
-            } catch (IOException e) { logger.severe("Failed to create data file: " + e.getMessage()); }
+                if (!created) {
+                    logger.warning("Data file could not be created or already exists: " + dataFile.getAbsolutePath());
+                }
+            } catch (IOException e) {
+                logger.severe("Failed to create data file: " + e.getMessage());
+            }
         }
 
         this.dataConfig = YamlConfiguration.loadConfiguration(dataFile);
@@ -77,7 +88,8 @@ public class YamlStorage implements StorageStrategy {
                 UUID playerId = UUID.fromString(key);
                 horsesData.put(playerId, horseRepo.load(playerId));
                 passengerPermissions.put(playerId, passengerRepo.load(playerId));
-            } catch (IllegalArgumentException ignored) {}
+            } catch (IllegalArgumentException ignored) {
+            }
         }
     }
 
@@ -106,7 +118,10 @@ public class YamlStorage implements StorageStrategy {
     @Override
     public void saveAllData() {
         synchronized (fileLock) {
-            for (String key : dataConfig.getKeys(false)) dataConfig.set(key, null);
+            for (String key : dataConfig.getKeys(false)) {
+                dataConfig.set(key, null);
+            }
+
             for (Map.Entry<UUID, HorseData> entry : horsesData.entrySet()) {
                 if (entry.getKey() == null || entry.getValue() == null || entry.getValue().getOwnerId() == null) {
                     logger.warning("Skipping save for horse with null ownerId or HorseData.");
@@ -123,78 +138,115 @@ public class YamlStorage implements StorageStrategy {
         Path targetPath = dataFile.toPath();
         Path parentPath = targetPath.getParent();
 
-        int attempts = 0;
-        while (attempts < 3) {
-            try {
-                if (parentPath != null) Files.createDirectories(parentPath);
-                break;
-            } catch (IOException e) {
-                attempts++;
-                logger.warning("Attempt " + attempts + " to create parent directories failed: " + e.getMessage());
-                try { Thread.sleep(50); } catch (InterruptedException ignored) {}
-            }
-        }
-
+        ensureParentDirectories(parentPath);
         if (parentPath != null && !Files.exists(parentPath)) {
             logger.warning("Parent directory for horse data does not exist after retries: " + parentPath);
         }
 
-        String content;
-        try {
-            content = dataConfig.saveToString();
-        } catch (Throwable t) {
-            logger.severe("Failed to serialize YAML content: " + t.getMessage());
+        String content = serializeDataConfig();
+        if (content == null) {
             return;
         }
 
         byte[] bytes = content.getBytes(StandardCharsets.UTF_8);
-        Path tempPath = null;
-        Exception lastTempEx = null;
 
-        try {
-            Path homeTemp = new File(System.getProperty("user.home"), ".pethorses_temp").toPath();
-            try {
-                Files.createDirectories(homeTemp);
-                tempPath = Files.createTempFile(homeTemp, "horses_data-", ".tmp");
-                Files.write(tempPath, bytes);
-                logger.fine("Temp file created in user.home: " + tempPath);
-            } catch (Exception e) {
-                lastTempEx = e;
-                logger.fine("Failed to write temp file in user.home: " + e.getMessage());
-            }
-        } catch (Exception e) {
-            lastTempEx = e;
-            logger.fine("Failed to prepare user.home temp dir: " + e.getMessage());
-        }
-
-        if (tempPath == null) {
-            try {
-                Path sysTmp = new File(System.getProperty("java.io.tmpdir")).toPath();
-                Files.createDirectories(sysTmp);
-                tempPath = Files.createTempFile(sysTmp, "horses_data-", ".tmp");
-                Files.write(tempPath, bytes);
-                logger.fine("Temp file created in system tmp: " + tempPath);
-            } catch (Exception e) {
-                lastTempEx = e;
-                logger.warning("Writing temp file in java.io.tmpdir failed: " + e.getMessage());
-            }
-        }
-
+        Path tempPath = createTemporaryFile(bytes);
         if (tempPath == null) {
             logger.severe("Unable to create any temp file for horse data; aborting save.");
-            logger.severe("Last temp error: " + lastTempEx);
             return;
         }
 
         logger.fine("Prepared temp file: " + tempPath + ", target: " + targetPath);
 
-        try {
-            try { if (parentPath != null) Files.createDirectories(parentPath); } catch (IOException e) { logger.fine("Parent dirs create before move failed: " + e.getMessage()); }
+        ensureParentDirectories(parentPath);
+        if (parentPath != null && !Files.exists(parentPath)) {
+            logger.fine("Parent dirs create before move failed: " + parentPath);
+        }
 
+        boolean moved = tryMoves(tempPath, targetPath);
+        if (moved) {
+            return;
+        }
+
+        try {
+            Files.write(targetPath, bytes, java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.TRUNCATE_EXISTING);
+            logger.fine("Wrote directly to target file after move failure: " + targetPath);
+            try {
+                Files.deleteIfExists(tempPath);
+            } catch (IOException ignored) {
+            }
+        } catch (IOException writeEx) {
+            logger.severe("Direct write to target failed. temp=" + tempPath + " target=" + targetPath + " error=" + writeEx.getMessage());
+            try {
+                Files.deleteIfExists(tempPath);
+            } catch (IOException ignored) {
+            }
+        }
+    }
+
+    private void ensureParentDirectories(Path parentPath) {
+        if (parentPath == null) {
+            return;
+        }
+        int attempts = 0;
+        while (attempts < 3) {
+            try {
+                Files.createDirectories(parentPath);
+                return;
+            } catch (IOException e) {
+                attempts++;
+                logger.warning("Attempt " + attempts + " to create parent directories failed: " + e.getMessage());
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+        }
+    }
+
+    private String serializeDataConfig() {
+        try {
+            return dataConfig.saveToString();
+        } catch (Throwable t) {
+            logger.severe("Failed to serialize YAML content: " + t.getMessage());
+            return null;
+        }
+    }
+
+    private Path createTemporaryFile(byte[] bytes) {
+        try {
+            Path homeTemp = new File(System.getProperty("user.home"), ".pethorses_temp").toPath();
+            Files.createDirectories(homeTemp);
+            Path tempPath = Files.createTempFile(homeTemp, "horses_data-", ".tmp");
+            Files.write(tempPath, bytes);
+            logger.fine("Temp file created in user.home: " + tempPath);
+            return tempPath;
+        } catch (Exception e) {
+            logger.fine("Failed to write temp file in user.home: " + e.getMessage());
+        }
+
+        try {
+            Path sysTmp = new File(System.getProperty("java.io.tmpdir")).toPath();
+            Files.createDirectories(sysTmp);
+            Path tempPath = Files.createTempFile(sysTmp, "horses_data-", ".tmp");
+            Files.write(tempPath, bytes);
+            logger.fine("Temp file created in system tmp: " + tempPath);
+            return tempPath;
+        } catch (Exception e) {
+            logger.warning("Writing temp file in java.io.tmpdir failed: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    private boolean tryMoves(Path tempPath, Path targetPath) {
+        try {
             try {
                 Files.move(tempPath, targetPath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
                 logger.fine("Atomic move succeeded: " + targetPath);
-                return;
+                return true;
             } catch (IOException atomicEx) {
                 logger.fine("Atomic move failed, will try non-atomic: " + atomicEx.getMessage());
             }
@@ -202,23 +254,14 @@ public class YamlStorage implements StorageStrategy {
             try {
                 Files.move(tempPath, targetPath, StandardCopyOption.REPLACE_EXISTING);
                 logger.fine("Non-atomic move succeeded: " + targetPath);
-                return;
+                return true;
             } catch (IOException moveEx) {
                 logger.warning("Non-atomic move failed: " + moveEx.getMessage());
             }
-
-            try {
-                Files.write(targetPath, bytes, java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.TRUNCATE_EXISTING);
-                logger.fine("Wrote directly to target file after move failure: " + targetPath);
-                try { Files.deleteIfExists(tempPath); } catch (IOException ignored) {}
-            } catch (IOException writeEx) {
-                logger.severe("Direct write to target failed. temp=" + tempPath + " target=" + targetPath + " error=" + writeEx.getMessage());
-                try { Files.deleteIfExists(tempPath); } catch (IOException ignored) {}
-            }
         } catch (Exception ex) {
-            logger.severe("Unexpected error in saveToFile: " + ex.getMessage());
-            try { Files.deleteIfExists(tempPath); } catch (IOException ignored) {}
+            logger.severe("Unexpected error in move attempts: " + ex.getMessage());
         }
+        return false;
     }
 
     @Override
