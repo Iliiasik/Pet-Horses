@@ -25,13 +25,22 @@ public class StressTests {
 
     private int getIntProp(String name, int defaultValue) {
         String v = System.getProperty(name);
-        if (v == null) return defaultValue;
-        try { return Integer.parseInt(v); } catch (NumberFormatException e) { return defaultValue; }
+        if (v == null) {
+            return defaultValue;
+        }
+        try {
+            return Integer.parseInt(v);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 
     @BeforeEach
     public void setUp() {
-        try { MockBukkit.unmock(); } catch (IllegalStateException ignored) {}
+        try {
+            MockBukkit.unmock();
+        } catch (IllegalStateException ignored) {
+        }
         MockBukkit.mock();
         plugin = MockBukkit.load(PetHorses.class);
         horseService = plugin.getHorseService();
@@ -41,7 +50,10 @@ public class StressTests {
 
     @AfterEach
     public void tearDown() {
-        try { MockBukkit.unmock(); } catch (IllegalStateException ignored) {}
+        try {
+            MockBukkit.unmock();
+        } catch (IllegalStateException ignored) {
+        }
     }
 
     @Test
@@ -73,7 +85,13 @@ public class StressTests {
             }
 
             for (Future<?> f : futures) {
-                try { f.get(5, TimeUnit.MINUTES); } catch (TimeoutException e) { errors.add(e); } catch (ExecutionException e) { errors.add(e.getCause()); }
+                try {
+                    f.get(5, TimeUnit.MINUTES);
+                } catch (TimeoutException e) {
+                    errors.add(e);
+                } catch (ExecutionException e) {
+                    errors.add(e.getCause());
+                }
             }
 
             if (!errors.isEmpty()) {
@@ -120,8 +138,14 @@ public class StressTests {
             List<Future<Void>> results = executor.invokeAll(tasks, 10, TimeUnit.MINUTES);
 
             for (Future<Void> r : results) {
-                if (r.isCancelled()) errors.add(new CancellationException("Task cancelled"));
-                try { r.get(); } catch (ExecutionException e) { errors.add(e.getCause()); }
+                if (r.isCancelled()) {
+                    errors.add(new CancellationException("Task cancelled"));
+                }
+                try {
+                    r.get();
+                } catch (ExecutionException e) {
+                    errors.add(e.getCause());
+                }
             }
 
             if (!errors.isEmpty()) {
@@ -163,7 +187,13 @@ public class StressTests {
             }
 
             for (Future<?> f : futures) {
-                try { f.get(3, TimeUnit.MINUTES); } catch (TimeoutException e) { errors.add(e); } catch (ExecutionException e) { errors.add(e.getCause()); }
+                try {
+                    f.get(3, TimeUnit.MINUTES);
+                } catch (TimeoutException e) {
+                    errors.add(e);
+                } catch (ExecutionException e) {
+                    errors.add(e.getCause());
+                }
             }
 
             if (!errors.isEmpty()) {
