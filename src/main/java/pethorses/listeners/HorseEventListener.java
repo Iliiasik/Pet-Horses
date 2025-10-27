@@ -31,8 +31,11 @@ public class HorseEventListener implements Listener {
     public void onHorseDeath(EntityDeathEvent event) {
         if (!(event.getEntity() instanceof Horse horse) || !horse.isTamed()) return;
 
-        Player owner = (Player) horse.getOwner();
-        if (owner == null) return;
+        if (!(horse.getOwner() instanceof Player owner)) return;
+
+        HorseData data = horseService.getHorseData(owner.getUniqueId());
+        if (data == null) return;
+        if (data.getHorseId() == null || !data.getHorseId().equals(horse.getUniqueId())) return;
 
         event.getDrops().removeIf(item -> item.getType() == Material.SADDLE || item.getType() == Material.LEATHER);
 
