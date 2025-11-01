@@ -4,13 +4,13 @@
 
 <p align="center">
   <a href="https://modrinth.com/plugin/pet-horses">
-    <img src="https://img.shields.io/modrinth/dt/pet-horses?color=green&style=for-the-badge&logo=modrinth" alt="Modrinth Downloads"/>
+    <img src="https://img.shields.io/modrinth/dt/pet-horse?color=green&style=for-the-badge&logo=modrinth" alt="Modrinth Downloads"/>
   </a><br>
   <a href="https://www.curseforge.com/minecraft/bukkit-plugins/pet-horses">
     <img src="https://cf.way2muchnoise.eu/full_1347084_downloads.svg" alt="CurseForge Downloads"/>
   </a><br>
-  <a href="https://www.codefactor.io/repository/github/iliiasik/pet-horses/overview/main">
-    <img src="https://www.codefactor.io/repository/github/iliiasik/pet-horses/badge/main" alt="CodeFactor"/>
+  <a href="https://www.codefactor.io/repository/github/iliiasik/pet-horse/overview/main">
+    <img src="https://www.codefactor.io/repository/github/iliiasik/pet-horse/badge/main" alt="CodeFactor"/>
   </a>
 </p>
 
