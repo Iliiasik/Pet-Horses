@@ -1,5 +1,5 @@
 <h3 align="center">
-  PET HORSES
+  PET HORSE
 </h3>
 
 <p align="center">
@@ -16,7 +16,7 @@
 
 ## Description
 
-Pet Horses enhances horse gameplay by giving **each player their own personal horse pet**.  
+Pet Horse enhances horse gameplay by giving **each player their own personal horse pet**.  
 It adds **passive leveling**, **summon/hide functionality**, **customization via GUI**, **passenger permissions**, and a **personal inventory to carry items**.  
 Over time, your horse becomes faster, jumps higher, and gains more health.
 
